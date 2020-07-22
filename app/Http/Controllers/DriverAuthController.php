@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 
 use Hash;
-use App\User;
+use App\Driver;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\User\UserSignUpRequest;
-use App\Http\Requests\Api\User\UserLoginRequest;
+use App\Http\Requests\Api\Driver\DriverSignUpRequest;
+use App\Http\Requests\Api\Driver\DriverLoginRequest;
 
-class UserAuthController extends Controller
+class DriverAuthController extends Controller
 {
     /**
      * Create a new AuthController instance.
@@ -29,7 +29,7 @@ class UserAuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(UserLoginRequest $request)
+    public function login(DriverLoginRequest $request)
     {
         $credentials = $request->only('email', 'password');
 
@@ -41,7 +41,7 @@ class UserAuthController extends Controller
     }
 
     /**
-     * Get the authenticated User
+     * Get the authenticated Driver
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -51,7 +51,7 @@ class UserAuthController extends Controller
     }
 
     /**
-     * Log the user out (Invalidate the token)
+     * Log the Driver out (Invalidate the token)
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -95,12 +95,12 @@ class UserAuthController extends Controller
      */
     public function guard()
     {
-        return \Auth::guard('user');
+        return \Auth::guard('driver');
     }
 
-    public function signup(UserSignUpRequest $request)
+    public function signup(DriverSignUpRequest $request)
     {
-        $user = User::create([
+        $driver = Driver::create([
             "name" => $request->name,
             "email" => $request->email,
             "username"  => $request->username,
@@ -108,14 +108,14 @@ class UserAuthController extends Controller
             "password" => Hash::make($request->password)
         ]);
 
-        if($user) {
+        if($driver) {
             return response()->json([
                 'message' => 'Sign Up Successfully.',
-                'user' => $user
+                'driver' => $driver
             ], 201);
         } else {
             return response()->json([
-                "message" => "User Creation Failed."
+                "message" => "Driver Creation Failed."
             ], 500);
         }
     }

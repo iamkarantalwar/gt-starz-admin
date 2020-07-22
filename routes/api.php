@@ -33,3 +33,20 @@ Route::group([
     Route::post('me', 'UserAuthController@me');
     Route::post('payload', 'UserAuthController@payload');
 });
+
+
+Route::group([
+
+    'middleware' => 'api',
+    'namespace' => '\App\Http\Controllers',
+    'prefix' => 'driver'
+
+], function ($router) {
+
+    Route::post('signup', 'DriverAuthController@signup');
+    Route::post('login', 'DriverAuthController@login');
+    Route::post('logout', 'DriverAuthController@logout');
+    Route::post('refresh', 'DriverAuthController@refresh');
+    Route::post('me', 'DriverAuthController@me');
+    Route::post('payload', 'DriverAuthController@payload');
+});
