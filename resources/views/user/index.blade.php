@@ -39,41 +39,39 @@
         </div>
         <!-- Card footer -->
         <div class="card-footer py-4">
-          <nav aria-label="...">
-            <ul class="pagination justify-content-end mb-0">
-             @if (!$users->onFirstPage())
+            <nav aria-label="...">
+              <ul class="pagination justify-content-end mb-0">
+               @if ($users->currentPage() != 1)
+                  <li class="page-item">
+                      <a class="page-link" href="{{route('users.index')}}?page={{$users->currentPage()-1 }}" tabindex="-1">
+                      <i class="fas fa-angle-left"></i>
+                      <span class="sr-only">Previous</span>
+                      </a>
+                  </li>
+               @endif
+                @if($users->firstItem() == $users->lastPage())
+                <li class="page-item active ">
+                  <a class="page-link" href="{{ route('users.index') }}?page={{$users->firstItem()}}">{{$users->firstItem()}}</a>
+               </li>
+                @else
+                  @for($i=2; $i<=$users->lastPage(); $i++)
+                      <li class="page-item @if($i ==  $users->currentPage()) active @endif">
+                          <a class="page-link" href="{{ route('users.index') }}?page={{ $i }}">{{ $i }}</a>
+                      </li>
+                  @endfor
+                @endif
+                @if($users->lastPage() != $users->currentPage())
                 <li class="page-item">
-                    <a class="page-link" href="{{route('users.index')}}?page={{$users->currentPage()-1 }}" tabindex="-1">
-                    <i class="fas fa-angle-left"></i>
-                    <span class="sr-only">Previous</span>
-                    </a>
+                  <a class="page-link" href="{{route('users.index')}}?page={{ $users->currentPage()+1 }}">
+                    <i class="fas fa-angle-right"></i>
+                    <span class="sr-only">Next</span>
+                  </a>
                 </li>
-             @endif
-              @if($users->firstItem() == $users->lastPage())
-              <li class="page-item active">
-                <a class="page-link" href="{{route('users.index')}}?page={{$users->currentPage() }}" tabindex="-1">
-                <i class="fas fa-angle-left"></i>
-                <span class="sr-only">{{ $users->currentPage() }}</span>
-                </a>
-            </li>
-              @else
-                @for($i=2; $i<=$users->lastPage(); $i++)
-                    <li class="page-item @if($i ==  $users->currentPage()) active @endif">
-                        <a class="page-link" href="{{ route('users.index') }}?page={{ $i }}">{{ $i }}</a>
-                    </li>
-                @endfor
-              @endif
-              @if($users->lastPage() != $users->currentPage())
-              <li class="page-item">
-                <a class="page-link" href="{{route('users.index')}}?page={{ $users->currentPage()+1 }}">
-                  <i class="fas fa-angle-right"></i>
-                  <span class="sr-only">Next</span>
-                </a>
-              </li>
-              @endif
-            </ul>
-          </nav>
-        </div>
+                @endif
+              </ul>
+            </nav>
+          </div>
+       </div>
       </div>
     </div>
 </div>

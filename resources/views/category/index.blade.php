@@ -37,7 +37,7 @@
         <div class="card-footer py-4">
           <nav aria-label="...">
             <ul class="pagination justify-content-end mb-0">
-             @if (!$categories->onFirstPage())
+             @if ($categories->currentPage() != 1)
                 <li class="page-item">
                     <a class="page-link" href="{{route('categories.index')}}?page={{$categories->currentPage()-1 }}" tabindex="-1">
                     <i class="fas fa-angle-left"></i>
@@ -46,12 +46,9 @@
                 </li>
              @endif
               @if($categories->firstItem() == $categories->lastPage())
-              <li class="page-item active">
-                <a class="page-link" href="{{route('categories.index')}}?page={{$categories->currentPage() }}" tabindex="-1">
-                <i class="fas fa-angle-left"></i>
-                <span class="sr-only">{{ $categories->currentPage() }}</span>
-                </a>
-            </li>
+              <li class="page-item active ">
+                <a class="page-link" href="{{ route('categories.index') }}?page={{$categories->firstItem()}}">{{$categories->firstItem()}}</a>
+             </li>
               @else
                 @for($i=2; $i<=$categories->lastPage(); $i++)
                     <li class="page-item @if($i ==  $categories->currentPage()) active @endif">
