@@ -27,6 +27,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             'App\Repositories\User\UserRepositoryInterface',
             'App\Repositories\User\UserRepository');
+
+        //Registing The Driver Service Repository
+        $this->app->bind(
+            'App\Repositories\Driver\DriverRepositoryInterface',
+            'App\Repositories\Driver\DriverRepository');
     }
 
     /**

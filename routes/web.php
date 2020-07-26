@@ -23,8 +23,12 @@ Route::group(['namespace' => 'Web', 'middleware' => 'auth'], function () {
 
     Route::resource('categories', 'CategoryController');
     Route::resource('banners', 'BannerController');
+    //User Routes
     Route::get('users', 'UserController@index')->name('users.index');
     Route::get('users/{user}/changestatus/{status}', 'UserController@changeApprovalStatus')->name('users.changestatus');
+    //Driver Routes
+    Route::resource('drivers', 'DriverController');
+    Route::get('drivers/{driver}/changestatus/{status}', 'DriverController@changeApprovalStatus')->name('drivers.changestatus');
 });
 
 Auth::routes(['register' => false]);

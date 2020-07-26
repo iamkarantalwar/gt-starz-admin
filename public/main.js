@@ -1,5 +1,10 @@
-
-    $('.upload-image-input').change( function(e) {
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover({
+        placement : 'top',
+        trigger: 'hover'
+    });
+});
+$('.upload-image-input').change( function(e) {
         let input = this;
         var url = input.value;
         var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
@@ -32,7 +37,7 @@ $('.ask-before-delete').click( function() {
         if (willDelete) {
           let form = $(this).closest('tr').find('form').submit();
         } else {
-          swal("Your "+title+" file is safe!");
+          swal("Your "+title+" details is safe!");
         }
       });
 });

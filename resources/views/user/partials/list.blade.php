@@ -29,14 +29,18 @@
             @endif
         </td>
         <td class="actions">
+            @if($user->approved == "0" || $user->approved == null)
             <a href="{{ route('users.changestatus', ['status' => 1, 'user' =>  $user]) }}"
                 class="confirm-approval-change" title="Approve User">
                 <i class="ni ni-check-bold" ></i>
             </a>
+            @endif
+            @if($user->approved == "1" || is_null($user->approved))
             <a href="{{ route('users.changestatus', ['status' => 0, 'user' =>  $user]) }}"
                 class="confirm-approval-change" title="Disapprove User">
                 <i class="ni ni-fat-remove"></i>
             </a>
+            @endif
         </td>
     </tr>
     @endforeach

@@ -12,9 +12,19 @@
 
 .actions i.ni-fat-remove {
     font-size: 30px;
+    position: relative;
+    top: 5px;
 }
 
 .thead-light tr th {
     font-weight: bold;
+    font-size: 14px;
+}
+
+.card-header .actions .btn-primary i {
+    color: white;
+}
+
+.card-header .actions .btn-primary {
     font-size: 14px;
 }

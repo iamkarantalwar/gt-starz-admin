@@ -34,13 +34,13 @@
                 <span class="nav-link-text">User Management</span>
             </a>
         </li>
-        {{-- <li class="nav-item">
-            <a class="nav-link" href="tables.html">
-            <i class="ni ni-bullet-list-67 text-default"></i>
-            <span class="nav-link-text">Driver Management</span>
+         <li class="nav-item">
+            <a class="nav-link" href="{{ route('drivers.index') }}">
+                <i class="ni ni-bullet-list-67 text-default"></i>
+                <span class="nav-link-text">Driver Management</span>
             </a>
         </li>
-        <li class="nav-item">
+    {{--    <li class="nav-item">
             <a class="nav-link" href="login.html">
             <i class="ni ni-key-25 text-info"></i>
             <span class="nav-link-text">Login</span>
