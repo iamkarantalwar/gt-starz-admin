@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group([
 
     'middleware' => 'api',
-    'namespace' => '\App\Http\Controllers',
+    'namespace' => '\App\Http\Controllers\Api',
     'prefix' => 'user'
 
 ], function ($router) {
@@ -32,13 +32,17 @@ Route::group([
     Route::post('refresh', 'UserAuthController@refresh');
     Route::post('me', 'UserAuthController@me');
     Route::post('payload', 'UserAuthController@payload');
+    //Get Categories
+    Route::get('categories/', 'CategoryController@getCategories');
+    //Get Banner Images
+    Route::get('banners/', 'BannerController@getBannerImages');
 });
 
 
 Route::group([
 
     'middleware' => 'api',
-    'namespace' => '\App\Http\Controllers',
+    'namespace' => '\App\Http\Controllers\Api',
     'prefix' => 'driver'
 
 ], function ($router) {

@@ -13,6 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+Route::group(['namespace' => 'Web', 'middleware' => 'auth'], function () {
+
+    Route::get('/', function () {
+        return view('welcome');
+    });
+
+    Route::resource('categories', 'CategoryController');
+    Route::resource('banners', 'BannerController');
+    Route::get('users', 'UserController@index')->name('users.index');
+    Route::get('users/{user}/changestatus/{status}', 'UserController@changeApprovalStatus')->name('users.changestatus');
 });
+
+Auth::routes(['register' => false]);
+
+Route::get('/home', 'HomeController@index')->name('home');

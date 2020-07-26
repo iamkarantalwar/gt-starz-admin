@@ -30,6 +30,7 @@ class DriverSignUpRequest extends ApiRequest
             'phone_number' => 'required|unique:drivers,phone_number|numeric',
             'password' => 'required|same:confirm_password|min:6',
             'confirm_password' => 'required',
+            'address' => 'required'
         ];
     }
 }
