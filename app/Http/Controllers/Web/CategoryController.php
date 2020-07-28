@@ -45,7 +45,10 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
+        uploadImage($request->all()['image']);
+        die();
         $store = $this->categoryRepository->create($request->all());
+
         if($store) {
             return redirect()->route('categories.index')->with('success', 'Category Created Successfully');
         } else {
