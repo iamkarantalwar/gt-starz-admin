@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Product\Product;
+use App\Models\Product\ProductOption;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// Route::get('/', function () {
+//        return Product::with(['skus', 'skus.productValues' ,'skus.productValues.productOption', 'skus.productValues.productValue'])->get();
+// })->name('welcome');
 
 
 Route::group(['namespace' => 'Web', 'middleware' => 'auth'], function () {

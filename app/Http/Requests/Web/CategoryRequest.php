@@ -26,13 +26,13 @@ class CategoryRequest extends FormRequest
         if($this->method() == "POST") {
             return [
                 'category_name' => 'required|unique:categories,category_name',
-                'image' => 'required|required|mimes:jpeg,png,jpg,gif,svg'
+                'image' => 'required|mimes:jpeg,png,jpg,gif,svg'
             ];
         } else if($this->method == "PUT" || $this->method == "PATCH") {
             $category = $this->route('categories');
             return [
                 'category_name' => 'required|unique:categories,category_name,'.$category->id,
-                'image' => 'image|required|mimes:jpeg,png,jpg,gif,svg'
+                // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg'
             ];
         }
 

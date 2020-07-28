@@ -19,7 +19,7 @@ function addImage($image, Model $model)
         $dir = strtolower(get_class($model));
         //Make Path
         $path = $dir. '/' . $dateTime . $image->getClientOriginalName();
-        $storage = Storage::disk('public')->put($path , $img);
+        $storage = Storage::disk('s3')->put($path , $img);
         //If Image is stored then store into database
         if($storage){
             //Create Image Instance
@@ -31,6 +31,7 @@ function addImage($image, Model $model)
         }
         return true;
     } catch (\Throwable $th) {
+        dd($th);
         return null;
     }
 }
@@ -38,7 +39,7 @@ function addImage($image, Model $model)
 function updateImage($image, Model $model) {
     try {
         // Delete the existing image
-        $delete = Storage::disk('public')->delete($model->image->url);
+        $delete = Storage::disk('s3')->delete($model->image->url);
         //If image is successfully deleted then add the new image
         if($delete) {
             $img = ImageIntervention::make($image->getRealPath());
@@ -50,7 +51,7 @@ function updateImage($image, Model $model) {
             //Make Dynamic Directory
             $dir = strtolower(get_class($model));
             $path = $dir .'/' . $dateTime .$image->getClientOriginalName();
-            $storage = Storage::disk('public')->put($path , $img);
+            $storage = Storage::disk('s3')->put($path , $img);
 
             //If Image is stored then update into database
             if($storage){
@@ -79,7 +80,7 @@ function updateImage($image, Model $model) {
 
 function deleteImage(Model $model)
 {
-    $delete = Storage::disk('public')->delete($model->image->url);
+    $delete = Storage::disk('s3')->delete($model->image->url);
     if($delete) {
         return true;
     } else {
@@ -90,5 +91,5 @@ function deleteImage(Model $model)
 function getImageUrl(Model $model)
 {
     //Get URL of the website
-    return Storage::disk('public')->url($model->image->url);
+    return Storage::disk('s3')->url($model->image->url);
 }
