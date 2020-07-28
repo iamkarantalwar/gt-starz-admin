@@ -43,13 +43,9 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-     //   dd(realpath($request->all()['image']));
-        uploadImage($request->all()['image']);
-        dd("success");
         $store = $this->categoryRepository->create($request->all());
-
         if($store) {
             return redirect()->route('categories.index')->with('success', 'Category Created Successfully');
         } else {
