@@ -10,7 +10,7 @@ function addImage($image, Model $model)
 {
     try {
         $img = ImageIntervention::make($image);
-        $img->resize(120, 120, function ($constraint) {
+        $img->resize(600, 600, function ($constraint) {
             $constraint->aspectRatio();
         });
         $img->stream(); // <-- Key point
@@ -42,7 +42,7 @@ function updateImage($image, Model $model) {
         //If image is successfully deleted then add the new image
         if($delete) {
             $img = ImageIntervention::make($image);
-            $img->resize(120, 120, function ($constraint) {
+            $img->resize(600, 600, function ($constraint) {
                 $constraint->aspectRatio();
             });
             $img->stream(); // <-- Key point
