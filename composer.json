@@ -19,8 +19,7 @@
         "laravelcollective/html": "^6.1",
         "league/flysystem-aws-s3-v3": "^1.0",
         "tymon/jwt-auth": "^1.0",
-        "ext-gd":"*",
-        "gd": "*"
+        "ext-gd":"*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
