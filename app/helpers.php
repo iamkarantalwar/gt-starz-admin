@@ -15,8 +15,10 @@ function addImage($image, Model $model)
         });
         $img->stream(); // <-- Key point
         $dateTime = str_replace(':' , '-' ,$model->created_at);
+        $dateTime = str_replace(' ' , '-' ,$dateTime);
         //Dynamic Directory According to the model
         $dir = strtolower(get_class($model));
+        $dir = str_replace('\\', '/', $dir);
         //Make Path
         $path = $dir. '/' . $dateTime . $image->getClientOriginalName();
         $storage = Storage::disk('s3')->put($path , $img);
@@ -47,8 +49,10 @@ function updateImage($image, Model $model) {
             });
             $img->stream(); // <-- Key point
             $dateTime = str_replace(':' , '-' ,$model->created_at);
+            $dateTime = str_replace(' ' , '-' ,$dateTime);
             //Make Dynamic Directory
             $dir = strtolower(get_class($model));
+            $dir = str_replace('\\', '/', $dir);
             $path = $dir .'/' . $dateTime .$image->getClientOriginalName();
             $storage = Storage::disk('s3')->put($path , $img);
 

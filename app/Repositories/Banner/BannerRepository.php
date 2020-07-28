@@ -94,7 +94,7 @@ class BannerRepository implements BannerRepositoryInterface
     public function getBannerImages()
     {
         $banners = $this->banner
-                           ->get()
+                           ->all()
                            ->map(function ($q){
                                $q->image_url = getImageUrl($q);
                                return $q;

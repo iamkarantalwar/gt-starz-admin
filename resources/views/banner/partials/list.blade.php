@@ -9,7 +9,7 @@
         </td>
         <td>
             <span class="badge badge-dot mr-4">
-                <img src="{{ Storage::disk('s3')->url($banner->image->url) }}" height="100px" width="100px">
+                <img src="{{ Storage::disk(env('STORAGE_ENGINE'))->url($banner->image->url) }}" height="100px" width="100px">
             </span>
         </td>
         <td class="actions">
