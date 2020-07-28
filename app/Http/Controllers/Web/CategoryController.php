@@ -45,8 +45,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+     //   dd(realpath($request->all()['image']));
         uploadImage($request->all()['image']);
-        die();
+        dd("success");
         $store = $this->categoryRepository->create($request->all());
 
         if($store) {
