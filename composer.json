@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "ext-gd": "^7.3",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^6.3",
@@ -18,8 +19,7 @@
         "laravel/ui": "^2.1",
         "laravelcollective/html": "^6.1",
         "league/flysystem-aws-s3-v3": "^1.0",
-        "tymon/jwt-auth": "^1.0",
-        "ext-gd":"*"
+        "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
