@@ -98,7 +98,7 @@ function getImageUrl(Model $model)
 function uploadImage($image)
 {
     try {
-        dd($image->getRealPath());
+        dd($image);
         $img = ImageIntervention::make($image->getRealPath());
         $img->resize(120, 120, function ($constraint) {
             $constraint->aspectRatio();
