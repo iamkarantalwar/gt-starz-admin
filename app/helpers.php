@@ -98,14 +98,14 @@ function getImageUrl(Model $model)
 function uploadImage($image)
 {
     try {
-        $img = ImageIntervention::make($image->getRealPath());
-        $img->resize(120, 120, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-        $img->stream(); // <-- Key point
+        // $img = ImageIntervention::make($image->getRealPath());
+        // $img->resize(120, 120, function ($constraint) {
+        //     $constraint->aspectRatio();
+        // });
+        // $img->stream(); // <-- Key point
         //Make Path
         $path = 'new/' . $image->getClientOriginalName();
-        $storage = Storage::disk('s3')->put($path , $img);
+        $storage = Storage::disk('s3')->put($path , $image);
         //If Image is stored then store into database
         if($storage){
             echo "stored";
