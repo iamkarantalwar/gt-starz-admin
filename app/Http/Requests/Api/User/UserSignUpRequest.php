@@ -28,7 +28,7 @@ class UserSignUpRequest extends ApiRequest
             'username' => 'required|unique:users,username',
             'email' => 'required|unique:users,email|email',
             'phone_number' => 'required|unique:users,phone_number|numeric',
-            'password' => 'required|same:confirm_password|min:6',
+            'password' => 'required|same:confirm_password|min:'.config('constant.password.minlength'),
             'confirm_password' => 'required',
             'address' => 'required'
         ];

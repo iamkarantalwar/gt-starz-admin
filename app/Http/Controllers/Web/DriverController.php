@@ -118,7 +118,7 @@ class DriverController extends Controller
          if($update) {
              return redirect()->back()->with('success', 'Driver Approval Status Changed Successfully');
          } else {
-             return redirect()->back()->with('danger', 'Something went wrong. Try again later.');
+             return redirect()->back()->with('error', 'Something went wrong. Try again later.');
          }
      }
 

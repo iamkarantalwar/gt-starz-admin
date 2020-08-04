@@ -32,6 +32,12 @@ Route::group([
     Route::post('refresh', 'UserAuthController@refresh');
     Route::post('me', 'UserAuthController@me');
     Route::post('payload', 'UserAuthController@payload');
+    //Update Password
+    Route::post('updatepassword', 'UserAuthController@updatePassword');
+    //Forgot Password
+    Route::post('forgotpassword', 'UserAuthController@sendForgotPasswordOtp');
+    Route::post('verifyotp', 'UserAuthController@verifyForgotPasswordOtp');
+    Route::post('resetpassword', 'UserAuthController@resetPassword');
     //Get Categories
     Route::get('categories/', 'CategoryController@getCategories');
     //Get Banner Images

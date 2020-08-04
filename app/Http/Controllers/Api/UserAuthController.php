@@ -2,23 +2,38 @@
 
 namespace App\Http\Controllers\Api;
 
-
 use Hash;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\Api\User\UserSignUpRequest;
+use App\Repositories\User\UserRepository;
+use App\Services\User\ForgotPasswordService;
 use App\Http\Requests\Api\User\UserLoginRequest;
+use App\Http\Requests\Api\User\UserSignUpRequest;
+use App\Http\Requests\Api\User\ChangePasswordRequest;
+use App\Http\Requests\Api\User\ForgotPasswordRequest;
+use App\Http\Requests\Api\User\ResetPasswordRequest;
+use App\Http\Requests\Api\User\VerifyForgotPasswordRequest;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class UserAuthController extends Controller
 {
+    use ResetsPasswords;
     /**
      * Create a new AuthController instance.
      *
      * @return void
      */
-    public function __construct()
+
+     protected $userRepository, $forgotPasswordService;
+
+    public function __construct(UserRepository $userRepository, ForgotPasswordService $forgotPasswordService)
     {
-        $this->middleware('auth:user', ['except' => ['login', 'signup']]);
+        $this->middleware('auth:user', ['except' => ['login', 'signup', 'sendForgotPasswordOtp', 'verifyForgotPasswordOtp', 'resetPassword']]);
+        $this->userRepository = $userRepository;
+        $this->forgotPasswordService = $forgotPasswordService;
     }
 
     /**
@@ -104,14 +119,7 @@ class UserAuthController extends Controller
 
     public function signup(UserSignUpRequest $request)
     {
-        $user = User::create([
-            "name" => $request->name,
-            "email" => $request->email,
-            "username"  => $request->username,
-            "phone_number" => $request->phone_number,
-            "password" => Hash::make($request->password),
-            "address" => $request->post('address'),
-        ]);
+        $user = $this->userRepository->create($request->all());
 
         if($user) {
             return response()->json([
@@ -129,4 +137,67 @@ class UserAuthController extends Controller
     {
         return $this->guard()->payload();
     }
+
+    // Update Password
+    public function updatePassword(ChangePasswordRequest $request)
+    {
+        $user = $request->user();
+        $check_hash = Hash::check($request->old_password, $user->password);
+        if ($check_hash) {
+            $change_password = $this->userRepository->changePassword($user, $request->all());
+            if($change_password) {
+                return response()->json([
+                    'message' => 'Password Changed Successfully',
+                ], 200);
+            }
+
+        } else {
+            return response()->json([
+                'message' => 'You\'ve entered incorrect password'
+            ], 403);
+        }
+    }
+
+    public function sendForgotPasswordOtp(ForgotPasswordRequest $request)
+    {
+        $result = $this->forgotPasswordService->forgetPassword($request->all());
+        if($result) {
+            return response()->json([
+                'message' => 'Email sent successfully. Check your e-mail.'
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'something went wrong'
+            ], 400);
+        }
+    }
+
+   public function verifyForgotPasswordOtp(VerifyForgotPasswordRequest $request)
+   {
+       $result = $this->forgotPasswordService->verifyOtp($request->email, $request->otp);
+       if($result) {
+            return response()->json([
+                'message' => 'OTP updated successfully.'
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Your OTP is expired or this OTP don\'t exist'
+            ], 400);
+        }
+   }
+
+   public function resetPassword(ResetPasswordRequest $request)
+   {
+        $result = $this->forgotPasswordService->resetPassword($request->email, $request->otp, $request->new_password);
+
+        if($result) {
+            return response()->json([
+                'message' => 'Password updated successfully.'
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Something Went Wrong. Try Again Later.'
+            ], 400);
+        }
+   }
 }

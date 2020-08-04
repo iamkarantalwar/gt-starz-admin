@@ -3,6 +3,7 @@
 namespace App\Repositories\User;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -31,5 +32,52 @@ class UserRepository implements UserRepositoryInterface
         } else {
             return null;
         }
+    }
+
+    public function changePassword(User $user, array $data)
+    {
+        $user->password = Hash::make($data['new_password']);
+        $user->save();
+        return $user;
+    }
+
+    public function create(array $data)
+    {
+        $user = User::create([
+            "name" => $data['name'],
+            "email" => $data['email'],
+            "username"  => $data['username'],
+            "phone_number" => $data['phone_number'],
+            "password" => Hash::make($data['password']),
+            "address" => $data['address'],
+        ]);
+
+        if($user) {
+            return $user;
+        } else {
+            return null;
+        }
+    }
+
+    public function update(User $user, array $data) : bool
+    {
+        $update = $user->update($data);
+        if($update) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getUserByEmail(string $email)
+    {
+        $user = $this->model->where('email', $email)->first();
+        if(is_null($user)) {
+            return false;
+        } else {
+            return $user;
+        }
+
+
     }
 }

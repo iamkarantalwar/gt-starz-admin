@@ -60,13 +60,12 @@
   <!-- Core -->
   {{-- CHECK IF ANY RESPONSE IS FOR UI SHOW BY SWAL --}}
   <script src="{{ asset('swal/swal.min.js')}}"></script>
-  @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+  @foreach (['danger', 'warning', 'success', 'info', 'error'] as $msg)
     @if(Session::has($msg))
     <script>
-        var icon = '@if($msg=="success") success @else warning @endif';
         swal({
             text: '{{ Session::get($msg) }}',
-            icon : 'success',
+            icon : '{{$msg}}',
         });
     </script>
     @endif

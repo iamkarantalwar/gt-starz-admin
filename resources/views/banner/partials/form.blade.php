@@ -37,6 +37,8 @@
                     <strong>{{ $errors->first('image') }}</strong>
                 </span>
                 @endif
+                <br/>
+                <b>Image Format allowed are :</b> gif, png, jpeg, jpg
             </div>
             <div class="col-sm-4" >
                 <div class="border border-primary rounded" style="height: 200px; width:217px;overflow:hidden;">

@@ -35,3 +35,8 @@
     height: auto;
     width: auto;
 }
+
+.uploaded-image {
+    height: 100%;
+    width: 100%;
+}

@@ -49,7 +49,7 @@ class BannerController extends Controller
         if($store) {
             return redirect()->route('banners.index')->with('success', 'Banner Created Successfully');
         } else {
-            return redirect()->back()->with('danger', 'Banner creation error. Try again later.');
+            return redirect()->back()->with('error', 'Banner creation error. Try again later.');
         }
     }
 
@@ -95,7 +95,7 @@ class BannerController extends Controller
         if($update) {
             return redirect()->route('banners.index')->with('success', 'Banner updated successfully.');
         } else {
-            return redirect()->back()->with('danger', 'Something went wrong. Try again later.');
+            return redirect()->back()->with('error', 'Something went wrong. Try again later.');
         }
     }
 
@@ -112,7 +112,7 @@ class BannerController extends Controller
         if($delete) {
             return redirect()->back()->with('success', 'Banner deleted successfully.');
         } else{
-            return redirect()->back()->with('danger', 'Something went wrong.Try again later.');
+            return redirect()->back()->with('error', 'Something went wrong.Try again later.');
         }
     }
 }

@@ -49,7 +49,7 @@ class CategoryController extends Controller
         if($store) {
             return redirect()->route('categories.index')->with('success', 'Category Created Successfully');
         } else {
-            return redirect()->back()->with('danger', 'Category creation error. Try again later.');
+            return redirect()->back()->with('error', 'Category creation error. Try again later.');
         }
     }
 
@@ -94,7 +94,7 @@ class CategoryController extends Controller
         if($update) {
             return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
         } else {
-            return redirect()->back()->with('danger', 'Something went wrong. Try again later.');
+            return redirect()->back()->with('error', 'Something went wrong. Try again later.');
         }
     }
 
@@ -111,7 +111,7 @@ class CategoryController extends Controller
         if($delete) {
             return redirect()->back()->with('success', 'Category deleted successfully.');
         } else{
-            return redirect()->back()->with('danger', 'Something went wrong.Try again later.');
+            return redirect()->back()->with('error', 'Something went wrong. Try again later.');
         }
     }
 }
