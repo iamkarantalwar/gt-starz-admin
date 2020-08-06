@@ -70,7 +70,7 @@
         <div class="header-body text-center mb-7">
           <div class="row justify-content-center">
             <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-                <img style="max-height: 100px" class="img-fluid" src="../assets/img/brand/white.png">
+                <img style="max-height: 100px" class="img-fluid" src="../assets/img/brand/white1.png">
               <h1 class="text-white">Welcome!</h1>
 
             </div>
