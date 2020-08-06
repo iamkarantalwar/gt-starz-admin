@@ -65,7 +65,7 @@
   <!-- Main content -->
   <div class="main-content">
     <!-- Header -->
-    <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
+    <div class="header py-7 py-lg-8 pt-lg-9">
       <div class="container">
         <div class="header-body text-center mb-7">
           <div class="row justify-content-center">
@@ -128,7 +128,7 @@
                   </label>
                 </div>
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary my-4">Sign in</button>
+                  <button type="submit" class="btn btn-default my-4">Sign in</button>
                 </div>
               </form>
             </div>
