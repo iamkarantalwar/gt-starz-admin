@@ -25,7 +25,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $notifications = Notification::orderBy('id', 'DESC')->get();
-        view()->share('notifications', $notifications);
+        try {
+            $notifications = Notification::orderBy('id', 'DESC')->get();
+            view()->share('notifications', $notifications);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
     }
 }
