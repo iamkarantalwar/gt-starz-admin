@@ -95,6 +95,7 @@ class ForgotPasswordService
             Mail::to($user->email)->send(new ForgetPasswordEmail($otp));
             return true;
         } catch(\Exception $e) {
+            dd($e);
             return null;
         }
 

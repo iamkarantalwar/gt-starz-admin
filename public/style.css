@@ -45,3 +45,12 @@
 .page-item.active .page-link {
     background-color: var(--default);
 }
+
+.notification-badge {
+    position: relative;
+    top: -16px;
+    border-radius: 50%;
+    padding-right: 6px;
+    padding-left: 6px;
+    letter-spacing: -3px
+}

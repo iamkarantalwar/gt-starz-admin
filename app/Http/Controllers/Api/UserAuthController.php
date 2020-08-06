@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\enums\NotificationType;
+use App\Events\UserCreated;
 use Hash;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,7 +14,10 @@ use App\Http\Requests\Api\User\UserSignUpRequest;
 use App\Http\Requests\Api\User\ChangePasswordRequest;
 use App\Http\Requests\Api\User\ForgotPasswordRequest;
 use App\Http\Requests\Api\User\ResetPasswordRequest;
+use App\Http\Requests\Api\User\UpdateUserProfileRequest;
 use App\Http\Requests\Api\User\VerifyForgotPasswordRequest;
+use App\Models\Notification;
+use App\Services\DashboardNotificationService;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Password;
@@ -27,13 +32,23 @@ class UserAuthController extends Controller
      * @return void
      */
 
-     protected $userRepository, $forgotPasswordService;
+     protected $userRepository, $forgotPasswordService, $dashboardNotificationService;
 
     public function __construct(UserRepository $userRepository, ForgotPasswordService $forgotPasswordService)
     {
         $this->middleware('auth:user', ['except' => ['login', 'signup', 'sendForgotPasswordOtp', 'verifyForgotPasswordOtp', 'resetPassword']]);
         $this->userRepository = $userRepository;
         $this->forgotPasswordService = $forgotPasswordService;
+    }
+
+    public function getDashboardNotificationService()
+    {
+        return $this->dashboardNotificationService;
+    }
+
+    public function setDashboardNotificationService($type)
+    {
+        $this->dashboardNotificationService = new DashboardNotificationService($type, new Notification());
     }
 
     /**
@@ -122,6 +137,10 @@ class UserAuthController extends Controller
         $user = $this->userRepository->create($request->all());
 
         if($user) {
+            //Call the notification service
+            $this->setDashboardNotificationService(NotificationType::NEW_USER);
+            $this->dashboardNotificationService->newUserAdded($user);
+            //Return the response
             return response()->json([
                 'message' => 'Sign Up Successfully.',
                 'user' => $user
@@ -199,5 +218,22 @@ class UserAuthController extends Controller
                 'message' => 'Something Went Wrong. Try Again Later.'
             ], 400);
         }
+   }
+
+   public function updateProfile(UpdateUserProfileRequest $request)
+   {
+        unset($request->password);
+        $user = $this->userRepository->getUserByEmail($request->user()->email);
+        $update = $this->userRepository->update($user, $request->all());
+        if($update) {
+            return response()->json([
+                'message' => 'User profile updated successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Something went wrong. Try again later'
+            ], 400);
+        }
+
    }
 }

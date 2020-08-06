@@ -1,5 +1,8 @@
 <?php
 
+use App\Events\MyEvent;
+use App\Events\UserCreated;
+use Illuminate\Broadcasting\Broadcasters\PusherBroadcaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('test/', function() {
+   event(new MyEvent('hello world'));
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -26,9 +33,11 @@ Route::group([
 
 ], function ($router) {
 
+    //Authentication
     Route::post('signup', 'UserAuthController@signup');
     Route::post('login', 'UserAuthController@login');
     Route::post('logout', 'UserAuthController@logout');
+    Route::post('profile', 'UserAuthController@updateProfile');
     Route::post('refresh', 'UserAuthController@refresh');
     Route::post('me', 'UserAuthController@me');
     Route::post('payload', 'UserAuthController@payload');

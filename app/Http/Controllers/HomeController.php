@@ -36,7 +36,7 @@ class HomeController extends Controller
     public function index()
     {
         return view('welcome')->with([
-            'users' => $this->userRepository->all(),
+            'users' => $this->userRepository->all()->slice(0, 5),
             'drivers' => $this->driverRepository->all(),
             'banners' => $this->bannerRepository->all(),
             'categories' => $this->categoryRepository->all(),

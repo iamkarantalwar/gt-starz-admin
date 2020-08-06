@@ -18,7 +18,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function all()
     {
-        return $this->model->paginate($this->paginate);
+        return $this->model->orderBy('id', 'DESC')->paginate($this->paginate);
     }
 
     public function changeApprovalStatus(User $user, bool $status)

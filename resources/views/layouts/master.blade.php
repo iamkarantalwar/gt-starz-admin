@@ -82,6 +82,7 @@
   <script src="{{ asset('assets/js/argon.js?v=1.2.0') }}"></script>
   {{-- CUSTOM JS --}}
  <script src="{{ asset('main.js')}}"></script>
+ @include('layouts.notification')
 </body>
 
 </html>
