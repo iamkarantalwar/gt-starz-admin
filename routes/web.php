@@ -18,12 +18,9 @@ use Illuminate\Support\Facades\Route;
 //        return Product::with(['skus', 'skus.productValues' ,'skus.productValues.productOption', 'skus.productValues.productValue'])->get();
 // })->name('welcome');
 
+Route::get('/', 'HomeController@index')->middleware('auth')->name('welcome');
 
 Route::group(['namespace' => 'Web', 'middleware' => 'auth'], function () {
-
-    Route::get('/', function () {
-        return view('welcome');
-    })->name('welcome');
 
     Route::resource('categories', 'CategoryController');
     Route::resource('banners', 'BannerController');

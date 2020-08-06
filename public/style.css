@@ -2,7 +2,7 @@
     font-size: 19px;
     margin-right: 15px;
     cursor: pointer;
-    color: #5e72e4;
+    color: var(--default);
     font-weight: bold;
 }
 
@@ -39,4 +39,9 @@
 .uploaded-image {
     height: 100%;
     width: 100%;
+}
+
+
+.page-item.active .page-link {
+    background-color: var(--default);
 }

@@ -12,7 +12,7 @@
                </h3>
                </div>
                <div class="col-4 text-right">
-                   <a href="{{ route('drivers.create') }}" class="btn btn-sm btn-primary">Add Driver</a>
+                   <a href="{{ route('drivers.create') }}" class="btn btn-sm btn-default">Add Driver</a>
                </div>
             </div>
          </div>

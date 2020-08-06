@@ -45,7 +45,7 @@
     <!-- Topnav -->
     @include('layouts.partials.navbar')
     <!-- Header -->
-    <div class="header bg-primary pb-6">
+    <div class="header pb-6" style="background: var(--default);">
 
     </div>
     <!-- Page content -->

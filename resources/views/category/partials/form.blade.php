@@ -29,7 +29,7 @@
             <b>Image Format allowed are :</b> gif, png, jpeg, jpg
         </div>
         <div class="col-sm-4" >
-            <div class="border border-primary rounded" style="height: 200px; width:217px;overflow:hidden;">
+            <div class="border border-default rounded" style="height: 200px; width:217px;overflow:hidden;">
             <img class="uploaded-image" src="@if($category){{ Storage::disk(env('STORAGE_ENGINE'))->url($category->image->url) }}@endif" alt="Please Upload Image..." height="203px" width="215px"/>
             </div>
         </div>
@@ -37,7 +37,7 @@
 
     <div class="form-group row">
         <div class="col-sm-12 text-right">
-            <button type="submit" class="btn btn-primary">{{ isset($category) ? 'Update' : 'Save'}} Category</button>
+            <button type="submit" class="btn btn-default">{{ isset($category) ? 'Update' : 'Save'}} Category</button>
         </div>
     </div>
 {!! Form::close() !!}

@@ -41,7 +41,7 @@
                 <b>Image Format allowed are :</b> gif, png, jpeg, jpg
             </div>
             <div class="col-sm-4" >
-                <div class="border border-primary rounded" style="height: 200px; width:217px;overflow:hidden;">
+                <div class="border border-default rounded" style="height: 200px; width:217px;overflow:hidden;">
                 <img class="uploaded-image" src="@if($banner){{ Storage::disk(env('STORAGE_ENGINE'))->url($banner->image->url) }}@endif" alt="Please Upload Image..." />
                 </div>
             </div>
@@ -49,7 +49,7 @@
 
         <div class="form-group row">
             <div class="col-sm-12 text-right">
-                <button type="submit" class="btn btn-primary">{{ isset($banner) ? 'Update' : 'Save'}} Banner</button>
+                <button type="submit" class="btn btn-default">{{ isset($banner) ? 'Update' : 'Save'}} Banner</button>
             </div>
         </div>
     {!! Form::close() !!}

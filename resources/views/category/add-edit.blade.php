@@ -10,7 +10,7 @@
             </h3>
             </div>
             <div class="col-4 text-right actions">
-                <a href="{{ route('categories.index') }}" class="btn btn-sm btn-primary"><i class="ni ni-bullet-list-67"></i> View Categories</a>
+                <a href="{{ route('categories.index') }}" class="btn btn-sm btn-default"> View Categories</a>
             </div>
          </div>
       </div>
