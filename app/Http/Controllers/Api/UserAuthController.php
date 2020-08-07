@@ -63,13 +63,7 @@ class UserAuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if ($token = $this->guard()->attempt($credentials)) {
-            $user = $this->guard()->user();
-            //Check If User Is Approved Or Not
-            if($user->approved) {
-                return $this->respondWithToken($token);
-            } else {
-                return response()->json(['error' => 'Forbidden', 'message' => 'User is not approved yet.'], 403);
-            }
+            return $this->respondWithToken($token);
         }
         return response()->json(['error' => 'Unauthorized'], 401);
     }
