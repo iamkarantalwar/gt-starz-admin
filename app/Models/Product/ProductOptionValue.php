@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductOptionValue extends Model
 {
-    public $keyType = 'string';
 
     protected $primaryKey = 'id';
 

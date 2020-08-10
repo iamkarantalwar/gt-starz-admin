@@ -8,9 +8,9 @@ class ProductOption extends Model
 {
     protected $guarded = ['created_at'];
 
-    public $keyType = 'string';
-
     protected $primaryKey = 'id';
+
+    public $keyType = 'string';
 
     public function values()
     {
