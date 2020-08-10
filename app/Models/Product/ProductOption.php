@@ -8,6 +8,8 @@ class ProductOption extends Model
 {
     protected $guarded = ['created_at'];
 
+    public $keyType = 'string';
+
     public function values()
     {
       return $this->hasMany(ProductOptionValue::class, 'option_id');

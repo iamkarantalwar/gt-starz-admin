@@ -9,6 +9,8 @@ class ProductSku extends Model
 {
     protected $guarded = ['created_at'];
 
+    public $keyType = 'string';
+
     public function productValues()
     {
         return $this->hasMany(ProductSkuValue::class);
