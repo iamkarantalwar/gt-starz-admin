@@ -85,7 +85,7 @@ class ForgotPasswordService
 
     public function generateOtp()
     {
-        $token = Str::random(6);
+        $token = mt_rand(100000, 999999);
         return $token;
     }
 
