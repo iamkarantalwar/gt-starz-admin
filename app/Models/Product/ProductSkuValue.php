@@ -10,6 +10,8 @@ class ProductSkuValue extends Model
 
     public $keyType = 'string';
 
+    protected $primaryKey = 'id';
+
     public function productOption()
     {
         return $this->belongsTo(ProductOption::class);

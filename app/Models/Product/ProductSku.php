@@ -11,6 +11,8 @@ class ProductSku extends Model
 
     public $keyType = 'string';
 
+    protected $primaryKey = 'id';
+
     public function productValues()
     {
         return $this->hasMany(ProductSkuValue::class);

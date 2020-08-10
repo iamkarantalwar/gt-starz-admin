@@ -10,6 +10,8 @@ class Option extends Model
 
     public $keyType = 'string';
 
+    protected $primaryKey = 'id';
+
     public function products()
     {
         return $this->belongsToMany(Product::class);

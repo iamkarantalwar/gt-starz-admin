@@ -10,6 +10,8 @@ class ProductOption extends Model
 
     public $keyType = 'string';
 
+    protected $primaryKey = 'id';
+
     public function values()
     {
       return $this->hasMany(ProductOptionValue::class, 'option_id');
