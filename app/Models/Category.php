@@ -8,6 +8,8 @@ class Category extends Model
 {
     protected $fillable = ['category_name'];
 
+    public $keyType = 'string';
+
     public function image()
     {
         return $this->morphOne('App\Models\Image', 'imageable');

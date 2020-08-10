@@ -9,10 +9,7 @@ class ProductSku extends Model
 {
     protected $guarded = ['created_at'];
 
-    protected $primaryKey = 'id';
-
-
-
+    public $keyType = 'string';
 
     public function productValues()
     {

@@ -5,6 +5,7 @@
 return [
     'pagination' => [
         'web' => '10',
+        'mobile' => '20'
     ],
 
     'otp' => [

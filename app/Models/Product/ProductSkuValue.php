@@ -8,18 +8,11 @@ class ProductSkuValue extends Model
 {
     protected $guarded = ['created_at'];
 
-    protected $primaryKey = 'id';
-
     public $keyType = 'string';
-
 
     public function productOption()
     {
-        return $this->belongsTo(ProductOption::class);
+        return $this->belongsTo(Option::class, 'product_option_id');
     }
 
-    public function productValue()
-    {
-        return $this->belongsTo(ProductOptionValue::class);
-    }
 }

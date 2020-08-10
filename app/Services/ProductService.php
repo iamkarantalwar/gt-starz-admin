@@ -101,32 +101,33 @@ class ProductService
         }
     }
 
-    public function getAllProducts()
+    public function all()
     {
-        $products =  $this->product
+        return $this->product
         ->with([
             'skus',
-            // 'skus.images',
-            // 'skus.productValues' ,
-            // 'skus.productValues.productOption',
-            // 'skus.productValues.productValue'
-        ])->get();
+            'skus.images',
+            'skus.productValues' ,
+            'skus.productValues.productOption',
+        ]);
+    }
 
+    public function getAllProducts()
+    {
+        $products =  $this->all()->get();
         return $products;
     }
 
     public function getProduct(int $id)
     {
-        $product =  $this->product
-                ->with([
-                    'skus',
-                    // 'skus.images',
-                    // 'skus.productValues' ,
-                    // 'skus.productValues.productOption',
-                    // 'skus.productValues.productValue'
-                ])->where('id', $id)->first();
-
+        $product =  $this->all()->where('id', $id)->first();
         return $product;
+    }
+
+    public function getProductByCategory($id, $pagination)
+    {
+        $products =  $this->all()->where('category_id', $id)->paginate($pagination);
+        return $products;
     }
 
 }

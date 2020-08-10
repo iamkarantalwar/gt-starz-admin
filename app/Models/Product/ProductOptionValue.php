@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductOptionValue extends Model
 {
-
-    protected $primaryKey = 'id';
-
     protected $guarded = ['created_at'];
+
+    public $primaryKey = 'id';
+    public $keyType = 'string';
 }

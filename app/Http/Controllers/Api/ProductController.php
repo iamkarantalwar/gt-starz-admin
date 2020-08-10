@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product\Product;
+use App\Models\Product\ProductOption;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 
@@ -55,7 +56,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        $product = $this->productService->getProduct($product->id);
+        return response()->json($product, 200);
     }
 
     /**
