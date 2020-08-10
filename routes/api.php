@@ -51,6 +51,8 @@ Route::group([
     Route::get('categories/', 'CategoryController@getCategories');
     //Get Banner Images
     Route::get('banners/', 'BannerController@getBannerImages');
+    //Get Products Api
+    Route::resource('products', 'ProductController');
 });
 
 

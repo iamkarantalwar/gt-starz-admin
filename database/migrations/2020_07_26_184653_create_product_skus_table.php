@@ -18,6 +18,7 @@ class CreateProductSkusTable extends Migration
             $table->string('product_id');
             $table->string('sku')->nullable();
             $table->string('price');
+            $table->string('discount');
             $table->timestamps();
         });
     }

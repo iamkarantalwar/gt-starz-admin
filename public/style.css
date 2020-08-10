@@ -54,3 +54,20 @@
     padding-left: 6px;
     letter-spacing: -3px
 }
+
+
+.remove-variation {
+    float: right;
+    color: var(--primary);
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#product-variation-tbody tr .card {
+    margin-bottom:0px !important;
+}
+
+.remove-variation-row {
+    font-size: 45px;
+    cursor: pointer;
+}

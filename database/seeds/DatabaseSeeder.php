@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
         $this->call(OptionSeeder::class);
 
         //Call all products seeder
-        $this->call(ProductSeeder::class);
-        $this->call(ProductSkuSeeder::class);
-        $this->call(ProductOptionSeeder::class);
-        $this->call(ProductSkuValueSeeder::class);
-        $this->call(ProductOptionValueSeeder::class);
+        // $this->call(ProductSeeder::class);
+        // $this->call(ProductSkuSeeder::class);
+        // $this->call(ProductOptionSeeder::class);
+        // $this->call(ProductSkuValueSeeder::class);
+        // $this->call(ProductOptionValueSeeder::class);
     }
 }

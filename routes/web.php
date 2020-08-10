@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/', function () {
-//        return Product::with(['skus', 'skus.productValues' ,'skus.productValues.productOption', 'skus.productValues.productValue'])->get();
-// })->name('welcome');
+Route::get('/data', function () {
+       return Product::with(['skus', 'skus.images','skus.productValues' ,'skus.productValues.productOption', 'skus.productValues.productValue'])->get();
+})->name('welcome');
 
 Route::get('/', 'HomeController@index')->middleware('auth')->name('welcome');
 
@@ -30,6 +30,8 @@ Route::group(['namespace' => 'Web', 'middleware' => 'auth'], function () {
     //Driver Routes
     Route::resource('drivers', 'DriverController');
     Route::get('drivers/{driver}/changestatus/{status}', 'DriverController@changeApprovalStatus')->name('drivers.changestatus');
+    //Product Routes
+    Route::resource('products', 'ProductController');
 });
 
 Auth::routes(['register' => false]);

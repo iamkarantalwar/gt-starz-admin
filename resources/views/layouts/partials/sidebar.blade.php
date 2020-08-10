@@ -29,6 +29,12 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('products.create') }}">
+                <i class="ni ni-bag-17"></i>
+                <span class="nav-link-text">Product Management</span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('users.index')}}">
                 <i class="ni ni-single-02 text-yellow"></i>
                 <span class="nav-link-text">User Management</span>

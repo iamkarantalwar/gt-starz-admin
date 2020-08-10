@@ -33,6 +33,7 @@
   <!-- Argon CSS -->
   <link rel="stylesheet" href="{{ asset('assets/css/argon.css?v=1.2.0') }}" type="text/css">
   <link rel="stylesheet" href="{{ asset('style.css') }}">
+  <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
 </head>
 
 <body>
@@ -57,9 +58,11 @@
     </div>
   </div>
   <!-- Argon Scripts -->
+
   <!-- Core -->
   {{-- CHECK IF ANY RESPONSE IS FOR UI SHOW BY SWAL --}}
   <script src="{{ asset('swal/swal.min.js')}}"></script>
+
   @foreach (['danger', 'warning', 'success', 'info', 'error'] as $msg)
     @if(Session::has($msg))
     <script>
@@ -70,7 +73,7 @@
     </script>
     @endif
   @endforeach
-  <script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
+
   <script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('assets/vendor/js-cookie/js.cookie.js') }}"></script>
   <script src="{{ asset('assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>

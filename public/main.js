@@ -13,7 +13,6 @@ $('.upload-image-input').change( function(e) {
 
             reader.onload = function (e) {
                 var imageBox = $(input).closest('div').parent('div').find('.uploaded-image');
-                console.log($(imageBox));
                 $(imageBox).attr('src', e.target.result);
             }
 

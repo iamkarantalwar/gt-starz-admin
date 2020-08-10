@@ -42,7 +42,7 @@
             </div>
             <div class="col-sm-4" >
                 <div class="border border-default rounded" style="height: 200px; width:217px;overflow:hidden;">
-                <img class="uploaded-image" src="@if($banner){{ Storage::disk(env('STORAGE_ENGINE'))->url($banner->image->url) }}@endif" alt="Please Upload Image..." />
+                <img class="uploaded-image" src="@if($banner){{ Storage::disk(env('STORAGE_ENGINE'))->url($banner->image->url) }}@else {{ asset('no-image.jpg') }} @endif" alt="Please Upload Image..." />
                 </div>
             </div>
         </div>

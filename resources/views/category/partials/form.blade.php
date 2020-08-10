@@ -30,7 +30,7 @@
         </div>
         <div class="col-sm-4" >
             <div class="border border-default rounded" style="height: 200px; width:217px;overflow:hidden;">
-            <img class="uploaded-image" src="@if($category){{ Storage::disk(env('STORAGE_ENGINE'))->url($category->image->url) }}@endif" alt="Please Upload Image..." height="203px" width="215px"/>
+            <img class="uploaded-image" src="@if($category){{ Storage::disk(env('STORAGE_ENGINE'))->url($category->image->url) }} @else {{ asset('no-image.jpg') }} @endif" alt="Please Upload Image..." height="203px" width="215px"/>
             </div>
         </div>
     </div>
