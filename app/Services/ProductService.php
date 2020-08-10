@@ -111,7 +111,7 @@ class ProductService
         $product =  $this->product
                 ->with([
                     'skus',
-                    'skus.images',
+                    // 'skus.images',
                     'skus.productValues' ,
                     'skus.productValues.productOption',
                     'skus.productValues.productValue'
