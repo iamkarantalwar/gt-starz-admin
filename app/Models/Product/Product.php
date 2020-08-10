@@ -8,11 +8,6 @@ class Product extends Model
 {
     protected $guarded = ['created_at'];
 
-    protected $primaryKey = 'id';
-
-    public $keyType = 'string';
-
-
 
     public function options()
     {
@@ -21,6 +16,6 @@ class Product extends Model
 
     public function skus()
     {
-        return $this->hasMany(ProductSku::class);
+        return $this->hasMany(ProductSku::class, 'product_id');
     }
 }

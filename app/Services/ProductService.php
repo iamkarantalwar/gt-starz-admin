@@ -107,9 +107,9 @@ class ProductService
         ->with([
             'skus',
             // 'skus.images',
-            'skus.productValues' ,
-            'skus.productValues.productOption',
-            'skus.productValues.productValue'
+            // 'skus.productValues' ,
+            // 'skus.productValues.productOption',
+            // 'skus.productValues.productValue'
         ])->get();
 
         return $products;
