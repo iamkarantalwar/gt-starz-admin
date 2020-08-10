@@ -103,7 +103,16 @@ class ProductService
 
     public function getAllProducts()
     {
-        return $this->product->with(['skus', 'skus.images','skus.productValues' ,'skus.productValues.productOption', 'skus.productValues.productValue'])->get();
+        $products =  $this->product
+        ->with([
+            'skus',
+            // 'skus.images',
+            'skus.productValues' ,
+            'skus.productValues.productOption',
+            'skus.productValues.productValue'
+        ])->get();
+
+        return $products;
     }
 
     public function getProduct(int $id)
@@ -112,9 +121,9 @@ class ProductService
                 ->with([
                     'skus',
                     // 'skus.images',
-                    'skus.productValues' ,
-                    'skus.productValues.productOption',
-                    'skus.productValues.productValue'
+                    // 'skus.productValues' ,
+                    // 'skus.productValues.productOption',
+                    // 'skus.productValues.productValue'
                 ])->where('id', $id)->first();
 
         return $product;
