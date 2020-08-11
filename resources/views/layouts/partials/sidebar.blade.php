@@ -46,12 +46,13 @@
                 <span class="nav-link-text">Driver Management</span>
             </a>
         </li>
-    {{--    <li class="nav-item">
-            <a class="nav-link" href="login.html">
-            <i class="ni ni-key-25 text-info"></i>
-            <span class="nav-link-text">Login</span>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('usermessages.index') }}">
+                <i class="ni ni-chat-round"></i>
+                <span class="nav-link-text">User Messages</span>
             </a>
         </li>
+        {{--
         <li class="nav-item">
             <a class="nav-link" href="register.html">
             <i class="ni ni-circle-08 text-pink"></i>

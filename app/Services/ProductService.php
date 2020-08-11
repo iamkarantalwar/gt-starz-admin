@@ -126,7 +126,34 @@ class ProductService
 
     public function getProductByCategory($id, $pagination)
     {
-        $products =  $this->all()->where('category_id', $id)->paginate($pagination);
+        $products =  $this->all()->where('category_id', $id)->get();
+       // return $products;
+        $products = $products->map(function($product) {
+                $product = [
+                    'name' => $product->product_name,
+                    'description' => $product->description,
+                    'skus' => $product->skus->map(function($sku) {
+
+                                $variations = $sku->productValues->map(function($variation) {
+                                    $variation = [
+                                        'option' => $variation->productOption != null ? $variation->productOption->option_name : null,
+                                        'value' => $variation->product_value_id
+                                    ];
+                                    return $variation;
+                                });
+
+                                $sku = [
+                                    'sku' => $sku->sku,
+                                    'price' => $sku->price,
+                                    'discount' => $sku->discount,
+                                    'image' => $sku->image != null ? getImageUrl($sku) : null,
+                                    'variations' => $variations
+                                ];
+                                return $sku;
+                    })
+                ];
+                return $product;
+        });
         return $products;
     }
 

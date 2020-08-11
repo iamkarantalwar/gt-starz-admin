@@ -49,11 +49,10 @@ $(document).ready(function() {
             const productVariationTbodyTrCount = $('#product-variation-tbody').children('tr').length;
             //Show the add more button
             $('#add-more').css('display', 'block');
-
             const beforeLastTr = `<td>
                                         <input
                                             required
-                                            type=${variationOption === "COLOUR" || variationOption === "COLOR" ? 'color' : 'text'}
+                                            type=${variationOptionText === "COLOUR" || variationOptionText === "COLOR" ? 'color' : 'text'}
                                             name='variant-${variationOption}[]'
                                             class='form-control'>
                                   </td>`;
@@ -110,7 +109,14 @@ $(document).ready(function() {
         //Click Of Add More Button
         $('#add-more').unbind("click").click(function () {
             var tr ='<tr>';
-            selectedVariants.forEach((variant) => tr += `<td><input required type='text' class='form-control' name='variant-${variant.value}[]'></td>`);
+            selectedVariants.forEach((variant) => tr += `<td>
+                                <input
+                                    required
+                                    type=${variant.variant === "COLOUR" || variant.variant === "COLOR" ? 'color' : 'text'}
+                                    class='form-control'
+                                    name='variant-${variant.value}[]'>
+                            </td>`
+                        );
             tr = tr+lastTr + "</tr>";
             $('#product-variation-tbody').append(tr);
         });

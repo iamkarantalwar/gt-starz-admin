@@ -1,0 +1,9 @@
+<?php
+
+namespace App\enums;
+
+class MessageType
+{
+    CONST SEND_MESSAGE_TO_USER = "SEND_MESSAGE_TO_USER";
+    CONST RECIEVE_MESSAGE_FROM_USER = "RECIEVE_MESSAGE_FROM_USER";
+}

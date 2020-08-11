@@ -54,6 +54,8 @@ Route::group([
     //Get Products Api
     Route::get('categories/{category}/products', 'CategoryController@getProducts');
     Route::resource('products', 'ProductController');
+    //User Messages Routes
+    Route::resource('messages', 'UserMessageController');
 });
 
 

@@ -20,11 +20,12 @@ class UserCreatedEvent implements ShouldBroadcast
 
   public function broadcastWith()
   {
-      return [
-          'user' => $this->user->name,
-          'message' => 'New User Added. Approve or Disapprove Now.',
-          'url' => route('users.index'),
-          'created_at' => $this->user->created_at->diffForHumans()];
+    return [
+        'user' => $this->user->name,
+        'message' => 'New User Added. Approve or Disapprove Now.',
+        'url' => route('users.index'),
+        'created_at' => $this->user->created_at->diffForHumans()
+    ];
   }
 
   public function broadcastOn()

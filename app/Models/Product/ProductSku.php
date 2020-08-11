@@ -20,4 +20,9 @@ class ProductSku extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }

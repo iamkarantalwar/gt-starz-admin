@@ -32,6 +32,8 @@ Route::group(['namespace' => 'Web', 'middleware' => 'auth'], function () {
     Route::get('drivers/{driver}/changestatus/{status}', 'DriverController@changeApprovalStatus')->name('drivers.changestatus');
     //Product Routes
     Route::resource('products', 'ProductController');
+    //User Messages Routes
+    Route::resource('usermessages', 'UserMessageController');
 });
 
 Auth::routes(['register' => false]);
