@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\enums\MessageType;
+use App\Events\RecieveMessageFromUserEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserMessageRequest;
+use App\Models\UserMessage;
 use App\Repositories\UserMessage\UserMessageRepository;
 use Illuminate\Http\Request;
 
@@ -53,8 +55,8 @@ class UserMessageController extends Controller
         ];
 
         $message = $this->userMessage->sendMessage($data, MessageType::RECIEVE_MESSAGE_FROM_USER);
-
         if($message) {
+            event(new RecieveMessageFromUserEvent($message));
             return response()->json($message, 200);
         } else {
             return response()->json([

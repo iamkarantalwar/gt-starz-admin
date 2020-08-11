@@ -35,35 +35,6 @@
         <!-- Card footer -->
         <div class="card-footer py-4">
             <nav aria-label="...">
-              <ul class="pagination justify-content-end mb-0">
-               @if ($messages->currentPage() != 1)
-                  <li class="page-item">
-                      <a class="page-link" href="{{route('users.index')}}?page={{$messages->currentPage()-1 }}" tabindex="-1">
-                      <i class="fas fa-angle-left"></i>
-                      <span class="sr-only">Previous</span>
-                      </a>
-                  </li>
-               @endif
-                @if($messages->firstItem() == $messages->lastPage())
-                <li class="page-item active ">
-                  <a class="page-link" href="{{ route('users.index') }}?page={{$messages->firstItem()}}">{{$messages->firstItem()}}</a>
-               </li>
-                @else
-                  @for($i=2; $i<=$messages->lastPage(); $i++)
-                      <li class="page-item @if($i ==  $messages->currentPage()) active @endif">
-                          <a class="page-link" href="{{ route('users.index') }}?page={{ $i }}">{{ $i }}</a>
-                      </li>
-                  @endfor
-                @endif
-                @if($messages->lastPage() != $messages->currentPage())
-                <li class="page-item">
-                  <a class="page-link" href="{{route('users.index')}}?page={{ $messages->currentPage()+1 }}">
-                    <i class="fas fa-angle-right"></i>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </li>
-                @endif
-              </ul>
             </nav>
           </div>
        </div>

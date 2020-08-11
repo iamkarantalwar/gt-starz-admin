@@ -21,6 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <title>GT Starz - Dashboard</title>
   <!-- Favicon -->
   <link rel="icon" href="{{ asset('assets/img/brand/favicon.png') }}" type="image/png">
@@ -83,9 +84,10 @@
   <script src="{{ asset('assets/vendor/chart.js/dist/Chart.extension.js') }}"></script>
   <!-- Argon JS -->
   <script src="{{ asset('assets/js/argon.js?v=1.2.0') }}"></script>
+  @include('layouts.notification')
   {{-- CUSTOM JS --}}
  <script src="{{ asset('main.js')}}"></script>
- @include('layouts.notification')
+
 </body>
 
 </html>

@@ -124,7 +124,7 @@ class ProductService
         return $product;
     }
 
-    public function getProductByCategory($id, $pagination)
+    public function getProductByCategory($id)
     {
         $products =  $this->all()->where('category_id', $id)->get();
        // return $products;

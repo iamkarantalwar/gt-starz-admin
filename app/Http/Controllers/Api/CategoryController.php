@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Models\Category;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Services\ProductService;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator as PaginationPaginator;
 
 class CategoryController {
 
@@ -27,7 +29,8 @@ class CategoryController {
     public function getProducts(Request $request, Category $category)
     {
         $paginate = $request->paginate ? $request->paginate : config('constant.pagination.mobile');
-        $products = $this->productService->getProductByCategory($category->id, $paginate);
-        return response()->json($products, 200);
+        $products = $this->productService->getProductByCategory($category->id);
+        $resultWithPagination = new PaginationPaginator($products->toArray(), $paginate);
+        return response()->json($resultWithPagination, 200);
     }
 }

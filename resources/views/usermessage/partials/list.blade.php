@@ -1,6 +1,6 @@
 @if($messages->count() > 0)
     @foreach ($messages as $message)
-    <tr>
+    <tr id="message-tr-{{$message->user_id}}">
         <th scope="row">
             {{ $loop->iteration }}
         </th>
@@ -10,10 +10,10 @@
         <td class="budget">
             {{ $message->user->email}}
         </td>
-        <td class="budget">
+        <td class="message">
             {{ $message->message }}
         </td>
-        <td>
+        <td class="sent-time">
             {{ $message->created_at->diffForHumans() }}
         </td>
         <td>

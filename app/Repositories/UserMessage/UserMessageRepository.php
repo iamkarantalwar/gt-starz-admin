@@ -18,7 +18,11 @@ class UserMessageRepository implements UserMessageRepositoryInterface
 
     public function all()
     {
-        return $this->userMessage->orderBy('id', 'DESC')->paginate(config('constant.pagination.web'));
+        $user_ids = $this->userMessage->select('user_id')->distinct('user_id')->get()->pluck('user_id');
+        $userMessages = $this->userMessage;
+        return $messages = $user_ids->map(function($id) use ($userMessages) {
+                        return $userMessages->where('user_id', $id)->orderBy('id', 'desc')->first();
+        });
     }
 
     public function getUserMessages($user)
@@ -32,6 +36,20 @@ class UserMessageRepository implements UserMessageRepositoryInterface
                 'user_id' => $data['user_id'],
                 'message_type' => $type,
                 'message' => $data['message'],
+        ]);
+
+        if($message) {
+            return $message;
+        } else {
+            return null;
+        }
+    }
+
+    public function recieveMessage($data, string $type) {
+        $message = $this->userMessage->create([
+            'user_id' => $data['user_id'],
+            'message_type' => $type,
+            'message' => $data['message'],
         ]);
 
         if($message) {

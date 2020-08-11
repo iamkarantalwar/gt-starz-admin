@@ -10,27 +10,29 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SendMessageToUserEvent
+class SendMessageToUserEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public $message;
+
+    public function __construct($message)
     {
-        //
+        $this->message = $message;
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
+    public function broadcastWith()
+    {
+      return $this->message->toArray();
+    }
+
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return ['gt-starz'];
+    }
+
+    public function broadcastAs()
+    {
+        return 'recieve-message-to-user-'.$this->message->user_id;
     }
 }

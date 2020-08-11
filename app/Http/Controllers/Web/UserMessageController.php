@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Web;
 
 use App\enums\MessageType;
+use App\Events\SendMessageToUserEvent;
 use App\Http\Controllers\Controller;
 use App\Models\UserMessage;
 use App\Repositories\UserMessage\UserMessageRepository;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class UserMessageController extends Controller
 {
@@ -24,8 +26,9 @@ class UserMessageController extends Controller
     public function index()
     {
         $messages = $this->userMessage->all();
+        $messages_with_pagination = new Paginator($messages, config('constant.pagination.web'));
         return view('usermessage.index')->with([
-            'messages' => $messages,
+            'messages' => $messages_with_pagination,
             'type' => [
                 'send' => MessageType::SEND_MESSAGE_TO_USER,
                 'recieve' => MessageType::RECIEVE_MESSAGE_FROM_USER,
@@ -51,7 +54,15 @@ class UserMessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $message = $this->userMessage->recieveMessage($request->all(), MessageType::SEND_MESSAGE_TO_USER);
+        if($message) {
+            event(new SendMessageToUserEvent($message));
+            return response()->json($message, 200);
+        } else {
+            return response()->json([
+                'message' => 'Something went wrong. Try again later.'
+            ], 400);
+        }
     }
 
     /**
