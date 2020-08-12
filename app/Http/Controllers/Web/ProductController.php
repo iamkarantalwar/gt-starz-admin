@@ -28,7 +28,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = $this->productService->all()->paginate(config('constant.pagination.web'));
+        return view('product.index')->with([
+            'products' => $products
+        ]);
     }
 
     /**

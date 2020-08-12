@@ -6,15 +6,17 @@ use App\Models\Banner;
 use Illuminate\Http\Request;
 use App\Http\Requests\Web\BannerRequest;
 use App\Repositories\Banner\BannerRepositoryInterface;
+use App\Repositories\Category\CategoryRepositoryInterface;
 
 class BannerController extends Controller
 {
     //Make Reposiotry Protected
-    protected $bannerRepository;
+    protected $bannerRepository, $categoryRepository;
 
-    public function __construct(BannerRepositoryInterface $bannerRepositoryInterface)
+    public function __construct(BannerRepositoryInterface $bannerRepositoryInterface, CategoryRepositoryInterface $categoryRepository)
     {
         $this->bannerRepository = $bannerRepositoryInterface;
+        $this->categoryRepository = $categoryRepository;
     }
     /**
      * Display a listing of the resource.
@@ -24,7 +26,12 @@ class BannerController extends Controller
     public function index()
     {
         $banners = $this->bannerRepository->all();
-        return view('banner.index')->with(['banners' => $banners, 'banner' => null]);
+        $categories = $this->categoryRepository->getCategoiresWithoutPagination();
+        return view('banner.index')->with([
+            'banners' => $banners,
+            'banner' => null,
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -74,8 +81,14 @@ class BannerController extends Controller
     {
         $banners = $this->bannerRepository->all();
         $banner = $this->bannerRepository->getBanner($banner);
+        $categories = $this->categoryRepository->getCategoiresWithoutPagination();
+
         if($banner) {
-            return view('banner.index')->with(['banners' => $banners, 'banner' => $banner]);
+            return view('banner.index')->with([
+                'banners' => $banners,
+                'banner' => $banner,
+                'categories' => $categories
+            ]);
         } else {
             return abort(404);
         }

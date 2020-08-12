@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('product_name');
             $table->text('description');
             $table->string('category_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -109,7 +109,7 @@ class ProductService
             'skus.images',
             'skus.productValues' ,
             'skus.productValues.productOption',
-        ]);
+        ])->orderBy('id', 'DESC');
     }
 
     public function getAllProducts()

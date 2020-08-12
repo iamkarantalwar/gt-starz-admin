@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Banner extends Model
 {
-    protected $fillable = ['description', 'priority'];
+    protected $fillable = ['description', 'priority', 'category_id'];
 
     public $keyType = 'string';
 

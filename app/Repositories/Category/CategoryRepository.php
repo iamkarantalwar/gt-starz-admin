@@ -21,6 +21,11 @@ class CategoryRepository implements CategoryRepositoryInterface {
         return $this->category->paginate($this->pagination);
     }
 
+    public function getCategoiresWithoutPagination()
+    {
+        return $this->category->all();
+    }
+
     public function create(array $data)
     {
 

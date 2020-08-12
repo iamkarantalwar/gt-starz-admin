@@ -5,6 +5,22 @@
     'route' => ['banners.store'],
     'enctype' => 'multipart/form-data'])) !!}
         <div class="form-group row">
+            <label for="bannerDescription" class="col-sm-2 col-form-label">Banner Category</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="category_id">
+                    <option value=""> Select Category </option>
+                    @foreach($categories as $category)
+                        <option value="{{$category->id}}">{{$category->category_name}}</option>
+                    @endforeach
+                </select>
+                @if ($errors->has('category_id'))
+                <span class="invalid-feedback" style="display: block;" role="alert">
+                    <strong>{{ $errors->first('category_id') }}</strong>
+                </span>
+                @endif
+            </div>
+        </div>
+        <div class="form-group row">
             <label for="bannerDescription" class="col-sm-2 col-form-label">Banner Description</label>
             <div class="col-sm-10">
                 {{Form::text('description', null, ['class' => 'form-control '.($errors->has('description') ? 'is-invalid':''),

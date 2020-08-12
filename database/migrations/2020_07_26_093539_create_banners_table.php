@@ -17,6 +17,7 @@ class CreateBannersTable extends Migration
             $table->id();
             $table->text('description');
             $table->bigInteger('priority')->nullable();
+            $table->bigInteger('category_id');
             $table->timestamps();
         });
     }

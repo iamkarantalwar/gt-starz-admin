@@ -29,7 +29,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('products.create') }}">
+            <a class="nav-link" href="{{ route('products.index') }}">
                 <i class="ni ni-bag-17"></i>
                 <span class="nav-link-text">Product Management</span>
             </a>
