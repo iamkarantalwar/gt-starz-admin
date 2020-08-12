@@ -17,7 +17,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('categories.create') }}">
+            <a class="nav-link" href="{{ route('categories.index') }}">
                 <i class="ni ni-planet text-orange"></i>
                 <span class="nav-link-text">Category</span>
             </a>

@@ -40,7 +40,8 @@
 <script>
 $('.modal').on('shown.bs.modal', function() {
     var body = $(this).find('.modal-body');
-    var height = parseInt($(body).height());
+    var height = $(body)[0].scrollHeight;
+    console.log(height);
     $(body).scrollTop(height);
 });
 

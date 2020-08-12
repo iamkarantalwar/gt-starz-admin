@@ -121,6 +121,29 @@ class ProductService
     public function getProduct(int $id)
     {
         $product =  $this->all()->where('id', $id)->first();
+        $product = [
+            'name' => $product->product_name,
+            'description' => $product->description,
+            'skus' => $product->skus->map(function($sku) {
+
+            $variations_result =  [];
+            foreach($sku->productValues as $variation) {
+                $option = $variation->productOption != null ? $variation->productOption->option_name : null;
+                $variations_result[$option] = $variation->product_value_id;
+            }
+
+                $sku = [
+                    'sku' => $sku->sku,
+                    'price' => $sku->price,
+                    'discount' => $sku->discount,
+                    'image' => $sku->image != null ? getImageUrl($sku) : null,
+                    'options' => $variations_result
+                ];
+
+                return $sku;
+
+            }),
+        ];
         return $product;
     }
 
@@ -134,23 +157,23 @@ class ProductService
                     'description' => $product->description,
                     'skus' => $product->skus->map(function($sku) {
 
-                                $variations = $sku->productValues->map(function($variation) {
-                                    $variation = [
-                                        'option' => $variation->productOption != null ? $variation->productOption->option_name : null,
-                                        'value' => $variation->product_value_id
-                                    ];
-                                    return $variation;
-                                });
+                    $variations_result =  [];
+                    foreach($sku->productValues as $variation) {
+                        $option = $variation->productOption != null ? $variation->productOption->option_name : null;
+                        $variations_result[$option] = $variation->product_value_id;
+                    }
 
-                                $sku = [
-                                    'sku' => $sku->sku,
-                                    'price' => $sku->price,
-                                    'discount' => $sku->discount,
-                                    'image' => $sku->image != null ? getImageUrl($sku) : null,
-                                    'variations' => $variations
-                                ];
-                                return $sku;
-                    })
+                        $sku = [
+                            'sku' => $sku->sku,
+                            'price' => $sku->price,
+                            'discount' => $sku->discount,
+                            'image' => $sku->image != null ? getImageUrl($sku) : null,
+                            'options' => $variations_result
+                        ];
+
+                        return $sku;
+
+                    })->unique('options.COLOR'),
                 ];
                 return $product;
         });

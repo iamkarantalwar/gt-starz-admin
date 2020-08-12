@@ -8,6 +8,8 @@ class Banner extends Model
 {
     protected $fillable = ['description', 'priority'];
 
+    public $keyType = 'string';
+
     public function image()
     {
         return $this->morphOne('App\Models\Image', 'imageable');
