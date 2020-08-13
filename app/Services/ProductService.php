@@ -173,7 +173,7 @@ class ProductService
 
                         return $sku;
 
-                    })->unique('options.COLOR'),
+                    })->unique('options.COLOR')->values(),
                 ];
                 return $product;
         });
