@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
-
-use Hash;
+use App\Http\Requests\Api\Driver\ChangePasswordRequest;
 use App\Models\Driver;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\Driver\DriverSignUpRequest;
 use App\Http\Requests\Api\Driver\DriverLoginRequest;
+use App\Http\Requests\Api\Driver\ForgotPasswordRequest;
+use App\Http\Requests\Api\Driver\UpdateDriverProfileRequest;
+use App\Http\Requests\Api\Driver\VerifyForgotPasswordRequest;
+use App\Http\Requests\Api\User\ResetPasswordRequest;
+use App\Repositories\Driver\DriverRepositoryInterface;
+use App\Services\Driver\ForgotPasswordService;
+use Illuminate\Support\Facades\Hash as Hash;
 
 class DriverAuthController extends Controller
 {
@@ -16,9 +22,24 @@ class DriverAuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    // Private Fields
+    protected $forgotPasswordService, $userRepository;
+
+    public function __construct(ForgotPasswordService $forgotPasswordService, DriverRepositoryInterface $driverRepository)
     {
-        $this->middleware('auth:driver', ['except' => ['login', 'signup']]);
+        $this->middleware('auth:driver',
+                                    [
+                                        'except' =>
+                                            [
+                                                'login',
+                                                'signup',
+                                                'sendForgotPasswordOtp',
+                                                'verifyForgotPasswordOtp',
+                                                'resetPassword'
+                                                ]
+                            ]);
+        $this->userRepository = $driverRepository;
+        $this->forgotPasswordService = $forgotPasswordService;
     }
 
     /**
@@ -122,4 +143,84 @@ class DriverAuthController extends Controller
     {
         return $this->guard()->payload();
     }
+
+     // Update Password
+     public function updatePassword(ChangePasswordRequest $request)
+     {
+         $user = $request->user();
+         $check_hash = Hash::check($request->old_password, $user->password);
+         if ($check_hash) {
+             $change_password = $this->userRepository->changePassword($user, $request->all());
+             if($change_password) {
+                 return response()->json([
+                     'message' => 'Password Changed Successfully',
+                 ], 200);
+             }
+
+         } else {
+             return response()->json([
+                 'message' => 'You\'ve entered incorrect password'
+             ], 403);
+         }
+     }
+
+    public function sendForgotPasswordOtp(ForgotPasswordRequest $request)
+    {
+        $result = $this->forgotPasswordService->forgetPassword($request->all());
+        if($result) {
+            return response()->json([
+                'message' => 'Email sent successfully. Check your e-mail.'
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'something went wrong'
+            ], 400);
+        }
+    }
+
+   public function verifyForgotPasswordOtp(VerifyForgotPasswordRequest $request)
+   {
+       $result = $this->forgotPasswordService->verifyOtp($request->email, $request->otp);
+       if($result) {
+            return response()->json([
+                'message' => 'OTP updated successfully.'
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Your OTP is expired or this OTP don\'t exist'
+            ], 400);
+        }
+   }
+
+   public function resetPassword(ResetPasswordRequest $request)
+   {
+        $result = $this->forgotPasswordService->resetPassword($request->email, $request->otp, $request->new_password);
+
+        if($result) {
+            return response()->json([
+                'message' => 'Password updated successfully.'
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Something Went Wrong. Try Again Later.'
+            ], 400);
+        }
+   }
+
+   public function updateProfile(UpdateDriverProfileRequest $request)
+   {
+        unset($request->password);
+        $user = $this->userRepository->getUserByEmail($request->user()->email);
+        $update = $this->userRepository->update($user, $request->all());
+        if($update) {
+            return response()->json([
+                'message' => 'User profile updated successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Something went wrong. Try again later'
+            ], 400);
+        }
+
+   }
 }

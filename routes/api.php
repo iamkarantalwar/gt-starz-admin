@@ -17,10 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('test/', function() {
-   event(new MyEvent('hello world'));
-});
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -56,6 +52,8 @@ Route::group([
     Route::resource('products', 'ProductController');
     //User Messages Routes
     Route::resource('messages', 'UserMessageController');
+    // Order Routes
+    Route::resource('orders', 'OrderController');
 });
 
 
@@ -73,4 +71,10 @@ Route::group([
     Route::post('refresh', 'DriverAuthController@refresh');
     Route::post('me', 'DriverAuthController@me');
     Route::post('payload', 'DriverAuthController@payload');
+     //Update Password
+     Route::post('updatepassword', 'DriverAuthController@updatePassword');
+     //Forgot Password
+     Route::post('forgotpassword', 'DriverAuthController@sendForgotPasswordOtp');
+     Route::post('verifyotp', 'DriverAuthController@verifyForgotPasswordOtp');
+     Route::post('resetpassword', 'DriverAuthController@resetPassword');
 });

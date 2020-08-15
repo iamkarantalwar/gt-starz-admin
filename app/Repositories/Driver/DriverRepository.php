@@ -66,4 +66,14 @@ class DriverRepository implements DriverRepositoryInterface
             return null;
         }
     }
+
+    public function getDriverByEmail(string $email)
+    {
+        $user = $this->model->where('email', $email)->first();
+        if(is_null($user)) {
+            return false;
+        } else {
+            return $user;
+        }
+    }
 }

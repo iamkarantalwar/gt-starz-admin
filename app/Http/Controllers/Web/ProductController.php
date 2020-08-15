@@ -72,7 +72,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -83,7 +83,11 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('product.add-edit')->with([
+            'product' => $product,
+            'options' => $this->option->all(),
+            'categories' => $this->categoryRepository->all(),
+        ]);
     }
 
     /**

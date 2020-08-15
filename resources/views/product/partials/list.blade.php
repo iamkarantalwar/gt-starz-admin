@@ -19,8 +19,16 @@
         <td class="budget">
             {{ $product->category->category_name}}
         </td>
-
-
+        <td class="actions">
+            <a href="{{ route('products.edit', ['product' => $product]) }}">
+                <i class="ni ni-ruler-pencil" title="Edit Product"></i>
+            </a>
+            <i class="ni ni-fat-remove ask-before-delete" type="submit" title="Delete Product"></i>
+            <form action="{{ route('products.destroy', ['product' => $product]) }}" method="POST">
+                @csrf
+                @method('DELETE')
+            </form>
+        </td>
     </tr>
     @endforeach
 @else

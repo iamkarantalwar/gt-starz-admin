@@ -77,7 +77,5 @@ class UserRepository implements UserRepositoryInterface
         } else {
             return $user;
         }
-
-
     }
 }

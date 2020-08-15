@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\User;
+namespace App\Http\Requests\Api\Driver;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Api\ApiRequest;
 
-class UpdateUserProfile extends FormRequest
+class ChangePasswordRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,9 @@ class UpdateUserProfile extends FormRequest
     public function rules()
     {
         return [
-            //
+            'old_password' => 'required',
+            'new_password' => 'required|min:'.config('constant.password.minlength'),
+            'confirm_password' => 'required|same:new_password'
         ];
     }
 }

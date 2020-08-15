@@ -180,4 +180,10 @@ class ProductService
         return $products;
     }
 
+    public function getProductForEdit(Product $product)
+    {
+        $product =  $this->all()->where('id', $product->id)->first();
+        return $product;
+    }
+
 }

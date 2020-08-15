@@ -32,7 +32,7 @@ class UserAuthController extends Controller
      * @return void
      */
 
-     protected $userRepository, $forgotPasswordService, $dashboardNotificationService;
+    protected $userRepository, $forgotPasswordService, $dashboardNotificationService;
 
     public function __construct(UserRepository $userRepository, ForgotPasswordService $forgotPasswordService)
     {
@@ -112,7 +112,9 @@ class UserAuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => $this->guard()->factory()->getTTL() * 60
+            'expires_in' => $this->guard()->factory()->getTTL() * 60,
+            'user_id' => $this->guard()->user()->id,
+            'is_approved' => $this->guard()->user()->approved,
         ]);
     }
 

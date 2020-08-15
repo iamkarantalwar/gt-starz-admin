@@ -28,6 +28,9 @@ $(document).ready(function() {
         {
             swal('Please select the variation type');
         }
+        else if(selectedVariants.length == 1) {
+            swal('Delete All The Variations Product First. You can\'t create one product with more than one variation');
+        }
         else
         {
             // Add Variation Option on the top of the table Head

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\User;
+namespace App\Http\Requests\Api\Driver;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Api\ApiRequest;
 
-class UpdateUserProfile extends FormRequest
+class VerifyForgotPasswordRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,8 @@ class UpdateUserProfile extends FormRequest
     public function rules()
     {
         return [
-            //
+            'email' => 'required|email|exists:drivers,email',
+            'otp' => 'required|min:'.config('constant.otp.length'),
         ];
     }
 }
