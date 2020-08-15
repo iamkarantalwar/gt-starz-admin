@@ -27,7 +27,7 @@ class UserMessageRepository implements UserMessageRepositoryInterface
 
     public function getUserMessages($user)
     {
-        return $this->userMessage->with(['user'])->get()->where('user_id', $user->id);
+        return $this->userMessage->get()->where('user_id', $user->id);
     }
 
     public function sendMessage($data, string $type)

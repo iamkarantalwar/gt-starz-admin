@@ -25,9 +25,9 @@ class UserMessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $messages = $this->userMessage->all();
+        $messages = $this->userMessage->getUserMessages($request->user());
         return response()->json($messages, 200);
     }
 
