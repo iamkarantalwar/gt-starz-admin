@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Driver;
 
+use Hash;
 use App\Models\Driver;
 
 class DriverRepository implements DriverRepositoryInterface
@@ -76,4 +77,12 @@ class DriverRepository implements DriverRepositoryInterface
             return $user;
         }
     }
+
+    public function changePassword(Driver $user, array $data)
+    {
+        $user->password = Hash::make($data['new_password']);
+        $user->save();
+        return $user;
+    }
+
 }
