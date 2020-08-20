@@ -19,6 +19,142 @@ class ProductService
         $this->productSkuValue = $productSkuValue;
     }
 
+    public function update(array $data, Product $product)
+    {
+        //Find All The Variations
+        $variants = [];
+        foreach(array_keys($data) as $key)
+        {
+            $check = explode('variant-', $key);
+            if(count($check) == 2)
+            {
+                array_push($variants, $key);
+            }
+        }
+        //If Variants are not available don't run any query
+        if(count($variants) == 0) {
+            return [
+                "status" => false,
+                "message" => "Please Enter At Least One Variation",
+            ];
+        }
+
+        //Update Product Information
+        $product_update = $product->update([
+            'product_name' => $data['product_name'],
+            'description' => $data['description'],
+            'category_id' => $data['category_id'],
+         ]);
+        //Compare the new variation and old variation id
+
+        $old_variation_id = $product->skus[0]->productValues[0]->product_option_id;
+        $new_variation_id = explode("variant-", $variants[0])[1];
+
+        $option_id = $old_variation_id == $new_variation_id ? $old_variation_id : $new_variation_id;
+
+        // Make An array that skus are updated
+        $skusUpdated = [];
+        $sku_old_ids = $data['ids'];
+        $newImageIndex = 0;
+        // If Product is added then Add Skus
+        if($product_update) {
+            //Iterate over the price,variation and all
+            for($i=0; $i<count($data['price']); $i++)
+            {
+                $price = $data['price'][$i];
+                $discount = $data['discount'][$i];
+                $value = $data[$variants[0]][$i];
+
+                // Check if SKU id is exist then update else create a new sku
+                if(isset($sku_old_ids[$i])) {
+                    // Update a sku
+                    $skuId = $sku_old_ids[$i];
+                    $productSku =  $this->productSku
+                                        ->where('product_id', $product->id)
+                                        ->where('id', $skuId)
+                                        ->first();
+
+                    $productSkuUpdate = $this->productSku
+                                            ->where('product_id', $product->id)
+                                            ->where('id', $skuId)
+                                            ->update(
+                                        [
+                                            'price' => $price,
+                                            'discount' => $discount
+                    ]);
+                    // Append Into The Skus Updated
+                    array_push($skusUpdated, $skuId);
+                    // If Image is coming then update the image
+                    if(isset($data['image-'.$skuId])) {
+                        $image = updateImage($data['image-'.$skuId], $productSku);
+                    }
+
+                    $productSku = $this->productSkuValue
+                                       ->where('product_id', $product->id)
+                                       ->where('product_sku_id', $skuId)
+                                       ->update([
+                                            'product_option_id' => $option_id,
+                                            'product_value_id' => $value
+                                       ]);
+
+                } else {
+                    // Create a sku
+                    $productSku = $this->productSku->create([
+                        'price' => $price,
+                        'product_id' => $product->id,
+                        'discount' => $discount
+                    ]);
+
+                    // If sku is added then add images
+                    $image = addImage($data['image'][$newImageIndex], $productSku);
+                    $newImageIndex++;
+                    //If image is added
+                    if($image) {
+                        //Store Variation with the sku
+                        $productSkuValue = $this->productSkuValue->create([
+                            'product_id' => $product->id,
+                            'product_sku_id' => $productSku->id,
+                            'product_option_id' => $option_id,
+                            'product_value_id' => $value
+                        ]);
+                    } else {
+                        // Delete the sku
+                        $productSku->delete();
+                        return [
+                            "status" => false,
+                            "message" => "Variation add failed.",
+                        ];
+                    }
+                }
+                $sku_old_ids = $product->skus->pluck('id');
+                // If Old SKU is Not Coming After updation then delete the variation
+                foreach ($sku_old_ids as $skuOldId) {
+                    if(!in_array($skuOldId, $skusUpdated)) {
+                        $productSku = $this->productSku
+                                            ->where('product_id', $product->id)
+                                            ->where('id', $skuOldId)
+                                            ->delete();
+
+                        $productSku = $this->productSkuValue
+                                            ->where('product_id', $product->id)
+                                            ->where('product_sku_id', $skuOldId)
+                                            ->delete();
+                    }
+                }
+            }
+            return [
+                "status" => true,
+                "message" => "Product Updates Successfully.",
+            ];
+        } else {
+            return [
+                "status" => false,
+                "message" => "Product Updation Failed.Try gain Later.",
+            ];
+        }
+
+    }
+
     public function addProduct(array $data)
     {
         //Find All The Variations

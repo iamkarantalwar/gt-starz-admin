@@ -8,8 +8,8 @@
             <label for="productCategory" class="col-sm-2 col-form-label">Product Category</label>
             <div class="col-sm-10">
                 <select class="form-control" name="category_id" required>
+                    <option value="">Select Category</option>
                     @foreach($categories as $category)
-                        <option value="">Select Category</option>
                         <option @if($product && $product->category_id == $category->id) selected @endif value="{{$category->id}}">{{$category->category_name}}</option>
                     @endforeach
                 </select>
@@ -60,7 +60,11 @@
               <select class="form-control" id="add-variation-select">
                   <option value="">Select The Variation</option>
                   @foreach ($options as $option)
-                    @if($option->id != $variationId && $product)
+                    @if($product)
+                        @if($option->id != $variationId && $product)
+                            <option value="{{$option->id}}">{{$option->option_name}}</option>
+                        @endif
+                    @else
                         <option value="{{$option->id}}">{{$option->option_name}}</option>
                     @endif
                   @endforeach
@@ -71,7 +75,7 @@
             </div>
             <div class="col-sm-4"></div>
             <div class="col-sm-2">
-                <button type="button" class="btn btn-default" style="display: none;" id="add-more">Add More</button>
+                <button type="button" class="btn btn-default" @if(!$product) style="display: none;" @endif id="add-more">Add More</button>
             </div>
         </div>
         <div class="card">
@@ -93,40 +97,43 @@
                   </tr>
                 </thead>
                 <tbody class="list" id='product-variation-tbody'>
-                    @foreach ($product->skus as $item)
-                    <tr>
-                        <td>
-                            <input
-                                required=""
-                                @if($variationType == "COLOR" || $variationType== "COLOUR")
-                                    type="color"
-                                @else
-                                    type="text"
-                                @endif
-                                name="variant-1[]"
-                                class="form-control"
-                                value="{{$item->productValues()->first()->product_value_id}}">
-                        </td>
-                        <td>
-                         <input required="" name="price[]" class="form-control" type="number" value="{{$item->price}}" placeholder="Enter Price">
-                        </td>
-                        <td>
-                            <input required="" name="discount[]" class="form-control" type="number" value="{{$item->discount}}" placeholder="Enter Discount">
-                        </td>
-                        <td class="">
-                            <div class="card" style="width: 11rem;">
-                            <img class="card-img-top" src="{{ Storage::disk(env('STORAGE_ENGINE'))->url($item->image->url) }}" alt="Card image cap">
-                                <div class="card-body">
-                                    <input type="file" name="image[]" onchange="selectImage(this);" required="" class="select-variant-image-file" style="display:none;">
-                                    <a href="javascript:void(0);" onclick="openDialogBox();" class="btn btn-primary select-variant-image">Select Image</a>
+                    @if(isset($product))
+                        @foreach ($product->skus as $item)
+                        <tr>
+                            <td>
+                                <input type="hidden" name="ids[]" value="{{$item->id}}">
+                                <input
+                                    required=""
+                                    @if($variationType == "COLOR" || $variationType== "COLOUR")
+                                        type="color"
+                                    @else
+                                        type="text"
+                                    @endif
+                                    name="variant-{{$item->productValues()->first()->product_option_id}}[]"
+                                    class="form-control"
+                                    value="{{$item->productValues()->first()->product_value_id}}">
+                            </td>
+                            <td>
+                            <input required="" name="price[]" class="form-control" type="number" value="{{$item->price}}" placeholder="Enter Price">
+                            </td>
+                            <td>
+                                <input required="" name="discount[]" class="form-control" type="number" value="{{$item->discount}}" placeholder="Enter Discount">
+                            </td>
+                            <td class="">
+                                <div class="card" style="width: 11rem;">
+                                <img class="card-img-top" src="{{ Storage::disk(env('STORAGE_ENGINE'))->url($item->image->url) }}" alt="Card image cap">
+                                    <div class="card-body">
+                                        <input type="file" name="image-{{$item->id}}" onchange="selectImage(this);" @if(!$product) required="" @endif class="select-variant-image-file" style="display:none;">
+                                        <a href="javascript:void(0);" onclick="openDialogBox();" class="btn btn-primary select-variant-image">Select Image</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td>
-                            <i class="ni ni-fat-remove remove-variation-row" onclick="removeRow(this)" title="Remove Whole Row"></i>
-                        </td>
-                    </tr>
-                    @endforeach
+                            </td>
+                            <td>
+                                <i class="ni ni-fat-remove remove-variation-row" onclick="removeRow(this)" title="Remove Whole Row"></i>
+                            </td>
+                        </tr>
+                        @endforeach
+                    @endif
                 </tbody>
               </table>
             </div>

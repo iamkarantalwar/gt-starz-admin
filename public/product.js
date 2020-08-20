@@ -1,26 +1,28 @@
 var selectedVariants = [];
+ //Last Three Are Reserved For The
+ const lastTr = `
+ <td>
+     <input required name='price[]' class='form-control' type='number' placeholder='Enter Price'>
+ </td>
+ <td>
+     <input required name='discount[]' class='form-control' type='number' placeholder='Enter Discount'>
+ </td>
+ <td class="">
+     <div class="card" style="width: 11rem;">
+         <img class="card-img-top" src="../../no-image.jpg" alt="Card image cap">
+         <div class="card-body">
+             <input type="file" name="image[]" onchange="selectImage(this);" required class="select-variant-image-file" style="display:none;">
+             <a href="javascript:void(0);" onclick="openDialogBox();" class="btn btn-primary select-variant-image">Select Image</a>
+         </div>
+     </div>
+ </td>
+ <td>
+ <i class="ni ni-fat-remove remove-variation-row" onclick="removeRow(this)" title="Remove Whole Row"></i>
+ </td>
+ `;
+
 $(document).ready(function() {
-    //Last Three Are Reserved For The
-    const lastTr = `
-    <td>
-        <input required name='price[]' class='form-control' type='number' placeholder='Enter Price'>
-    </td>
-    <td>
-        <input required name='discount[]' class='form-control' type='number' placeholder='Enter Discount'>
-    </td>
-    <td class="">
-        <div class="card" style="width: 11rem;">
-            <img class="card-img-top" src="../../no-image.jpg" alt="Card image cap">
-            <div class="card-body">
-                <input type="file" name="image[]" onchange="selectImage(this);" required class="select-variant-image-file" style="display:none;">
-                <a href="javascript:void(0);" onclick="openDialogBox();" class="btn btn-primary select-variant-image">Select Image</a>
-            </div>
-        </div>
-    </td>
-    <td>
-    <i class="ni ni-fat-remove remove-variation-row" onclick="removeRow(this)" title="Remove Whole Row"></i>
-    </td>
-    `;
+
     $('#add-variation-btn').unbind("click").click(function() {
         const variationOption = $('#add-variation-select').val();
         const variationOptionText = $('#add-variation-select option:selected').text();
@@ -211,3 +213,45 @@ function selectImage(e)
          swal('Check Your Image Format.');
      }
 }
+
+    //Click Of Add More Button
+    $('#add-more').unbind("click").click(function () {
+        var tr ='<tr>';
+        selectedVariants.forEach((variant) => tr += `<td>
+                            <input
+                                required
+                                type=${variant.variant === "COLOUR" || variant.variant === "COLOR" ? 'color' : 'text'}
+                                class='form-control'
+                                name='variant-${variant.value}[]'>
+                        </td>`
+                    );
+        tr = tr+lastTr + "</tr>";
+        $('#product-variation-tbody').append(tr);
+    });
+
+
+     //Image Select
+     $(document).unbind("click").on('click', '.select-variant-image', function(){
+        var closestImageBox = $(this).closest('div').find('.select-variant-image-file');
+        $(closestImageBox).trigger('click');
+    });
+
+    //Change Of image show in box
+    $('.select-variant-image-file').change(function(e){
+
+        let input = this;
+        var url = input.value;
+        var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+        if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var closestImageBox = $(input).closest('td').find('.card-img-top');
+                $(closestImageBox).attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }else{
+            swal('Check Your Image Format.');
+        }
+    });

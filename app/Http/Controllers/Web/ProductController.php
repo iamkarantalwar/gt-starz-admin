@@ -99,7 +99,12 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $product = $this->productService->update($request->all(), $product);
+        if($product['status'] == true) {
+            return redirect()->back()->with('success', $product['message']);
+        } else {
+            return redirect()->back()->with('error', $product['message']);
+        }
     }
 
     /**
