@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Storage;
 use App\Models\Product\Option;
 use App\Models\Product\Product;
 use App\Models\Product\ProductSku;
@@ -258,6 +259,7 @@ class ProductService
     {
         $product =  $this->all()->where('id', $id)->first();
         $product = [
+            'id' => $product->id,
             'name' => $product->product_name,
             'description' => $product->description,
             'skus' => $product->skus->map(function($sku) {
@@ -269,10 +271,13 @@ class ProductService
             }
 
                 $sku = [
+                    'id' => $sku->id,
                     'sku' => $sku->sku,
                     'price' => $sku->price,
                     'discount' => $sku->discount,
-                    'image' => $sku->image != null ? getImageUrl($sku) : null,
+                    'image' => $sku->images->map(function($image) {
+                        return Storage::disk(env('STORAGE_ENGINE'))->url($image->url);
+                    }),
                     'options' => $variations_result
                 ];
 
