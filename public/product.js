@@ -255,3 +255,18 @@ function selectImage(e)
             swal('Check Your Image Format.');
         }
     });
+
+
+function validateImages(form)
+{
+   const images = $('input[name="image[]"]');
+   for(let i = 0; i < images.length; i++)
+   {
+       if( $(images[i]).val() == "" ) {
+           swal({
+               text : 'Please Select The Image.',
+               icon : 'warning'
+           });
+       }
+   }
+}

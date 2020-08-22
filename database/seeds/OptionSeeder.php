@@ -30,7 +30,7 @@ class OptionSeeder extends Seeder
 
         $option = Option::create([
             'option_name' => 'WEIGHT',
-            'slug' => 'material',
+            'slug' => 'weight',
         ]);
 
     }

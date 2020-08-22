@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Events\UserApprovedEvent;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Repositories\User\UserRepositoryInterface;
@@ -29,6 +30,9 @@ class UserController extends Controller
     {
         $update = $this->userRepository->changeApprovalStatus($user, $status);
         if($update) {
+            if($status == true) {
+                event(new UserApprovedEvent($user));
+            }
             return redirect()->back()->with('success', 'User Approval Status Changed Successfully');
         } else {
             return redirect()->back()->with('error', 'Something went wrong. Try again later.');

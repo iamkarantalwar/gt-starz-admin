@@ -44,7 +44,7 @@ class ProductController extends Controller
         return view('product.add-edit')->with([
             'product' => null,
             'options' => $this->option->all(),
-            'categories' => $this->categoryRepository->all(),
+            'categories' => $this->categoryRepository->getCategoiresWithoutPagination(),
         ]);
     }
 
@@ -86,7 +86,7 @@ class ProductController extends Controller
         return view('product.add-edit')->with([
             'product' => $product,
             'options' => $this->option->all(),
-            'categories' => $this->categoryRepository->all(),
+            'categories' => $this->categoryRepository->getCategoiresWithoutPagination(),
         ]);
     }
 

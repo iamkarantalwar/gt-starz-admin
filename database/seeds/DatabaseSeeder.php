@@ -16,8 +16,11 @@ class DatabaseSeeder extends Seeder
         //Call the option seeder
         $this->call(OptionSeeder::class);
 
+        // Call The Category Seeder
+        $this->call(CategoryTableSeeder::class);
+
         //Call all products seeder
-        // $this->call(ProductSeeder::class);
+        $this->call(ProductSeeder::class);
         // $this->call(ProductSkuSeeder::class);
         // $this->call(ProductOptionSeeder::class);
         // $this->call(ProductSkuValueSeeder::class);

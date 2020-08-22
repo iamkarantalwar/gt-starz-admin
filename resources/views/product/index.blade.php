@@ -47,17 +47,7 @@
                     </a>
                 </li>
             @endif
-                @if($products->firstItem() == $products->lastPage())
-                <li class="page-item active ">
-                <a class="page-link" href="{{ route('products.index') }}?page={{$products->firstItem()}}">{{$products->firstItem()}}</a>
-            </li>
-                @else
-                @for($i=2; $i<=$products->lastPage(); $i++)
-                    <li class="page-item @if($i ==  $products->currentPage()) active @endif">
-                        <a class="page-link" href="{{ route('products.index') }}?page={{ $i }}">{{ $i }}</a>
-                    </li>
-                @endfor
-                @endif
+
                 @if($products->lastPage() != $products->currentPage())
                 <li class="page-item">
                 <a class="page-link" href="{{route('products.index')}}?page={{ $products->currentPage()+1 }}">

@@ -1,9 +1,11 @@
 {!! Form::model($product, ((!empty($product)) ?
     ['method' => 'PATCH', 'route' => ['products.update', ['product' => $product]],
-    'enctype' => 'multipart/form-data'] :
+    'enctype' => 'multipart/form-data',
+    ] :
     ['method' => 'POST',
     'route' => ['products.store'],
-    'enctype' => 'multipart/form-data'])) !!}
+    'enctype' => 'multipart/form-data',
+    ])) !!}
         <div class="form-group row">
             <label for="productCategory" class="col-sm-2 col-form-label">Product Category</label>
             <div class="col-sm-10">
@@ -142,7 +144,7 @@
 
         <div class="form-group row">
             <div class="col-sm-12 text-right">
-                <button type="submit" class="btn btn-default">{{ isset($product) ? 'Update' : 'Save'}} Product</button>
+                <button type="submit" onclick="validateImages();" class="btn btn-default">{{ isset($product) ? 'Update' : 'Save'}} Product</button>
             </div>
         </div>
     {!! Form::close() !!}
