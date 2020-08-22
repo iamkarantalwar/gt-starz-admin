@@ -20,7 +20,8 @@
         "laravelcollective/html": "^6.1",
         "league/flysystem-aws-s3-v3": "^1.0",
         "pusher/pusher-php-server": "^4.1",
-        "tymon/jwt-auth": "^1.0"
+        "tymon/jwt-auth": "^1.0",
+        "fzaninotto/faker": "^1.9.1"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
