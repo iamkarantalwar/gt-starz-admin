@@ -1,6 +1,6 @@
 <?php
 
-use Faker\Generator as Faker;
+
 use App\Models\Category;
 use App\Models\Image;
 use Illuminate\Database\Seeder;
@@ -20,7 +20,7 @@ class CategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = new Faker();
+        $faker = Faker\Factory::create();
 
         for($i=0; $i<=50; $i++) {
             $category = $this->categoryRepository->create([

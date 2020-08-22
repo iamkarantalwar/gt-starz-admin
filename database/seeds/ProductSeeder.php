@@ -1,6 +1,6 @@
 <?php
 
-use Faker\Generator as Faker;
+
 use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product\Product;
@@ -17,7 +17,7 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        $faker = new Faker();
+        $faker = Faker\Factory::create();
 
         $categories = Category::all();
         foreach ($categories as $category) {
