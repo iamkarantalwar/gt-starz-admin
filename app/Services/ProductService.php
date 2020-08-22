@@ -294,6 +294,7 @@ class ProductService
        // return $products;
         $products = $products->map(function($product) {
                 $product = [
+                    'id' => $product->id,
                     'name' => $product->product_name,
                     'description' => $product->description,
                     'skus' => $product->skus->map(function($sku) {
@@ -325,6 +326,11 @@ class ProductService
     {
         $product =  $this->all()->where('id', $product->id)->first();
         return $product;
+    }
+
+    public function filterProducts($search)
+    {
+        return $this->product->where('product_name', 'like', '%'.$search.'%')->paginate($this->pagination);
     }
 
 }

@@ -16,6 +16,11 @@ class CategoryRepository implements CategoryRepositoryInterface {
         $this->pagination = config('constant.pagination.web');
     }
 
+    public function filterCategories($search)
+    {
+        return $this->category->where('category_name', 'like', '%'.$search.'%')->paginate($this->pagination);
+    }
+
     public function all()
     {
         return $this->category->paginate($this->pagination);

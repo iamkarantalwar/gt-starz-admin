@@ -21,9 +21,13 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = $this->categoryRepository->all();
+        if($request->search) {
+            $categories = $this->categoryRepository->filterCategories($request->search);
+        } else {
+            $categories = $this->categoryRepository->all();
+        }
         return view('category.index')->with(['categories' => $categories]);
     }
 
