@@ -25,4 +25,42 @@ class CartService {
         return $result;
     }
 
+    public function updateCart(array $cart, $userId)
+    {
+        $userCart = $this->cart->where('user_id', $userId)->get();
+        // Remove the Existing Cart
+        foreach($userCart as $item) {
+            $item->delete();
+        }
+
+        // Add Items Into The Cart
+        foreach($cart as $item) {
+            $cart = $this->cart->create([
+                'product_id' => $item['productId'],
+                'sku_id' => $item['skuId'],
+                'quantity' => $item['quantity'],
+                'user_id' => $userId
+            ]);
+        }
+    }
+
+    public function removeItemFromCart($cartItem, $user)
+    {
+        $item = $this->cartRepository->where('id', $cartItem->id)->first()->delete();
+    }
+
+    public function updateCartItem($cart, $item)
+    {
+        $update = $cart->update([
+            'product_id' => $item['productId'],
+            'sku_id' => $item['skuId'],
+            'quantity' => $item['quantity'],
+        ]);
+
+        if($update) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -21,6 +21,9 @@ class CartController extends Controller
      */
     public function index(Request $request)
     {
+        if($request->user()) {
+            $this->cartService->updateCart($request->all(), $request->user()->id);
+        }
         $response = $this->cartService->getCartProducts($request->all());
         return response()->json($response, 200);
     }
@@ -32,7 +35,7 @@ class CartController extends Controller
      */
     public function create()
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -43,7 +46,7 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -54,7 +57,7 @@ class CartController extends Controller
      */
     public function show(Cart $cart)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -65,7 +68,7 @@ class CartController extends Controller
      */
     public function edit(Cart $cart)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -78,6 +81,16 @@ class CartController extends Controller
     public function update(Request $request, Cart $cart)
     {
         //
+        $update = $this->cartService->updateCartItem($cart, $request->all());
+        if($update) {
+            return response()->json([
+                'message' => 'Item Updated Successfully.'
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Something went wrong. Try again later.'
+            ], 401);
+        }
     }
 
     /**
@@ -86,8 +99,24 @@ class CartController extends Controller
      * @param  \App\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cart $cart)
+    public function destroy(Request $request, Cart $cart)
     {
-        //
+        if($request->user()) {
+            $delete = $this->cartService->removeItemFromCart($cart, $request->user()->id);
+            if($delete) {
+                return response()->json([
+                    'message' => 'Item Removed Successfully.'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Something went wrong. Try again later.'
+                ], 401);
+            }
+        } else {
+            return response()->json([
+                'message' => ' Not Authorised For This Action'
+            ], 401);
+        }
+
     }
 }
