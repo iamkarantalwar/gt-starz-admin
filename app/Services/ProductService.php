@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Image;
 use Storage;
 use App\Models\Product\Option;
 use App\Models\Product\Product;
@@ -330,7 +331,38 @@ class ProductService
 
     public function filterProducts($search)
     {
-        return $this->product->where('product_name', 'like', '%'.$search.'%')->paginate($this->pagination);
+        return $this->product->where('product_name', 'like', '%'.$search.'%')->orderBy('id', 'DESC');
+    }
+
+    public function getProductWithVariation($productId, $skuId) {
+        $productWithSkuAndImage = $this->getProduct($productId);
+        $productWithSkuAndImage['skus'] = $productWithSkuAndImage['skus']->where('id', $skuId)->values()->collapse();
+        return $productWithSkuAndImage;
+    }
+
+    public function deleteProduct($product) {
+        try {
+
+            $productSkuValues = $this->productSkuValue->where('product_id', $product->id);
+            foreach($productSkuValues as $productSkuValue) {
+                $productSkuValue->delete();
+            }
+
+            $productSkus = $this->productSku->where('product_id', $product->id);
+            foreach($productSkus as $productSku) {
+                deleteImage($productSku);
+                $productSku->delete();
+            }
+
+
+            $product = $this->product->where('id', $product->id)->delete();
+            return true;
+
+        } catch(\Exception $e) {
+            dd($e);
+            return false;
+        }
+
     }
 
 }

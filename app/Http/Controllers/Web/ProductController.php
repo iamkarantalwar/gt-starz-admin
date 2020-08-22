@@ -26,9 +26,14 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->productService->all()->paginate(config('constant.pagination.web'));
+        if($request->search) {
+            $products = $this->productService->filterProducts($request->search)->paginate(config('constant.pagination.web'));
+        } else {
+            $products = $this->productService->all()->paginate(config('constant.pagination.web'));
+        }
+
         return view('product.index')->with([
             'products' => $products
         ]);
@@ -115,6 +120,11 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $delete = $this->productService->deleteProduct($product);
+        if($delete) {
+            return redirect()->back()->with('success', 'Category deleted successfully.');
+        } else{
+            return redirect()->back()->with('error', 'Something went wrong. Try again later.');
+        }
     }
 }
