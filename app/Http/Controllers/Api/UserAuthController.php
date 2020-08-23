@@ -218,6 +218,7 @@ class UserAuthController extends Controller
 
    public function updateProfile(UpdateUserProfileRequest $request)
    {
+
         unset($request->password);
         unset($request->approved);
         $user = $this->userRepository->getUserByEmail($request->user()->email);

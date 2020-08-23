@@ -33,7 +33,7 @@ Route::group([
     Route::post('signup', 'UserAuthController@signup');
     Route::post('login', 'UserAuthController@login');
     Route::post('logout', 'UserAuthController@logout');
-    Route::post('profile', 'UserAuthController@updateProfile');
+    Route::post('updateprofile', 'UserAuthController@updateProfile');
     Route::post('refresh', 'UserAuthController@refresh');
     Route::post('me', 'UserAuthController@me');
     Route::post('payload', 'UserAuthController@payload');
@@ -55,7 +55,7 @@ Route::group([
     // Order Routes
     Route::resource('orders', 'OrderController');
     // Cart Routes
-    Route::resource('cart', 'CartController');
+    Route::post('cart', 'CartController@index');
 });
 
 

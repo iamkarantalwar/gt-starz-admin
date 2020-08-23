@@ -20,6 +20,7 @@ class CartService {
         $result = [];
         foreach($cart as $item) {
             $data = $this->productService->getProductWithVariation($item['productId'], $item['skuId']);
+            $data['price'] = intval($item['quantity']) * $data['skus']['price'];
             array_push($result, $data);
         }
         return $result;

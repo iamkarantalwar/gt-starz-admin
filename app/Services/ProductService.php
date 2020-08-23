@@ -132,6 +132,12 @@ class ProductService
                 // If Old SKU is Not Coming After updation then delete the variation
                 foreach ($sku_old_ids as $skuOldId) {
                     if(!in_array($skuOldId, $skusUpdated)) {
+                        $sku = $this->productSku
+                        ->where('product_id', $product->id)
+                        ->where('id', $skuOldId);
+
+                        deleteImage($sku);
+
                         $productSku = $this->productSku
                                             ->where('product_id', $product->id)
                                             ->where('id', $skuOldId)
