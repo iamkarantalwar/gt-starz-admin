@@ -24,7 +24,12 @@ class CartController extends Controller
         if($request->user()) {
             $this->cartService->updateCart($request->all(), $request->user()->id);
         }
-        $response = $this->cartService->getCartProducts($request->all());
+        if($request->cart) {
+            $response = $this->cartService->getCartProducts($request->cart);
+        } else {
+            $response = $this->cartService->getCartProducts($request->all());
+        }
+
         return response()->json($response, 200);
     }
 
