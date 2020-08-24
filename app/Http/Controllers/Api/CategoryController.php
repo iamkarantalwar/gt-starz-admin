@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Models\Category;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Services\ProductService;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator as PaginationPaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CategoryController {
 
@@ -30,7 +31,14 @@ class CategoryController {
     {
         $paginate = $request->paginate ? $request->paginate : config('constant.pagination.mobile');
         $products = $this->productService->getProductByCategory($category->id);
-        $resultWithPagination = new PaginationPaginator($products->toArray(), $paginate);
+        $resultWithPagination = $this->paginate($products, $paginate, $request->page);
         return response()->json($resultWithPagination, 200);
+    }
+
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage)->values(), $items->count(), $perPage, $page, $options);
     }
 }
