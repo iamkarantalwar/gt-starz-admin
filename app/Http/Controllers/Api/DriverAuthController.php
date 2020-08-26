@@ -124,7 +124,8 @@ class DriverAuthController extends Controller
             "email" => $request->email,
             "username"  => $request->username,
             "phone_number" => $request->phone_number,
-            "password" => Hash::make($request->password)
+            "password" => Hash::make($request->password),
+            "address" => $request->address,
         ]);
 
         if($driver) {
