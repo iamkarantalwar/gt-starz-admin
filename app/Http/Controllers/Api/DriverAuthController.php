@@ -211,11 +211,11 @@ class DriverAuthController extends Controller
    public function updateProfile(UpdateDriverProfileRequest $request)
    {
         unset($request->password);
-        $user = $this->userRepository->getUserByEmail($request->user()->email);
+        $user = $this->userRepository->getDriverByEmail($request->user()->email);
         $update = $this->userRepository->update($user, $request->all());
         if($update) {
             return response()->json([
-                'message' => 'User profile updated successfully'
+                'message' => 'Driver profile updated successfully'
             ], 200);
         } else {
             return response()->json([
