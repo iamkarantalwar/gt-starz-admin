@@ -73,6 +73,7 @@ Route::group([
     Route::post('refresh', 'DriverAuthController@refresh');
     Route::post('me', 'DriverAuthController@me');
     Route::post('payload', 'DriverAuthController@payload');
+    Route::post('updateprofile', 'DriverAuthController@updateProfile');
      //Update Password
      Route::post('updatepassword', 'DriverAuthController@updatePassword');
      //Forgot Password
