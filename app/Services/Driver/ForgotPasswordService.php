@@ -146,7 +146,7 @@ class ForgotPasswordService
         if(is_null($otp)) {
             return false;
         }
-       $user = $this->userReposiotry->getUserByEmail($email);;
+       $user = $this->userReposiotry->getDriverByEmail($email);;
        $update = $user->update([
             'password' => Hash::make($password)
        ]);
