@@ -4,6 +4,8 @@ namespace App\Repositories\Driver;
 
 use Hash;
 use App\Models\Driver;
+use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Support\Facades\Hash as FacadesHash;
 
 class DriverRepository implements DriverRepositoryInterface
 {
@@ -36,20 +38,32 @@ class DriverRepository implements DriverRepositoryInterface
 
     public function create(array $data)
     {
-        $driver = $this->model->create($data);
-        if($driver) {
-            return $driver;
+        $user = $this->model->create([
+            "name" => $data['name'],
+            "email" => $data['email'],
+            "username"  => $data['username'],
+            "phone_number" => $data['phone_number'],
+            "password" => FacadesHash::make($data['password']),
+            "address" => $data['address'],
+        ]);
+
+        if($user) {
+            return $user;
         } else {
             return null;
         }
     }
+
 
     public function update(array $data, Driver $driver)
     {
         if($data['password'] == null)
         {
             unset($data['password']);
+        } else {
+            $data['password'] = Hash::make($data['password']);
         }
+
         $update = $driver->update($data);
         if($update) {
             return $driver;
