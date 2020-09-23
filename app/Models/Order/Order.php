@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = [];
+    protected $fillable = ['user_id', 'driver_id', 'address', 'city', 'state', 'phone_number', 'payment_type', 'order_status'];
 
-    public function details()
+    public function orderProducts()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(OrderProduct::class);
     }
 }

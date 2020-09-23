@@ -3,15 +3,17 @@
 namespace App\Repositories\Order;
 
 use App\Models\Order\Order;
+use App\Services\CartService;
 
 class OrderRepository implements OrderRepositoryInterface
 {
     // Private Field On The Repo
-    private $order;
+    private $order, $cartService;
 
-    public function __construct(Order $order)
+    public function __construct(Order $order, CartService $cartService)
     {
         $this->order = $order;
+        $this->cartService = $cartService;
     }
 
     public function all()
@@ -41,6 +43,7 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function createOrder(array $data)
     {
-        return $this->order->create($data);
+        $order = $this->order->create($data);
+        return $order;
     }
 }

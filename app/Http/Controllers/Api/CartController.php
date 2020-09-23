@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Api\User\AddToCartRequest;
 use App\Models\Cart;
 use App\Services\CartService;
 use Illuminate\Http\Request;
@@ -21,9 +22,7 @@ class CartController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->user()) {
-            $this->cartService->updateCart($request->all(), $request->user()->id);
-        }
+
         if($request->cart) {
             $response = $this->cartService->getCartProducts($request->cart);
         } else {
@@ -49,9 +48,22 @@ class CartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddToCartRequest $request)
     {
-        return abort(404);
+        if($this->user()) {
+            $create = $this->cartService->addToCart($request->all(), $this->user()->id);
+            if($create) {
+                return response()->json($create, 200);
+            } else {
+                return response()->json([
+                    'message' => 'Something Went Wrong. Try Again Later.'
+                ], 400);
+            }
+        } else {
+            return response()->json([
+                'message' => 'You are not authorised for this action.'
+            ], 401);
+        }
     }
 
     /**
@@ -62,7 +74,7 @@ class CartController extends Controller
      */
     public function show(Cart $cart)
     {
-        return abort(404);
+        return response()->json($cart, 200);
     }
 
     /**
@@ -85,17 +97,23 @@ class CartController extends Controller
      */
     public function update(Request $request, Cart $cart)
     {
-        //
-        $update = $this->cartService->updateCartItem($cart, $request->all());
-        if($update) {
-            return response()->json([
-                'message' => 'Item Updated Successfully.'
-            ], 200);
+        if($this->user() && $cart->user_id == $this->user()->id) {
+            $update = $this->cartService->updateCartItem($cart, $request->all());
+            if($update) {
+                return response()->json([
+                    'message' => 'Item Updated Successfully.'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Something went wrong. Try again later.'
+                ], 401);
+            }
         } else {
             return response()->json([
-                'message' => 'Something went wrong. Try again later.'
+                'message' => 'You are not authorised for this action.'
             ], 401);
         }
+
     }
 
     /**
@@ -104,10 +122,10 @@ class CartController extends Controller
      * @param  \App\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Cart $cart)
+    public function destroy(Cart $cart)
     {
-        if($request->user()) {
-            $delete = $this->cartService->removeItemFromCart($cart, $request->user()->id);
+        if($this->user() && $cart->user_id == $this->user()->id) {
+            $delete = $this->cartService->removeItemFromCart($cart);
             if($delete) {
                 return response()->json([
                     'message' => 'Item Removed Successfully.'
@@ -123,5 +141,10 @@ class CartController extends Controller
             ], 401);
         }
 
+    }
+
+    public function user()
+    {
+        return \Auth::guard('user')->user();
     }
 }

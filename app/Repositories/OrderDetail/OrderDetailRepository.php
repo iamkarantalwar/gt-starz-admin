@@ -2,14 +2,14 @@
 
 namespace App\Repositories\OrderDetail;
 
-use App\Models\Order\OrderDetail;
+use App\Models\Order\OrderProduct;
 
 class OrderDetailRepository implements OrderDetailRepositoryInterface
 {
     //Private Model
     private $orderDetail;
 
-    public function __construct(OrderDetail $orderDetail)
+    public function __construct(OrderProduct $orderDetail)
     {
         $this->orderDetail = $orderDetail;
     }

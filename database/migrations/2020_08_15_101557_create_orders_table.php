@@ -18,8 +18,10 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->bigInteger('driver_id');
+            $table->bigInteger('driver_id')->nullable();
             $table->string('address');
+            $table->string('state');
+            $table->string('city');
             $table->string('phone_number');
             $table->enum('payment_type', [
                 PaymentMethod::PAYPAL,
