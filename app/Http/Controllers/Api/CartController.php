@@ -50,7 +50,7 @@ class CartController extends Controller
      */
     public function store(AddToCartRequest $request)
     {
-        return $this->user();
+        return 'abc';
         if($this->user()) {
             $create = $this->cartService->addToCart($request->all(), $this->user()->id);
             return $create;
