@@ -52,6 +52,7 @@ class CartController extends Controller
     {
         if($this->user()) {
             $create = $this->cartService->addToCart($request->all(), $this->user()->id);
+            return $create;
             if($create) {
                 return response()->json($create, 200);
             } else {
