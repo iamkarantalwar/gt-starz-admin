@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Services\CartService;
@@ -143,6 +144,6 @@ class CartController extends Controller
 
     public function user()
     {
-        return \Auth::guard('user')->user();
+        return Auth::guard('user')->user();
     }
 }
