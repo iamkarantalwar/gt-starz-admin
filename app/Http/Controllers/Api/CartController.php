@@ -2,35 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
-use App\Services\CartService;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    private $cartService;
-
-    public function __construct(CartService $cartService)
-    {
-        $this->cartService = $cartService;
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        // if($request->cart) {
-        //     $response = $this->cartService->getCartProducts($request->cart);
-        // } else {
-        //     $response = $this->cartService->getCartProducts($request->all());
-        // }
-
-        // return response()->json($response, 200);
+        //
     }
 
     /**
@@ -40,7 +25,7 @@ class CartController extends Controller
      */
     public function create()
     {
-        return abort(404);
+        //
     }
 
     /**
@@ -51,23 +36,21 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json([
-            'abc' => 'anc'
-        ], 200);
-        // if($this->user()) {
-        //     $create = $this->cartService->addToCart($request->all(), $this->user()->id);
-        //     if($create) {
-        //         return response()->json($create, 200);
-        //     } else {
-        //         return response()->json([
-        //             'message' => 'Something Went Wrong. Try Again Later.'
-        //         ], 400);
-        //     }
-        // } else {
-        //     return response()->json([
-        //         'message' => 'You are not authorised for this action.'
-        //     ], 401);
-        // }
+         if($this->user()) {
+            $create = $this->cartService->addToCart($request->all(), $this->user()->id);
+            return $create;
+            if($create) {
+                return response()->json($create, 200);
+            } else {
+                return response()->json([
+                    'message' => 'Something Went Wrong. Try Again Later.'
+                ], 400);
+            }
+        } else {
+            return response()->json([
+                'message' => 'You are not authorised for this action.'
+            ], 401);
+        }
     }
 
     /**
@@ -78,7 +61,7 @@ class CartController extends Controller
      */
     public function show(Cart $cart)
     {
-        return abort(404);
+        //
     }
 
     /**
@@ -89,7 +72,7 @@ class CartController extends Controller
      */
     public function edit(Cart $cart)
     {
-        return abort(404);
+        //
     }
 
     /**
@@ -101,22 +84,7 @@ class CartController extends Controller
      */
     public function update(Request $request, Cart $cart)
     {
-        if($this->user() && $cart->user_id == $this->user()->id) {
-            $update = $this->cartService->updateCartItem($cart, $request->all());
-            if($update) {
-                return response()->json([
-                    'message' => 'Item Updated Successfully.'
-                ], 200);
-            } else {
-                return response()->json([
-                    'message' => 'Something went wrong. Try again later.'
-                ], 401);
-            }
-        } else {
-            return response()->json([
-                'message' => 'You are not authorised for this action.'
-            ], 401);
-        }
+        //
     }
 
     /**
@@ -127,26 +95,11 @@ class CartController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        if($this->user() && $cart->user_id == $this->user()->id) {
-            $delete = $this->cartService->removeItemFromCart($cart);
-            if($delete) {
-                return response()->json([
-                    'message' => 'Item Removed Successfully.'
-                ], 200);
-            } else {
-                return response()->json([
-                    'message' => 'Something went wrong. Try again later.'
-                ], 401);
-            }
-        } else {
-            return response()->json([
-                'message' => ' Not Authorised For This Action'
-            ], 401);
-        }
+        //
     }
 
-    // public function user()
-    // {
-    //     return Auth::guard('user')->user();
-    // }
+    public function user()
+    {
+        return \Auth::guard('user')->user();
+    }
 }
