@@ -145,8 +145,8 @@ class CartController extends Controller
         }
     }
 
-    public function user()
-    {
-        return Auth::guard('user')->user();
-    }
+    // public function user()
+    // {
+    //     return Auth::guard('user')->user();
+    // }
 }
