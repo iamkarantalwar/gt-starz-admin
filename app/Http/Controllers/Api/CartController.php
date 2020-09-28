@@ -50,7 +50,9 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        return 'abc';
+        return response()->json([
+            'a' => 'hello'
+        ], 200);
         if($this->user()) {
             $create = $this->cartService->addToCart($request->all(), $this->user()->id);
             return $create;
