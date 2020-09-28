@@ -55,9 +55,10 @@ Route::group([
     // Order Routes
     Route::resource('orders', 'OrderController');
     // Cart Routes
+    Route::post('carts', 'CartController@store');
     Route::resource('carts', 'CartController');
     // Route::get('cart', 'CartController@index');
-    Route::post('carts', 'CartController@store');
+
 });
 
 
