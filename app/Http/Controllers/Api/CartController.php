@@ -22,7 +22,7 @@ class CartController extends Controller
      */
     public function index(Request $request)
     {
-
+        return 'abcs';
         if($request->cart) {
             $response = $this->cartService->getCartProducts($request->cart);
         } else {
@@ -53,21 +53,21 @@ class CartController extends Controller
         return response()->json([
             'a' => 'hello'
         ], 200);
-        if($this->user()) {
-            $create = $this->cartService->addToCart($request->all(), $this->user()->id);
-            return $create;
-            if($create) {
-                return response()->json($create, 200);
-            } else {
-                return response()->json([
-                    'message' => 'Something Went Wrong. Try Again Later.'
-                ], 400);
-            }
-        } else {
-            return response()->json([
-                'message' => 'You are not authorised for this action.'
-            ], 401);
-        }
+        // if($this->user()) {
+        //     $create = $this->cartService->addToCart($request->all(), $this->user()->id);
+        //     return $create;
+        //     if($create) {
+        //         return response()->json($create, 200);
+        //     } else {
+        //         return response()->json([
+        //             'message' => 'Something Went Wrong. Try Again Later.'
+        //         ], 400);
+        //     }
+        // } else {
+        //     return response()->json([
+        //         'message' => 'You are not authorised for this action.'
+        //     ], 401);
+        // }
     }
 
     /**
