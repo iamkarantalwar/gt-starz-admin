@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Api\User;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Api\ApiRequest;
 
-class AddToCartRequest extends FormRequest
+class AddToCartRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
