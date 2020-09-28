@@ -22,10 +22,17 @@ class CartController extends Controller
      */
     public function index(Request $request)
     {
-        return response()->json([
-            'method' => "index",
-            'data' => $request->method()
-        ]);
+        if($this->user()) {
+            if($request->cart) {
+                $response = $this->cartService->getCartProducts($request->cart);
+            } else {
+                $response = $this->cartService->getCartProducts($request->all());
+            }
+        } else {
+            $response = $this->cartService->getUserCart($this->user()->id);
+        }
+
+        return response()->json($response, 200);
     }
 
     /**
@@ -36,8 +43,8 @@ class CartController extends Controller
     public function create()
     {
         return response()->json([
-            'method' => "=create"
-        ]);
+            'message' => 'Page Not Found'
+        ], 404);
     }
 
     /**
@@ -73,7 +80,7 @@ class CartController extends Controller
      */
     public function show(Cart $cart)
     {
-        //
+        return response()->json($cart, 200);
     }
 
     /**
