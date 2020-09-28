@@ -10,7 +10,7 @@ class CartController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:user', ['except' => ['index']]);
+        $this->middleware('auth:user', ['except' => ['index', 'store']]);
     }
     /**
      * Display a listing of the resource.
