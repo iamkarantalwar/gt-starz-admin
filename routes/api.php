@@ -55,7 +55,7 @@ Route::group([
     // Order Routes
     Route::resource('orders', 'OrderController');
     // Cart Routes
-    Route::resource('carts', 'CartController');
+    Route::resource('cart', 'CartController');
 });
 
 
