@@ -4,10 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Services\CartService;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    private $cartService;
+
+    public function __construct(CartService $cartService)
+    {
+        $this->cartService = $cartService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -41,9 +48,21 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json([
-            'method' => "store"
-        ]);
+        if($this->user()) {
+            $create = $this->cartService->addToCart($request->all(), $this->user()->id);
+            return $create;
+            if($create) {
+                return response()->json($create, 200);
+            } else {
+                return response()->json([
+                    'message' => 'Something Went Wrong. Try Again Later.'
+                ], 400);
+            }
+        } else {
+            return response()->json([
+                'message' => 'You are not authorised for this action.'
+            ], 401);
+        }
     }
 
     /**
@@ -93,5 +112,10 @@ class CartController extends Controller
         return response()->json([
             'method' => "destroy"
         ]);
+    }
+
+    public function user()
+    {
+        return \Auth::guard('user')->user();
     }
 }
