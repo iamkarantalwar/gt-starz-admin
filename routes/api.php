@@ -23,7 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group([
 
-    'middleware' => 'api',
+    // 'middleware' => 'api',
     'namespace' => '\App\Http\Controllers\Api',
     'prefix' => 'user'
 
@@ -55,10 +55,7 @@ Route::group([
     // Order Routes
     Route::resource('orders', 'OrderController');
     // Cart Routes
-    Route::post('carts', 'CartController@store');
     Route::resource('carts', 'CartController');
-    // Route::get('cart', 'CartController@index');
-
 });
 
 
