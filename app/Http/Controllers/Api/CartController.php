@@ -4,10 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Services\CartService;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    private $cartService;
+
+    public function __construct(CartService $cartService)
+    {
+        $this->cartService = $cartService;
+    }
+
     /**
      * Display a listing of the resource.
      *
