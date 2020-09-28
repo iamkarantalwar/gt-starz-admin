@@ -39,7 +39,7 @@ class CartController extends Controller
      */
     public function create()
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -75,9 +75,7 @@ class CartController extends Controller
      */
     public function show(Cart $cart)
     {
-        return response()->json([
-            'method' => 'GET',
-        ], 200);
+        return abort(404);
     }
 
     /**
@@ -88,7 +86,7 @@ class CartController extends Controller
      */
     public function edit(Cart $cart)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -100,9 +98,22 @@ class CartController extends Controller
      */
     public function update(Request $request, Cart $cart)
     {
-        return response()->json([
-            'method' => 'PUT',
-        ], 200);
+        if($this->user() && $cart->user_id == $this->user()->id) {
+            $update = $this->cartService->updateCartItem($cart, $request->all());
+            if($update) {
+                return response()->json([
+                    'message' => 'Item Updated Successfully.'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Something went wrong. Try again later.'
+                ], 401);
+            }
+        } else {
+            return response()->json([
+                'message' => 'You are not authorised for this action.'
+            ], 401);
+        }
     }
 
     /**
@@ -113,9 +124,22 @@ class CartController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        return response()->json([
-            'method' => 'DELETE',
-        ], 200);
+        if($this->user() && $cart->user_id == $this->user()->id) {
+            $delete = $this->cartService->removeItemFromCart($cart);
+            if($delete) {
+                return response()->json([
+                    'message' => 'Item Removed Successfully.'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Something went wrong. Try again later.'
+                ], 401);
+            }
+        } else {
+            return response()->json([
+                'message' => ' Not Authorised For This Action'
+            ], 401);
+        }
     }
 
     public function user()
