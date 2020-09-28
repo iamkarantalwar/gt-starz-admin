@@ -24,13 +24,13 @@ class CartController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->cart) {
-            $response = $this->cartService->getCartProducts($request->cart);
-        } else {
-            $response = $this->cartService->getCartProducts($request->all());
-        }
+        // if($request->cart) {
+        //     $response = $this->cartService->getCartProducts($request->cart);
+        // } else {
+        //     $response = $this->cartService->getCartProducts($request->all());
+        // }
 
-        return response()->json($response, 200);
+        // return response()->json($response, 200);
     }
 
     /**
@@ -51,20 +51,23 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        if($this->user()) {
-            $create = $this->cartService->addToCart($request->all(), $this->user()->id);
-            if($create) {
-                return response()->json($create, 200);
-            } else {
-                return response()->json([
-                    'message' => 'Something Went Wrong. Try Again Later.'
-                ], 400);
-            }
-        } else {
-            return response()->json([
-                'message' => 'You are not authorised for this action.'
-            ], 401);
-        }
+        return response()->json([
+            'abc' => 'anc'
+        ], 200);
+        // if($this->user()) {
+        //     $create = $this->cartService->addToCart($request->all(), $this->user()->id);
+        //     if($create) {
+        //         return response()->json($create, 200);
+        //     } else {
+        //         return response()->json([
+        //             'message' => 'Something Went Wrong. Try Again Later.'
+        //         ], 400);
+        //     }
+        // } else {
+        //     return response()->json([
+        //         'message' => 'You are not authorised for this action.'
+        //     ], 401);
+        // }
     }
 
     /**
