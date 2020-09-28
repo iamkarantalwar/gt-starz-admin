@@ -48,7 +48,7 @@ class CartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AddToCartRequest $request)
+    public function store(Request $request)
     {
         return 'abc';
         if($this->user()) {
