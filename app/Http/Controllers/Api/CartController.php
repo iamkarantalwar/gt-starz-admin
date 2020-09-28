@@ -15,7 +15,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json([
+            'method' => "index"
+        ]);
     }
 
     /**
@@ -25,7 +27,9 @@ class CartController extends Controller
      */
     public function create()
     {
-        //
+        return response()->json([
+            'method' => "=create"
+        ]);
     }
 
     /**
@@ -36,21 +40,9 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-         if($this->user()) {
-            $create = $this->cartService->addToCart($request->all(), $this->user()->id);
-            return $create;
-            if($create) {
-                return response()->json($create, 200);
-            } else {
-                return response()->json([
-                    'message' => 'Something Went Wrong. Try Again Later.'
-                ], 400);
-            }
-        } else {
-            return response()->json([
-                'message' => 'You are not authorised for this action.'
-            ], 401);
-        }
+        return response()->json([
+            'method' => "store"
+        ]);
     }
 
     /**
@@ -84,7 +76,9 @@ class CartController extends Controller
      */
     public function update(Request $request, Cart $cart)
     {
-        //
+        return response()->json([
+            'method' => "update"
+        ]);
     }
 
     /**
@@ -95,11 +89,8 @@ class CartController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        //
-    }
-
-    public function user()
-    {
-        return \Auth::guard('user')->user();
+        return response()->json([
+            'method' => "destroy"
+        ]);
     }
 }
