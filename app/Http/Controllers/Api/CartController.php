@@ -29,7 +29,14 @@ class CartController extends Controller
                 $response = $this->cartService->getCartProducts($request->all());
             }
         } else {
-            $response = $this->cartService->getUserCart($this->user()->id);
+            $userCartItems = $this->cartService->getUserCart($this->user()->id);
+            $response = $this->cartService->getCartProducts($userCartItems->map(function($cartItem) {
+                    return collect([
+                        'productId' => $cartItem->product_id,
+                        'skuId' => $cartItem->skuId,
+                        'quantity' => $cartItem->quantity
+                    ]);
+            }));
         }
 
         return response()->json($response, 200);

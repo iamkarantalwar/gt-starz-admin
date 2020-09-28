@@ -19,9 +19,11 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->bigInteger('driver_id')->nullable();
+            $table->string('name');
             $table->string('address');
             $table->string('state');
             $table->string('city');
+            $table->string('zip_code');
             $table->string('phone_number');
             $table->enum('payment_type', [
                 PaymentMethod::PAYPAL,
