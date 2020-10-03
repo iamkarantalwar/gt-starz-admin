@@ -13,6 +13,7 @@ class CartController extends Controller
 
     public function __construct(CartService $cartService)
     {
+        $this->middleware('auth:user', [ 'except' => [ 'index' ] ]);
         $this->cartService = $cartService;
     }
     /**
@@ -22,7 +23,7 @@ class CartController extends Controller
      */
     public function index(Request $request)
     {
-        if($this->user()) {
+        if(!$this->user()) {
             if($request->cart) {
                 $response = $this->cartService->getCartProducts($request->cart);
             } else {
@@ -30,13 +31,14 @@ class CartController extends Controller
             }
         } else {
             $userCartItems = $this->cartService->getUserCart($this->user()->id);
-            $response = $this->cartService->getCartProducts($userCartItems->map(function($cartItem) {
-                    return collect([
-                        'productId' => $cartItem->product_id,
-                        'skuId' => $cartItem->skuId,
-                        'quantity' => $cartItem->quantity
-                    ]);
-            }));
+            $userCartItemsInFormat = $userCartItems->map(function($cartItem) {
+                return collect([
+                    'productId' => $cartItem->product_id,
+                    'skuId' => $cartItem->sku_id,
+                    'quantity' => $cartItem->quantity
+                ]);
+            })->toArray();
+           $response = $this->cartService->getCartProducts($userCartItemsInFormat);
         }
 
         return response()->json($response, 200);

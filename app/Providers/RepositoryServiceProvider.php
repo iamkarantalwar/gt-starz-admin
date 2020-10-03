@@ -32,7 +32,13 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             'App\Repositories\Driver\DriverRepositoryInterface',
             'App\Repositories\Driver\DriverRepository');
+
+        //Registing The Driver Service Repository
+        $this->app->bind(
+            'App\Repositories\Driver\OrderRepositoryInterface',
+            'App\Repositories\Driver\OrderRepository');
     }
+
 
     /**
      * Bootstrap services.

@@ -25,17 +25,17 @@ class CreateOrdersTable extends Migration
             $table->string('city');
             $table->string('zip_code');
             $table->string('phone_number');
-            $table->enum('payment_type', [
-                PaymentMethod::PAYPAL,
-                PaymentMethod::STRIPE
-            ]);
+            // $table->enum('payment_type', [
+            //     PaymentMethod::PAYPAL,
+            //     PaymentMethod::STRIPE
+            // ]);
             $table->enum('order_status', [
                 OrderStatus::PENDING,
                 OrderStatus::PAYMENT_APPROVED,
                 OrderStatus::DISPATCHED,
                 OrderStatus::DELIVERED,
                 OrderStatus::CANCELLED,
-            ]);
+            ])->default(OrderStatus::PENDING);
             $table->timestamps();
         });
     }

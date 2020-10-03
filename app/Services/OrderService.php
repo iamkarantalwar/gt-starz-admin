@@ -2,21 +2,25 @@
 
 namespace App\Services;
 
+use App\Repositories\Order\OrderRepository;
 use App\Repositories\Order\OrderRepositoryInterface;
+use App\Repositories\OrderDetail\OrderDetailRepository;
 use App\Repositories\OrderDetail\OrderDetailRepositoryInterface;
 
 class OrderService
 {
     // Private Fields On Repositories
-    private $orderDetailRepository, $orderRepository, $cartService;
+    private $orderDetailRepository, $orderRepository, $cartService, $productService;
 
-    public function __construct(OrderRepositoryInterface $orderRepository,
-                                OrderDetailRepositoryInterface $orderDetailRepository,
-                                CartService $cartService)
+    public function __construct(OrderRepository $orderRepository,
+                                OrderDetailRepository $orderDetailRepository,
+                                CartService $cartService,
+                                ProductService $productService)
     {
         $this->orderDetailRepository = $orderDetailRepository;
         $this->orderRepository = $orderRepository;
         $this->cartService = $cartService;
+        $this->productService = $productService;
     }
 
     public function createOrder(array $data)
@@ -24,15 +28,41 @@ class OrderService
         $create = $this->orderRepository->createOrder($data);
         if($create) {
              // Shift Items From Cart To The Order
-            $cart = $this->cartService->getUserCart($data['userId']);
-            foreach ($cart as $cartItem) {
-                $product =
-                $this->orderDetailRepository->create([
+            $cart = $this->cartService->getUserCart($data['user_id']);
 
-                ]);
+            if($cart->count() == 0) {
+                return false;
             }
+
+            foreach ($cart as $cartItem) {
+                $product = $this->productService->getProductWithVariation($cartItem['product_id'], $cartItem['sku_id']);
+                $this->orderDetailRepository->create([
+                    'order_id' => $create->id,
+                    'product_name' => $product['name'],
+                    'cost' => $product['skus']['price'],
+                    'discount' => $product['skus']['discount'],
+                    'variation_type' => "OPTION",
+                    'variation_value' => "VALUE",
+                    'total' => $product['skus']['price']
+                ]);
+
+                $cartItem->delete();
+            }
+
+            return true;
+
         } else {
             return false;
         }
+    }
+
+    public function getUserOrders($userId)
+    {
+        return $this->orderRepository->all()->where('user_id', $userId)->values();
+    }
+
+    public function getOrderDetails($orderId)
+    {
+        return $this->orderRepository->show($orderId)->orderProducts;
     }
 }

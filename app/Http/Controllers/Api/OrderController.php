@@ -25,7 +25,8 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-
+        $orders = $this->orderService->getUserOrders($request->user()->id);
+        return response()->json($orders, 200);
     }
 
     /**
@@ -46,7 +47,18 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
-        //
+        $data = $request->all();
+        $data['user_id'] = $request->user()->id;
+        $response = $this->orderService->createOrder($data);
+        if($response) {
+            return response()->json([
+                'message' => 'Order Created Successfully',
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Something went wrong.'
+            ], 400);
+        }
     }
 
     /**
@@ -92,5 +104,17 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function orderDetails(Order $order, Request $request)
+    {
+        if($request->user()->id == $order->user_id) {
+            $details = $this->orderService->getOrderDetails($order->id);
+            return response()->json($details, 200);
+        } else {
+            return response()->json([
+                'message' => 'You are not authorised for this action.'
+            ], 401);
+        }
     }
 }

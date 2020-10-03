@@ -54,7 +54,9 @@ Route::group([
     Route::resource('messages', 'UserMessageController');
     // Order Routes
     Route::resource('orders', 'OrderController');
+    Route::post('orders/{order}/details', 'OrderController@orderDetails');
     // Cart Routes
+    Route::post('cart', 'CartController@index');
     Route::resource('carts', 'CartController');
 });
 

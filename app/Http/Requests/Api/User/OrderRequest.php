@@ -24,12 +24,11 @@ class OrderRequest extends ApiRequest
     public function rules()
     {
         return [
-            'user_id' => 'required',
+            'name' => 'required',
             'address' => 'required',
             'state' => 'required',
             'city' => 'required',
             'phone_number' => 'required',
-            'payment_type' => 'required',
         ];
     }
 }

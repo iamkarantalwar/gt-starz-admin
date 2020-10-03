@@ -19,4 +19,9 @@ class OrderDetailRepository implements OrderDetailRepositoryInterface
         $deatil = $this->orderDetail->create($data);
         return $deatil;
     }
+
+    public function find($id)
+    {
+        return $this->orderDetail->where('id', $id)->first();
+    }
 }

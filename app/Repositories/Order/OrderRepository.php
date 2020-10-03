@@ -21,6 +21,11 @@ class OrderRepository implements OrderRepositoryInterface
         return $this->order->orderBy('id', 'DESC')->get();
     }
 
+    public function show($id)
+    {
+        return $this->order->where('id', $id)->first();
+    }
+
     public function userOrder($type)
     {
         return $this->order->orderBy('id', 'DESC')->where('order_status', $type)->get();
