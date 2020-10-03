@@ -11,10 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-       // $this->call(AdminSeeder::class);
+       $this->call(AdminSeeder::class);
 
         //Call the option seeder
-       // $this->call(OptionSeeder::class);
+       $this->call(OptionSeeder::class);
 
         // Call The Category Seeder
         $this->call(CategoryTableSeeder::class);

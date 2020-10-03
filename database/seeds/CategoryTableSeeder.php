@@ -22,7 +22,7 @@ class CategoryTableSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        for($i=0; $i<=50; $i++) {
+        for($i=0; $i<=5; $i++) {
             $category = $this->categoryRepository->create([
                 'category_name' => $faker->name(),
             ]);

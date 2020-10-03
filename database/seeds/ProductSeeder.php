@@ -21,7 +21,7 @@ class ProductSeeder extends Seeder
 
         $categories = Category::all();
         foreach ($categories as $category) {
-            for($i=0; $i<80; $i++) {
+            for($i=0; $i<5; $i++) {
                 $product = Product::create([
                     'category_id' => $category->id,
                     'product_name' => $faker->unique()->name(),
