@@ -31,11 +31,12 @@ class OrderService
             $cart = $this->cartService->getUserCart($data['user_id']);
 
             if($cart->count() == 0) {
+                $create->delete();
                 return false;
             }
 
             foreach ($cart as $cartItem) {
-                $product = $this->productService->getProductWithVariation($cartItem['product_id'], $cartItem['sku_id']);
+                $product = $this->productService->getProductByProductIdAndSkuId($cartItem['product_id'], $cartItem['sku_id']);
                 $this->orderDetailRepository->create([
                     'order_id' => $create->id,
                     'product_name' => $product['name'],

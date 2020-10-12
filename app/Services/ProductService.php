@@ -262,6 +262,34 @@ class ProductService
         return $products;
     }
 
+    public function getProductByProductIdAndSkuId(int $productId, int $skuId)
+    {
+        $product =  $this->all()->where('id', $productId)->first();
+
+        $sku = $product->skus->where('id', $skuId)->first();
+
+        $variations_result =  [];
+        foreach($sku->productValues as $variation) {
+            $option = $variation->productOption != null ? $variation->productOption->option_name : null;
+            $variations_result[$option] = $variation->product_value_id;
+        }
+
+        $product = [
+            'id' => $product->id,
+            'name' => $product->product_name,
+            'description' => $product->description,
+            'sku' => [
+                'id' => $sku->id,
+                'sku' => $sku->sku,
+                'price' => $sku->price,
+                'discount' => $sku->discount,
+                'image' => Storage::disk('s3')->url($sku->image->url),
+                'options' => $variations_result
+            ]
+        ];
+        return $product;
+    }
+
     public function getProduct(int $id)
     {
         $product =  $this->all()->where('id', $id)->first();

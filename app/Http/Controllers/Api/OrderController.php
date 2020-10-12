@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\OrderRequest;
+use App\Models\Cart;
 use App\Models\Order\Order;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
@@ -47,6 +48,11 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
+        if(!$request->user()) {
+            return response()->json([
+                'message' => 'You are not authorised.',
+            ], 401);
+        }
         $data = $request->all();
         $data['user_id'] = $request->user()->id;
         $response = $this->orderService->createOrder($data);

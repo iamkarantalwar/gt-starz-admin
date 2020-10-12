@@ -15,13 +15,13 @@ class CartService {
         $this->productService = $productService;
     }
 
-    public function getCartProducts(array $cart)
+    public function getCartProducts(array $cart) : array
     {
         $result = [];
         foreach($cart as $item) {
-            $data = $this->productService->getProductWithVariation($item['productId'], $item['skuId']);
+            $data = $this->productService->getProductByProductIdAndSkuId($item['productId'], $item['skuId']);
             $item['quantity'] = isset($item['quantity']) ? $item['quantity'] : 1;
-            $data['price'] = intval($item['quantity']) * $data['skus']['price'];
+            $data['price'] = intval($item['quantity']) * $data['sku']['price'];
             array_push($result, $data);
         }
         return $result;
