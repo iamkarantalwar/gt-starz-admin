@@ -40,11 +40,11 @@ class OrderService
                 $this->orderDetailRepository->create([
                     'order_id' => $create->id,
                     'product_name' => $product['name'],
-                    'cost' => $product['skus']['price'],
-                    'discount' => $product['skus']['discount'],
+                    'cost' => $product['sku']['price'],
+                    'discount' => $product['sku']['discount'],
                     'variation_type' => "OPTION",
                     'variation_value' => "VALUE",
-                    'total' => $product['skus']['price']
+                    'total' => $product['sku']['price']
                 ]);
 
                 $cartItem->delete();
