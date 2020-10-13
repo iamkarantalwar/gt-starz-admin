@@ -161,7 +161,20 @@ class CartController extends Controller
     public function afterLogin(Request $request)
     {
         if(!$this->user()) {
-            // return response()->json
+            return response()->json([
+                'message' => ' Not Authorised For This Action'
+            ], 401);
+        } else {
+            $response = $this->cartService->addItemsToCartAfterLogin($request->cart, $this->user()->id);
+            if($response) {
+                return response()->json([
+                    'message' => 'Cart added successfully.'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Something went wrong. Try again later.'
+                ], 400);
+            }
         }
     }
 

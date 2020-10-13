@@ -29,6 +29,18 @@ class CartService {
         return $result;
     }
 
+    public function addItemsToCartAfterLogin(array $carts, int $userId) {
+        foreach ($carts as $cart) {
+            $cart['user_id'] = $userId;
+        }
+        $cartItems = $this->cartRepository->insert($carts);
+        if($cartItems) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function mergeCart($oldCart)
     {
 
