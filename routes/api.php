@@ -59,6 +59,7 @@ Route::group([
     Route::post('cart', 'CartController@index');
     Route::resource('carts', 'CartController');
     Route::post('cart/afterlogin', 'CartController@afterLogin');
+    Route::get('test-order', 'OrderController@testOrder');
 });
 
 

@@ -59,7 +59,20 @@ class OrderService
 
     public function getUserOrders($userId)
     {
-        return $this->orderRepository->all()->where('user_id', $userId)->values();
+        $userOrders = $this->orderRepository->getUserOrders($userId);
+        return $userOrders->map(function($order){
+            $order->quantity =  $order->orderProducts->sum('quantity');
+            $order->total = $order->orderProducts->sum('total');
+            return $order;
+        });
+    }
+
+    public function getUserOrder($orderId)
+    {
+        $order = $this->orderRepository->getOrderById($orderId);
+        $order->quantity =  $order->orderProducts->sum('quantity');
+        $order->total = $order->orderProducts->sum('total');
+        return $order;
     }
 
     public function getOrderDetails($orderId)

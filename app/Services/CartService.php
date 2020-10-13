@@ -21,7 +21,7 @@ class CartService {
         foreach($cart as $item) {
             $data = $this->productService->getProductByProductIdAndSkuId($item['productId'], $item['skuId']);
             $item['quantity'] = isset($item['quantity']) ? $item['quantity'] : 1;
-            $data['price'] = intval($item['quantity']) * $data['sku']['price'];
+            $data['price'] = floatval(intval($item['quantity']) * $data['sku']['price']) - intval($item['quantity']) * $data['sku']['discount'];
             $data['cartId'] = $item['id'];
             $data['quantity'] = $item['quantity'];
             array_push($result, $data);
@@ -96,6 +96,15 @@ class CartService {
 
     public function addToCart($data, $userId)
     {
+        $productWithSkuExist = $this->cartRepository->where([
+            'product_id' => $data['productId'],
+            'sku_id' => $data['skuId'],
+            'user_id'=> $userId
+        ])->first();
+
+        if($productWithSkuExist) {
+            return $productWithSkuExist;
+        }
 
         $create = $this->cartRepository->create([
             'product_id' => $data['productId'],

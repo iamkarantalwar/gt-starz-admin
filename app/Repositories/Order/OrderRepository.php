@@ -31,6 +31,11 @@ class OrderRepository implements OrderRepositoryInterface
         return $this->order->orderBy('id', 'DESC')->where('order_status', $type)->get();
     }
 
+    public function getOrderById($orderId)
+    {
+        return $this->order->where('id', $orderId)->first();
+    }
+
     public function updateStatus($orderId, $status)
     {
         $update = $this->order
@@ -50,5 +55,10 @@ class OrderRepository implements OrderRepositoryInterface
     {
         $order = $this->order->create($data);
         return $order;
+    }
+
+    public function getUserOrders($userId)
+    {
+        return $this->order->where('user_id', $userId)->get();
     }
 }

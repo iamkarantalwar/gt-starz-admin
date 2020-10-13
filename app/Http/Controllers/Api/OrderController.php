@@ -16,7 +16,7 @@ class OrderController extends Controller
 
     public function __construct(OrderService $orderService)
     {
-        $this->middleware('auth:user');
+        $this->middleware('auth:user', ['except' => [ 'testOrder' ]]);
         $this->orderService = $orderService;
     }
     /**
@@ -115,12 +115,22 @@ class OrderController extends Controller
     public function orderDetails(Order $order, Request $request)
     {
         if($request->user()->id == $order->user_id) {
-            $details = $this->orderService->getOrderDetails($order->id);
+            $details = $this->orderService->getUserOrder($order->id);
             return response()->json($details, 200);
         } else {
             return response()->json([
                 'message' => 'You are not authorised for this action.'
             ], 401);
         }
+    }
+
+    public function testOrder()
+    {
+        $userOrders = Order::where('user_id', 3)->get();
+        return $userOrders->map(function($order){
+            $order->quantity =  $order->orderProducts->sum('quantity');
+            $order->total = $order->orderProducts->sum('total');
+            return $order;
+        });
     }
 }
