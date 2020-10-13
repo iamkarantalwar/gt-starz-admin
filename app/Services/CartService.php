@@ -22,6 +22,7 @@ class CartService {
             $data = $this->productService->getProductByProductIdAndSkuId($item['productId'], $item['skuId']);
             $item['quantity'] = isset($item['quantity']) ? $item['quantity'] : 1;
             $data['price'] = intval($item['quantity']) * $data['sku']['price'];
+            $data['cartId'] = $item['id'];
             array_push($result, $data);
         }
         return $result;
@@ -82,22 +83,13 @@ class CartService {
 
     public function addToCart($data, $userId)
     {
-        // Check If Item Is Exist
-        $item = $this->cartRepository
-                     ->where('product_id', $data['productId'])
-                     ->where('user_id', $userId)
-                     ->first();
-        if($item) {
-            $this->updateCartItem($item, $data);
-            return $item;
-        } else {
-            $create = $this->cartRepository->create([
-                'product_id' => $data['productId'],
-                'sku_id' => $data['skuId'],
-                'user_id'=> $userId,
-                'quantity' => isset($data['quantity']) ? $data['quantity'] : 1,
-            ]);
-        }
+
+        $create = $this->cartRepository->create([
+            'product_id' => $data['productId'],
+            'sku_id' => $data['skuId'],
+            'user_id'=> $userId,
+            'quantity' => isset($data['quantity']) ? $data['quantity'] : 1,
+        ]);
 
         if($create) {
             return $create;
