@@ -158,6 +158,13 @@ class CartController extends Controller
         }
     }
 
+    public function afterLogin(Request $request)
+    {
+        if(!$this->user()) {
+            // return response()->json
+        }
+    }
+
     public function user()
     {
         return \Auth::guard('user')->user();

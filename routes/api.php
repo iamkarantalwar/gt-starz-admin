@@ -58,6 +58,7 @@ Route::group([
     // Cart Routes
     Route::post('cart', 'CartController@index');
     Route::resource('carts', 'CartController');
+    Route::post('cart/afterlogin', 'CartController@afterLogin');
 });
 
 

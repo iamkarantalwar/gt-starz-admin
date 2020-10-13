@@ -23,6 +23,7 @@ class CartService {
             $item['quantity'] = isset($item['quantity']) ? $item['quantity'] : 1;
             $data['price'] = intval($item['quantity']) * $data['sku']['price'];
             $data['cartId'] = $item['id'];
+            $data['quantity'] = $item['quantity'];
             array_push($result, $data);
         }
         return $result;
