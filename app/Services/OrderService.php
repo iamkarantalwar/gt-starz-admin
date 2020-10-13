@@ -44,7 +44,8 @@ class OrderService
                     'discount' => $product['sku']['discount'],
                     'variation_type' => "OPTION",
                     'variation_value' => "VALUE",
-                    'total' => $product['sku']['price']
+                    'total' => floatval(intval($cartItem['quantity']) * $product['sku']['price']) - floatval(intval($cartItem['quantity']) * $product['sku']['discount']),
+                    'quantity' => $cartItem['quantity']
                 ]);
 
                 $cartItem->delete();
