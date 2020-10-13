@@ -33,9 +33,10 @@ class CartController extends Controller
             $userCartItems = $this->cartService->getUserCart($this->user()->id);
             $userCartItemsInFormat = $userCartItems->map(function($cartItem) {
                 return collect([
+                    'id' => $cartItem->id,
                     'productId' => $cartItem->product_id,
                     'skuId' => $cartItem->sku_id,
-                    'quantity' => $cartItem->quantity
+                    'quantity' => $cartItem->quantity,
                 ]);
             })->toArray();
            $response = $this->cartService->getCartProducts($userCartItemsInFormat);
