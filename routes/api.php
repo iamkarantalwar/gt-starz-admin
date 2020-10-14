@@ -2,6 +2,7 @@
 
 use App\Events\MyEvent;
 use App\Events\UserCreated;
+use App\Models\Order\Order;
 use Illuminate\Broadcasting\Broadcasters\PusherBroadcaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +61,15 @@ Route::group([
     Route::resource('carts', 'CartController');
     Route::post('cart/afterlogin', 'CartController@afterLogin');
     Route::get('test-order', 'OrderController@testOrder');
+    Route::get('delete-all-orders', function(){
+        $orders = Order::all();
+        foreach ($orders as $order) {
+           $order->delete();
+        }
+        return response()->json([
+            'message' => 'All orders has been deleted',
+        ], 200);
+    });
 });
 
 
