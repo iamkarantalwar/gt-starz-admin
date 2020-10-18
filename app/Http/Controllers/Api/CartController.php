@@ -165,7 +165,8 @@ class CartController extends Controller
                 'message' => ' Not Authorised For This Action'
             ], 401);
         } else {
-            $response = $this->cartService->addItemsToCartAfterLogin($request->cart, $this->user()->id);
+            $cart = $request->cart ? $request->cart : $request->all();
+            $response = $this->cartService->addItemsToCartAfterLogin($cart, $this->user()->id);
             if($response) {
                 return response()->json([
                     'message' => 'Cart added successfully.'
