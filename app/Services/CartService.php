@@ -34,16 +34,15 @@ class CartService {
 
         foreach ($carts as $cartItem) {
             # code..
-            array_push($cartItems, [
-            // 'id' => $cartItem->id,
-            'product_id' => $cartItem['productId'],
-            'sku_id' => $cartItem['skuId'],
-            'quantity' => $cartItem['quantity'],
-            'user_id' => $userId
-            ]);
+            $cartItem = $this->addToCart([
+                'product_id' => $cartItem['productId'],
+                'sku_id' => $cartItem['skuId'],
+                'quantity' => $cartItem['quantity'],
+            ], $userId);
+
+            array_push($cartItems, $cartItem);
         }
 
-        $cartItems = $this->cartRepository->insert($cartItems);
         if($cartItems) {
             return true;
         } else {
