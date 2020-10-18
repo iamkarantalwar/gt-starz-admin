@@ -33,7 +33,7 @@ class CartService {
 
         $userCartItemsInFormat = $carts->map(function($cartItem) use ($userId) {
             return collect([
-                'id' => $cartItem->id,
+                // 'id' => $cartItem->id,
                 'product_id' => $cartItem->productId,
                 'sku_id' => $cartItem->skuId,
                 'quantity' => $cartItem->quantity,
