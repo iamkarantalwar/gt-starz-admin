@@ -34,11 +34,7 @@ class CartService {
 
         foreach ($carts as $cartItem) {
             # code..
-            $cartItem = $this->addToCart([
-                'product_id' => $cartItem['productId'],
-                'sku_id' => $cartItem['skuId'],
-                'quantity' => $cartItem['quantity'],
-            ], $userId);
+            $cartItem = $this->addToCart($cartItem, $userId);
 
             array_push($cartItems, $cartItem);
         }
