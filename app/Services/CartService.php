@@ -29,11 +29,19 @@ class CartService {
         return $result;
     }
 
-    public function addItemsToCartAfterLogin(array $carts, int $userId) {
-        foreach ($carts as $cart) {
-            $cart['user_id'] = $userId;
-        }
-        $cartItems = $this->cartRepository->insert($carts);
+    public function addItemsToCartAfterLogin($carts, int $userId) {
+
+        $userCartItemsInFormat = $carts->map(function($cartItem) use ($userId) {
+            return collect([
+                'id' => $cartItem->id,
+                'product_id' => $cartItem->product_id,
+                'sku_id' => $cartItem->sku_id,
+                'quantity' => $cartItem->quantity,
+                'user_id' => $userId
+            ]);
+        })->toArray();
+
+        $cartItems = $this->cartRepository->insert($userCartItemsInFormat);
         if($cartItems) {
             return true;
         } else {
