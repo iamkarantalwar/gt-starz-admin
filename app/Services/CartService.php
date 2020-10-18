@@ -103,12 +103,19 @@ class CartService {
     {
         $productWithSkuExist = $this->cartRepository->where([
             'product_id' => $data['productId'],
-            'sku_id' => $data['skuId'],
             'user_id'=> $userId
         ])->first();
 
         if($productWithSkuExist) {
-            return $productWithSkuExist;
+            if($productWithSkuExist->sku_id != $data['skuId'] || $productWithSkuExist->quantity != $data['quantity']) {
+                $update = $productWithSkuExist->update([
+                    'sku_id' => $data['skuId'],
+                    'quantity' => $data['quantity'],
+                ]);
+                return $productWithSkuExist;
+            } else {
+                return $productWithSkuExist;
+            }
         }
 
         $create = $this->cartRepository->create([
