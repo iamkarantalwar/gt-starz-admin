@@ -30,18 +30,20 @@ class CartService {
     }
 
     public function addItemsToCartAfterLogin($carts, int $userId) {
+        $cartItems = [];
 
-        $userCartItemsInFormat = $carts->map(function($cartItem) use ($userId) {
-            return collect([
-                // 'id' => $cartItem->id,
-                'product_id' => $cartItem->productId,
-                'sku_id' => $cartItem->skuId,
-                'quantity' => $cartItem->quantity,
-                'user_id' => $userId
+        foreach ($carts as $cartItem) {
+            # code..
+            array_push($cartItems, [
+            // 'id' => $cartItem->id,
+            'product_id' => $cartItem['productId'],
+            'sku_id' => $cartItem['skuId'],
+            'quantity' => $cartItem['quantity'],
+            'user_id' => $userId
             ]);
-        })->toArray();
+        }
 
-        $cartItems = $this->cartRepository->insert($userCartItemsInFormat);
+        $cartItems = $this->cartRepository->insert($cartItems);
         if($cartItems) {
             return true;
         } else {
