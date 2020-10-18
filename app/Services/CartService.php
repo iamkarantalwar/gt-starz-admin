@@ -22,7 +22,7 @@ class CartService {
             $data = $this->productService->getProductByProductIdAndSkuId($item['productId'], $item['skuId']);
             $item['quantity'] = isset($item['quantity']) ? $item['quantity'] : 1;
             $data['price'] = floatval(intval($item['quantity']) * $data['sku']['price']) - intval($item['quantity']) * $data['sku']['discount'];
-            $data['cartId'] = $item['id'];
+            $data['cartId'] = isset($item['id']) ? $item['id'] : null;
             $data['quantity'] = $item['quantity'];
             array_push($result, $data);
         }
