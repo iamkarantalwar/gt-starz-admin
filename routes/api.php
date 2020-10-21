@@ -96,4 +96,5 @@ Route::group([
      Route::post('resetpassword', 'DriverAuthController@resetPassword');
      Route::post('orders/pending', 'DriverOrderController@pendingOrders');
      Route::post('orders/completed', 'DriverOrderController@completedOrders');
+     Route::post('orders/{order}', 'DriverOrderController@getDriverOrderDetails');
 });

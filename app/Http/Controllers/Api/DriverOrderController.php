@@ -28,4 +28,15 @@ class DriverOrderController extends Controller
         $orders = $this->orderService->getDriverCompletedOrders($request->user()->id);
         return response()->json($orders, 200);
     }
+
+    public function getDriverOrderDetails(Order $order, Request $request) {
+        if($order->driver_id != $request->user()->id) {
+            return response()->json([
+                'message' => 'You are not authenticated for this action.',
+            ], 401);
+        } else {
+            $details = $this->orderService->getOrderDetails($order->id);
+            return response()->json($details, 200);
+        }
+    }
 }
