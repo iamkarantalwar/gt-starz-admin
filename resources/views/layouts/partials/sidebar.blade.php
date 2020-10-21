@@ -52,13 +52,13 @@
                 <span class="nav-link-text">User Messages</span>
             </a>
         </li>
-        {{--
+
         <li class="nav-item">
-            <a class="nav-link" href="register.html">
-            <i class="ni ni-circle-08 text-pink"></i>
-            <span class="nav-link-text">Register</span>
+            <a class="nav-link" href="{{ route('orders.index') }}">
+                <i class="ni ni-circle-08 text-pink"></i>
+                <span class="nav-link-text">Orders</span>
             </a>
-        </li> --}}
+        </li>
 
         </ul>
         <!-- Divider -->

@@ -34,6 +34,8 @@ Route::group(['namespace' => 'Web', 'middleware' => 'auth'], function () {
     Route::resource('products', 'ProductController');
     //User Messages Routes
     Route::resource('usermessages', 'UserMessageController');
+    //Orders
+    Route::resource('orders', 'OrderController');
 });
 
 Auth::routes(['register' => false]);

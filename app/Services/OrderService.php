@@ -38,6 +38,7 @@ class OrderService
             foreach ($cart as $cartItem) {
                 $product = $this->productService->getProductByProductIdAndSkuId($cartItem['product_id'], $cartItem['sku_id']);
                 $this->orderDetailRepository->create([
+                    'product_id' => $product['id'],
                     'order_id' => $create->id,
                     'product_name' => $product['name'],
                     'cost' => $product['sku']['price'],
@@ -79,5 +80,10 @@ class OrderService
     public function getOrderDetails($orderId)
     {
         return $this->orderRepository->show($orderId)->orderProducts;
+    }
+
+    public function getAllOrdersWithPagination()
+    {
+        return $this->orderRepository->getOrdersWithPagination();
     }
 }

@@ -61,4 +61,11 @@ class OrderRepository implements OrderRepositoryInterface
     {
         return $this->order->where('user_id', $userId)->get();
     }
+
+    public function getOrdersWithPagination()
+    {
+        return $this->order->paginate(config('constant.pagination.web'));
+    }
 }
+
+
