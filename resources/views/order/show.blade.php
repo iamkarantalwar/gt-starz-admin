@@ -51,6 +51,7 @@
                 <div class="col-md-6">
                     <form action="{{ route('orders.update', ['order' => $order]) }}" method="POST" id='form'>
                         @method("PUT")
+                        @csrf
                         <div class="row">
                             <div class="col-md-6">
                                 <b>Assign Driver</b>
