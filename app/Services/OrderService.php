@@ -86,4 +86,19 @@ class OrderService
     {
         return $this->orderRepository->getOrdersWithPagination();
     }
+
+    public function update($data, $order)
+    {
+        return $this->orderRepository->update($data, $order);
+    }
+
+    public function getDriverPendingOrders($driverId)
+    {
+        return $this->orderRepository->getDriverPendingOrders($driverId);
+    }
+
+    public function getDriverCompletedOrders($driverId)
+    {
+        return $this->orderRepository->getDriverCompletedOrders($driverId);
+    }
 }

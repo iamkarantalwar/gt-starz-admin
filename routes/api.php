@@ -94,4 +94,6 @@ Route::group([
      Route::post('forgotpassword', 'DriverAuthController@sendForgotPasswordOtp');
      Route::post('verifyotp', 'DriverAuthController@verifyForgotPasswordOtp');
      Route::post('resetpassword', 'DriverAuthController@resetPassword');
+     Route::post('orders/pending', 'DriverOrderController@pendingOrders');
+     Route::post('orders/completed', 'DriverOrderController@completedOrders');
 });

@@ -4,16 +4,19 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order\Order;
+use App\Repositories\Driver\DriverRepository;
+use App\Repositories\Driver\DriverRepositoryInterface;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    private $orderService;
+    private $orderService, $driverRepository;
 
-    public function __construct(OrderService $orderService)
+    public function __construct(OrderService $orderService, DriverRepositoryInterface $driverRepository)
     {
         $this->orderService = $orderService;
+        $this->driverRepository = $driverRepository;
     }
     /**
      * Display a listing of the resource.
@@ -58,7 +61,8 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         return view('order.show')->with([
-            'order' => $order
+            'order' => $order,
+            'drivers' => $this->driverRepository->all(),
         ]);
     }
 
@@ -82,7 +86,12 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        $update = $this->orderService->update($request->all(), $order);
+        if($update) {
+            return redirect()->back()->with('success', 'Order updated successfully.');
+        } else {
+            return redirect()->back()->with('success', 'Something went wrong. Try again later.');
+        }
     }
 
     /**

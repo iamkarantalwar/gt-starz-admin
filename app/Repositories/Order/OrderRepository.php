@@ -66,6 +66,21 @@ class OrderRepository implements OrderRepositoryInterface
     {
         return $this->order->paginate(config('constant.pagination.web'));
     }
+
+    public function update($data,Order $order)
+    {
+        return $order->update($data);
+    }
+
+    public function getDriverPendingOrders($driverId)
+    {
+        return $this->order->where('driver_id', $driverId)->where('order_status', '=', 'DISPATCHED')->orderBy('id', 'DESC');
+    }
+
+    public function getDriverCompletedOrders($driverId)
+    {
+        return $this->order->where('driver_id', $driverId)->where('order_status', '=', 'DELIVERED')->orderBy('id', 'DESC');
+    }
 }
 
 
