@@ -55,7 +55,7 @@
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('orders.index') }}">
-                <i class="ni ni-circle-08 text-pink"></i>
+                <i class="fa-cart-arrow-down"></i>
                 <span class="nav-link-text">Orders</span>
             </a>
         </li>
