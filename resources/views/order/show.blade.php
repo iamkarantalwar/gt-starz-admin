@@ -60,7 +60,7 @@
                                 <select class="form-control" name="driver_id">
                                     <option value="">Chose Driver</option>
                                     @foreach($drivers as $driver)
-                                        <option value="{{$driver->id}}">{{$driver->name}}</option>
+                                        <option @if($driver->id == $order->driver_id) selected @endif value="{{$driver->id}}">{{$driver->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -35,7 +35,7 @@ class DriverOrderController extends Controller
                 'message' => 'You are not authenticated for this action.',
             ], 401);
         } else {
-            $details = $this->orderService->getOrderDetails($order->id);
+            $details = $this->orderService->getUserOrder($order->id);
             return response()->json($details, 200);
         }
     }
