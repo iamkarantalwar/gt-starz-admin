@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\OrderRequest;
 use App\Models\Cart;
+use App\Models\DriverRating;
 use App\Models\Order\Order;
+use App\Models\Order\OrderRefund;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 
@@ -132,5 +134,58 @@ class OrderController extends Controller
             $order->total = $order->orderProducts->sum('total');
             return $order;
         });
+    }
+
+
+    public function requestRefund(Order $order, Request $request)
+    {
+        if($order->user_id != $request->user()->id) {
+            return response()->json([
+                'message' => 'You are not authenticated for this action.',
+            ], 401);
+        } else {
+            $refund = OrderRefund::create([
+                'order_id' => $order->id,
+            ]);
+
+            if($refund) {
+                return response()->json([
+                    'message' => 'Order refund request sent successfully.'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Order refund request failed.'
+                ], 400);
+            }
+
+        }
+    }
+
+    public function rateDriver(Order $order, Request $request)
+    {
+        if($order->user_id != $request->user()->id) {
+            return response()->json([
+                'message' => 'You are not authenticated for this action.',
+            ], 401);
+        } else {
+            $rating = DriverRating::create([
+                'driver_id' => $order->driver_id,
+                'order_id' => $order->id,
+                'user_id' => $order->user_id,
+                'rating' => $request->rating
+            ]);
+
+            if($rating) {
+                return response()->json([
+                    'message' => 'Driver rating sent successfully.'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Driver rating failed.'
+                ], 400);
+            }
+
+        }
+
     }
 }

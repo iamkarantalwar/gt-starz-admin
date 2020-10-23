@@ -70,6 +70,8 @@ Route::group([
             'message' => 'All orders has been deleted',
         ], 200);
     });
+    Route::post('orders/{order}/requestrefund', 'OrderController@requestRefund');
+    Route::post('orders/{order}/ratedriver', 'OrderController@rateDriver');
 });
 
 
@@ -97,4 +99,6 @@ Route::group([
      Route::post('orders/pending', 'DriverOrderController@pendingOrders');
      Route::post('orders/completed', 'DriverOrderController@completedOrders');
      Route::post('orders/{order}', 'DriverOrderController@getDriverOrderDetails');
+     Route::post('orders/{order}/dispatched', 'DriverOrderController@orderDispatched');
+     Route::post('orders/{order}/delivered', 'DriverOrderController@orderDelivered');
 });

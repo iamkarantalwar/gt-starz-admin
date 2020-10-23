@@ -67,7 +67,7 @@ class OrderRepository implements OrderRepositoryInterface
         return $this->order->paginate(config('constant.pagination.web'));
     }
 
-    public function update($data,Order $order)
+    public function update($data, Order $order)
     {
         return $order->update($data);
     }

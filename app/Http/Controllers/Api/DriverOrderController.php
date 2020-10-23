@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\enums\OrderStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Order\Order;
 use App\Services\OrderService;
@@ -39,4 +40,35 @@ class DriverOrderController extends Controller
             return response()->json($details, 200);
         }
     }
+
+    public function orderDispatched(Order $order, Request $request)
+    {
+        if($order->driver_id != $request->user()->id) {
+            return response()->json([
+                'message' => 'You are not authenticated for this action.',
+            ], 401);
+        } else {
+            $details = $this->orderService->update($order->id, [
+                'status' => OrderStatus::DISPATCHED
+            ]);
+
+            return response()->json($details, 200);
+        }
+    }
+
+    public function orderDelivered(Order $order, Request $request)
+    {
+        if($order->driver_id != $request->user()->id) {
+            return response()->json([
+                'message' => 'You are not authenticated for this action.',
+            ], 401);
+        } else {
+            $details = $this->orderService->update($order->id, [
+                'status' => OrderStatus::DELIVERED
+            ]);
+
+            return response()->json($details, 200);
+        }
+    }
+
 }
