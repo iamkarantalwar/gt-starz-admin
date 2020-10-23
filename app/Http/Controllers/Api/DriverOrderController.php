@@ -49,7 +49,7 @@ class DriverOrderController extends Controller
             ], 401);
         } else {
             $details = $this->orderService->update([
-                'status' => OrderStatus::DISPATCHED
+                'order_status' => OrderStatus::DISPATCHED
             ], $order);
             if($details) {
                 return response()->json([
@@ -71,7 +71,7 @@ class DriverOrderController extends Controller
             ], 401);
         } else {
             $details = $this->orderService->update([
-                'status' => OrderStatus::DELIVERED
+                'order_status' => OrderStatus::DELIVERED
             ], $order);
 
             if($details) {
