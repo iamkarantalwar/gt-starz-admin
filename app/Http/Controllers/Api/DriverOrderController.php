@@ -48,9 +48,9 @@ class DriverOrderController extends Controller
                 'message' => 'You are not authenticated for this action.',
             ], 401);
         } else {
-            $details = $this->orderService->update($order->id, [
+            $details = $this->orderService->update([
                 'status' => OrderStatus::DISPATCHED
-            ]);
+            ], $order);
 
             return response()->json($details, 200);
         }
@@ -63,9 +63,9 @@ class DriverOrderController extends Controller
                 'message' => 'You are not authenticated for this action.',
             ], 401);
         } else {
-            $details = $this->orderService->update($order->id, [
+            $details = $this->orderService->update([
                 'status' => OrderStatus::DELIVERED
-            ]);
+            ], $order);
 
             return response()->json($details, 200);
         }
