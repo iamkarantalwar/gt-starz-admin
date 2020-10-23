@@ -51,8 +51,15 @@ class DriverOrderController extends Controller
             $details = $this->orderService->update([
                 'status' => OrderStatus::DISPATCHED
             ], $order);
-
-            return response()->json($details, 200);
+            if($details) {
+                return response()->json([
+                    'message' => 'Status updated successfully.'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Status updation failed.'
+                ], 400);
+            }
         }
     }
 
@@ -67,7 +74,15 @@ class DriverOrderController extends Controller
                 'status' => OrderStatus::DELIVERED
             ], $order);
 
-            return response()->json($details, 200);
+            if($details) {
+                return response()->json([
+                    'message' => 'Status updated successfully.'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Status updation failed.'
+                ], 400);
+            }
         }
     }
 
