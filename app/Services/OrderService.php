@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Product\ProductSku;
 use App\Repositories\Order\OrderRepository;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\OrderDetail\OrderDetailRepository;
@@ -63,7 +64,9 @@ class OrderService
     public function getUserOrders($userId)
     {
         $userOrders = $this->orderRepository->getUserOrders($userId);
-        return $userOrders->map(function($order){
+        $productSku = new ProductSku();
+        return $userOrders->map(function($order) use($productSku){
+            $order->image = getImageUrl($productSku->where('id', $order->sku_id)->first());
             $order->quantity =  $order->orderProducts->sum('quantity');
             $order->total = $order->orderProducts->sum('total');
             return $order;
