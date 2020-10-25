@@ -67,7 +67,7 @@ class OrderService
         $productSku = new ProductSku();
         return $userOrders->map(function($order) use($productSku){
             $sku = $productSku->where('id', $order->sku_id)->first();
-            $order->image = $sku == null ? "" : getImageUrl($sku);
+            $order->orderProducts->image = $sku == null ? "" : getImageUrl($sku);
             $order->quantity =  $order->orderProducts->sum('quantity');
             $order->total = $order->orderProducts->sum('total');
             return $order;
