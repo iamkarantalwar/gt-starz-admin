@@ -39,6 +39,7 @@ class OrderService
                 $product = $this->productService->getProductByProductIdAndSkuId($cartItem['product_id'], $cartItem['sku_id']);
                 $this->orderDetailRepository->create([
                     'product_id' => $product['id'],
+                    'sku_id' => $cartItem['sku_id'],
                     'order_id' => $create->id,
                     'product_name' => $product['name'],
                     'cost' => $product['sku']['price'],
