@@ -98,7 +98,7 @@ Route::group([
      Route::post('resetpassword', 'DriverAuthController@resetPassword');
      Route::post('orders/pending', 'DriverOrderController@pendingOrders');
      Route::post('orders/completed', 'DriverOrderController@completedOrders');
-     Route::post('orders/dipatched', 'DriverOrderController@dispatchedOrders');
+     Route::post('orders/dispatched', 'DriverOrderController@dispatchedOrders');
      Route::post('orders/{order}', 'DriverOrderController@getDriverOrderDetails');
      Route::post('orders/{order}/dispatched', 'DriverOrderController@orderDispatched');
      Route::post('orders/{order}/delivered', 'DriverOrderController@orderDelivered');
