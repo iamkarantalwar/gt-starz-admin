@@ -74,12 +74,22 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function getDriverPendingOrders($driverId)
     {
-        return $this->order->where('driver_id', $driverId)->where('order_status', '=', 'PENDING')->orderBy('id', 'DESC')->get();
+        $orders = $this->order->where('driver_id', $driverId)->where('order_status', '=', 'PENDING')->orderBy('id', 'DESC')->get();
+        return $orders->map(function($order){
+            $order->quantity =  $order->orderProducts->sum('quantity');
+            $order->total = $order->orderProducts->sum('total');
+            return $order;
+        });
     }
 
     public function getDriverCompletedOrders($driverId)
     {
-        return $this->order->where('driver_id', $driverId)->where('order_status', '=', 'DELIVERED')->orderBy('id', 'DESC')->get();
+        $orders = $this->order->where('driver_id', $driverId)->where('order_status', '=', 'DELIVERED')->orderBy('id', 'DESC')->get();
+        return $orders->map(function($order){
+            $order->quantity =  $order->orderProducts->sum('quantity');
+            $order->total = $order->orderProducts->sum('total');
+            return $order;
+        });
     }
 }
 
