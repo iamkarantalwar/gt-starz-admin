@@ -101,4 +101,9 @@ class OrderService
     {
         return $this->orderRepository->getDriverCompletedOrders($driverId);
     }
+
+    public function getDriverDispacthedOrders($driverId)
+    {
+        return $this->orderRepository->getDriverCompletedOrders($driverId);
+    }
 }

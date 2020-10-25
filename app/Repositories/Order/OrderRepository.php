@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Order;
 
+use App\enums\OrderStatus;
 use App\Models\Order\Order;
 use App\Services\CartService;
 
@@ -74,7 +75,7 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function getDriverPendingOrders($driverId)
     {
-        $orders = $this->order->where('driver_id', $driverId)->where('order_status', '=', 'PENDING')->orderBy('id', 'DESC')->get();
+        $orders = $this->order->where('driver_id', $driverId)->where('order_status', '=', OrderStatus::PENDING)->orderBy('id', 'DESC')->get();
         return $orders->map(function($order){
             $order->quantity =  $order->orderProducts->sum('quantity');
             $order->total = $order->orderProducts->sum('total');
@@ -84,7 +85,17 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function getDriverCompletedOrders($driverId)
     {
-        $orders = $this->order->where('driver_id', $driverId)->where('order_status', '=', 'DELIVERED')->orderBy('id', 'DESC')->get();
+        $orders = $this->order->where('driver_id', $driverId)->where('order_status', '=', OrderStatus::DELIVERED)->orderBy('id', 'DESC')->get();
+        return $orders->map(function($order){
+            $order->quantity =  $order->orderProducts->sum('quantity');
+            $order->total = $order->orderProducts->sum('total');
+            return $order;
+        });
+    }
+
+    public function getDriverDispacthedOrders($driverId)
+    {
+        $orders = $this->order->where('driver_id', $driverId)->where('order_status', '=', OrderStatus::DISPATCHED)->orderBy('id', 'DESC')->get();
         return $orders->map(function($order){
             $order->quantity =  $order->orderProducts->sum('quantity');
             $order->total = $order->orderProducts->sum('total');

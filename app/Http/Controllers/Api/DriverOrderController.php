@@ -86,4 +86,10 @@ class DriverOrderController extends Controller
         }
     }
 
+    public function dispatchedOrders(Request $request)
+    {
+        $orders = $this->orderService->getDriverDispacthedOrders($request->user()->id);
+        return response()->json($orders, 200);
+    }
+
 }
