@@ -66,8 +66,12 @@ class OrderService
         $userOrders = $this->orderRepository->getUserOrders($userId);
         $productSku = new ProductSku();
         return $userOrders->map(function($order) use($productSku){
-            $sku = $productSku->where('id', $order->sku_id)->first();
-            $order->orderProducts->image = $sku == null ? "" : getImageUrl($sku);
+
+            $order->order_products = $order->order_products->map(function($product) use($productSku) {
+                $sku = $productSku->where('id', $product->sku_id)->first();
+                $sku->image = $sku == null ? "" : getImageUrl($sku);;
+            });
+
             $order->quantity =  $order->orderProducts->sum('quantity');
             $order->total = $order->orderProducts->sum('total');
             return $order;
