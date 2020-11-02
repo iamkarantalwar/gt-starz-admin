@@ -89,7 +89,7 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $sendDriverAssign = false;
-        if($request->driver_id != $order->id) {
+        if($request->driver_id != $order->driver_id) {
             $sendDriverAssign = true;
         }
 
