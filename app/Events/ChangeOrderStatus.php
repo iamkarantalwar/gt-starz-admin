@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class OrderDispatched implements ShouldBroadcast
+class ChangeOrderStatus implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -42,6 +42,6 @@ class OrderDispatched implements ShouldBroadcast
 
     public function broadcastAs()
     {
-        return 'order-dispatch-'.$this->order->driver_id ;
+        return 'order-status-'.$this->order->id;
     }
 }

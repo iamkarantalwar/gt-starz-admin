@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Events\AssignOrderToDriver;
+use App\Events\ChangeOrderStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Order\Order;
 use App\Repositories\Driver\DriverRepository;
@@ -86,8 +88,26 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        $sendDriverAssign = false;
+        if($request->driver_id != $order->id) {
+            $sendDriverAssign = true;
+        }
+
+        $sendOrderStatus = false;
+        if($request->order_status != $order->order_status) {
+            $sendOrderStatus = true;
+        }
+
         $update = $this->orderService->update($request->all(), $order);
         if($update) {
+
+            if($sendDriverAssign) {
+                event(new AssignOrderToDriver($order));
+            }
+
+            if($sendOrderStatus) {
+                event(new ChangeOrderStatus($order));
+            }
             return redirect()->back()->with('success', 'Order updated successfully.');
         } else {
             return redirect()->back()->with('success', 'Something went wrong. Try again later.');
