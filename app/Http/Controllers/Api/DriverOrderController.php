@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\enums\OrderStatus;
+use App\Events\OrderDispatched;
 use App\Http\Controllers\Controller;
 use App\Models\Order\Order;
 use App\Services\OrderService;
@@ -51,6 +52,7 @@ class DriverOrderController extends Controller
             $details = $this->orderService->update([
                 'order_status' => OrderStatus::DISPATCHED
             ], $order);
+            event(new OrderDispatched($order));
             if($details) {
                 return response()->json([
                     'message' => 'Status updated successfully.'
