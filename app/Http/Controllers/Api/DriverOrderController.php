@@ -75,7 +75,7 @@ class DriverOrderController extends Controller
             $details = $this->orderService->update([
                 'order_status' => OrderStatus::DELIVERED
             ], $order);
-
+            event(new ChangeOrderStatus($order));
             if($details) {
                 return response()->json([
                     'message' => 'Status updated successfully.'
