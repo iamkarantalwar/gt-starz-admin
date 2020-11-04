@@ -73,8 +73,8 @@ Route::group([
     Route::post('orders/{order}/requestrefund', 'OrderController@requestRefund');
     Route::post('orders/{order}/ratedriver', 'OrderController@rateDriver');
 
-    // Stripe
-    Route::post('stripe/getephemeralkey', 'StripeController@getEphmeralKey');
+    // Payment
+    Route::post('payment/{method}/{orderId}', 'PaymentController@paymentProcess');
 });
 
 
