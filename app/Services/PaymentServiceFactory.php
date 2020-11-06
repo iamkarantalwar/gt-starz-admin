@@ -6,11 +6,20 @@ use App\Services\Payment\StripePaymentService;
 
 class PaymentServiceFactory
 {
+    private $stripePaymentService, $paypalPaymentService;
+
+    public function __construct(StripePaymentService $stripePaymentService,
+                                PaypalPaymentService $paypalPaymentService)
+    {
+        $this->stripePaymentService = $stripePaymentService;
+        $this->paypalPaymentService = $paypalPaymentService;
+    }
+
    public function getPaymentService($paymentMethod) {
         if($paymentMethod == PaymentMethod::STRIPE) {
-            return new StripePaymentService();
+            return $this->stripePaymentService;
         } else if($paymentMethod == PaymentMethod::PAYPAL) {
-            return new PaypalPaymentService();
+            return $this->paypalPaymentService;
         } else {
             return null;
         }
