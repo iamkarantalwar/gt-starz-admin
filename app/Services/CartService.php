@@ -103,6 +103,7 @@ class CartService {
     {
         $productWithSkuExist = $this->cartRepository->where([
             'product_id' => $data['productId'],
+            'sku_id' => $data['skuId'],
             'user_id'=> $userId
         ])->first();
 
