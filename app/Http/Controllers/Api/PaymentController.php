@@ -40,7 +40,7 @@ class PaymentController extends Controller
 
     }
 
-    public function confirmTransactionStatus(Request $request, Order $order, $method = PaymentMethod::STRIPE) {
+    public function confirmTransactionStatus(Request $request, $method = PaymentMethod::STRIPE, Order $order) {
 
         $service = $this->paymentServiceFactory->getPaymentService($method);
         if($service == null) {

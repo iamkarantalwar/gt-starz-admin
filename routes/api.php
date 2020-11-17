@@ -3,6 +3,7 @@
 use App\Events\MyEvent;
 use App\Events\UserCreated;
 use App\Models\Order\Order;
+use App\Models\Payment\StripePayment;
 use Illuminate\Broadcasting\Broadcasters\PusherBroadcaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -61,15 +62,14 @@ Route::group([
     Route::resource('carts', 'CartController');
     Route::post('cart/afterlogin', 'CartController@afterLogin');
     Route::get('test-order', 'OrderController@testOrder');
-    Route::get('delete-all-orders', function(){
-        $orders = Order::all();
-        foreach ($orders as $order) {
-           $order->delete();
-        }
+    Route::get('test-all-orders', function(){
+        $orders = StripePayment::all();
         return response()->json([
             'message' => 'All orders has been deleted',
+            'orders' => $orders,
         ], 200);
     });
+
     Route::post('orders/{order}/requestrefund', 'OrderController@requestRefund');
     Route::post('orders/{order}/ratedriver', 'OrderController@rateDriver');
 
