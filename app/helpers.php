@@ -1,8 +1,11 @@
 <?php
 
 use App\Models\Image;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Intervention\Image\Facades\Image as ImageIntervention;
 
 
@@ -118,4 +121,11 @@ function uploadImage($image)
         dd($th);
         return null;
     }
+}
+
+function paginate($items, $perPage = 5, $page = null, $options = [])
+{
+    $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+    $items = $items instanceof Collection ? $items : Collection::make($items);
+    return new LengthAwarePaginator($items->forPage($page, $perPage)->values(), $items->count(), $perPage, $page, $options);
 }

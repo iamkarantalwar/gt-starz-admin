@@ -61,6 +61,7 @@ class OrderController extends Controller
         if($response) {
             return response()->json([
                 'message' => 'Order Created Successfully',
+                'order' => $response,
             ], 200);
         } else {
             return response()->json([

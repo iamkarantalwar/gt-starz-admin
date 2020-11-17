@@ -54,7 +54,7 @@ class OrderService
                 $cartItem->delete();
             }
 
-            return true;
+            return $create;
 
         } else {
             return false;
