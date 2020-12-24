@@ -7,6 +7,7 @@ use App\Repositories\Order\OrderRepository;
 use App\Repositories\Order\OrderRepositoryInterface;
 use App\Repositories\OrderDetail\OrderDetailRepository;
 use App\Repositories\OrderDetail\OrderDetailRepositoryInterface;
+use Illuminate\Support\Facades\Storage;
 
 class OrderService
 {
@@ -81,8 +82,17 @@ class OrderService
     public function getUserOrder($orderId)
     {
         $order = $this->orderRepository->getOrderById($orderId);
-        $order->quantity =  $order->orderProducts->sum('quantity');
-        $order->total = $order->orderProducts->sum('total');
+        $order->order_products = $order->orderproducts->map(function ($product) {
+            if($product->sku_id != null) {
+                $product->image = getImageUrl($product->sku);
+            } else {
+                $product->image = "";
+            }
+
+            return $product;
+        });
+        $order->quantity =  $order->orderproducts->sum('quantity');
+        $order->total = $order->orderproducts->sum('total');
         return $order;
     }
 

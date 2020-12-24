@@ -111,8 +111,8 @@
                         <tr>
                             <td> {{ $loop->iteration }} </td>
                             <td>
-                                @if($product->product()->first() != null)
-                                    {{$product->product()->first()->category()->first()->name}}
+                                @if($product->product != null)
+                                    {{$product->product->category->category_name}}
                                 @else
                                     N.A.
                                 @endif

@@ -10,6 +10,7 @@ use App\Models\Order\Order;
 use App\Models\Order\OrderRefund;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -119,6 +120,13 @@ class OrderController extends Controller
     {
         if($request->user()->id == $order->user_id) {
             $details = $this->orderService->getUserOrder($order->id);
+            // $details->order_products = $details->order_products->map(function($product){
+            //     return "ABC";
+            //     $product->image = "ABD";
+            //     $product->image = Storage::disk(env('STORAGE_ENGINE'))->url($product->sku->image->url);
+            //     return $product;
+            // });
+            // return $details;
             return response()->json($details, 200);
         } else {
             return response()->json([

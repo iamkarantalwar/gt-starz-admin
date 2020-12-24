@@ -10,7 +10,7 @@ class Order extends Model
 {
     protected $fillable = ['user_id', 'driver_id', 'name', 'address', 'city', 'state', 'phone_number', 'payment_type', 'order_status', 'zip_code', 'lat', 'lng'];
 
-    public function orderProducts()
+    public function orderproducts()
     {
         return $this->hasMany(OrderProduct::class, 'order_id');
     }
