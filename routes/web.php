@@ -41,3 +41,6 @@ Route::group(['namespace' => 'Web', 'middleware' => 'auth'], function () {
 Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/payment', ['as' => 'payment', 'uses' => 'PaymentController@payWithpaypal']);
+Route::get('/payment/status',['as' => 'status', 'uses' => 'PaymentController@getPaymentStatus']);

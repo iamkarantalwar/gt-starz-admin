@@ -62,6 +62,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        return $this->orderService->getUserOrder($order->id);
         return view('order.show')->with([
             'order' => $order,
             'drivers' => $this->driverRepository->all(),

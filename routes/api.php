@@ -75,9 +75,10 @@ Route::group([
 
     // Payment
     //Route::post('payment/{method}/{orderId}', 'PaymentController@paymentProcess');
-    Route::post('payment/create/{order}', 'PaymentController@createStripePayment');
-    Route::put('updatestripeid', 'PaymentController@updateStripeId');
-    Route::post('payment/success/{method}/{order}', 'PaymentController@confirmTransactionStatus');
+    Route::post('payment/create/{order}/{method}/process', 'PaymentController@paymentProcess');
+    Route::post('payment/create/{order}/{method}', 'PaymentController@createPayment');
+    Route::put('updatestripeid', 'PaymentController@updatePayerId');
+    Route::get('payment/success/{order}/{method}', 'PaymentController@confirmTransactionStatus')->name('confirm.payment');
 
 });
 

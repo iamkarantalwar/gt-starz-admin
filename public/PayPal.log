@@ -1,0 +1,47 @@
+[26-11-2020 18:06:10] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[26-11-2020 18:06:12] PayPal\Core\PayPalHttpConnection : DEBUG: Request Headers 	: POST /v1/oauth2/token HTTP/1.1, Host: api.sandbox.paypal.com, User-Agent: PayPalSDK/PayPal-PHP-SDK 1.14.0 (platform-ver=7.3.15; bit=64; os=Windows_NT_10.0; machine=AMD64; crypto-lib-ver=1.1.1d; curl=7.68.0), Authorization: Basic Og==, Accept: */*, Content-Length: 29, Content-Type: application/x-www-form-urlencoded, , 
+[26-11-2020 18:06:12] PayPal\Core\PayPalHttpConnection : DEBUG: Request Data		: grant_type=client_credentials
+--------------------------------------------------------------------------------------------------------------------------------
+
+[26-11-2020 18:06:12] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 401
+[26-11-2020 18:06:12] PayPal\Core\PayPalHttpConnection : DEBUG: Response Headers	: Cache-Control: max-age=0, no-cache, no-store, must-revalidate, Content-Length: 77, Content-Type: application/json, Date: Thu, 26 Nov 2020 18:05:12 GMT, Paypal-Debug-Id: 326f2ea27e5c6, X-Paypal-Token-Service: IAAS, 
+[26-11-2020 18:06:12] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 401 when accessing https://api.sandbox.paypal.com/v1/oauth2/token. {"error":"invalid_client","error_description":"Client Authentication failed"}
+[26-11-2020 18:06:12] PayPal\Core\PayPalHttpConnection : DEBUG: 
+
+================================================================================================================================
+
+[26-11-2020 18:25:31] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[26-11-2020 18:25:33] PayPal\Core\PayPalHttpConnection : DEBUG: Request Headers 	: POST /v1/oauth2/token HTTP/1.1, Host: api.sandbox.paypal.com, User-Agent: PayPalSDK/PayPal-PHP-SDK 1.14.0 (platform-ver=7.3.15; bit=64; os=Windows_NT_10.0; machine=AMD64; crypto-lib-ver=1.1.1d; curl=7.68.0), Authorization: Basic Og==, Accept: */*, Content-Length: 29, Content-Type: application/x-www-form-urlencoded, , 
+[26-11-2020 18:25:33] PayPal\Core\PayPalHttpConnection : DEBUG: Request Data		: grant_type=client_credentials
+--------------------------------------------------------------------------------------------------------------------------------
+
+[26-11-2020 18:25:33] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 401
+[26-11-2020 18:25:33] PayPal\Core\PayPalHttpConnection : DEBUG: Response Headers	: Cache-Control: max-age=0, no-cache, no-store, must-revalidate, Content-Length: 77, Content-Type: application/json, Date: Thu, 26 Nov 2020 18:24:32 GMT, Paypal-Debug-Id: 7fa4256087f0f, X-Paypal-Token-Service: IAAS, 
+[26-11-2020 18:25:33] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 401 when accessing https://api.sandbox.paypal.com/v1/oauth2/token. {"error":"invalid_client","error_description":"Client Authentication failed"}
+[26-11-2020 18:25:33] PayPal\Core\PayPalHttpConnection : DEBUG: 
+
+================================================================================================================================
+
+[26-11-2020 18:35:00] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[26-11-2020 18:35:02] PayPal\Core\PayPalHttpConnection : DEBUG: Request Headers 	: POST /v1/oauth2/token HTTP/1.1, Host: api.sandbox.paypal.com, User-Agent: PayPalSDK/PayPal-PHP-SDK 1.14.0 (platform-ver=7.3.15; bit=64; os=Windows_NT_10.0; machine=AMD64; crypto-lib-ver=1.1.1d; curl=7.68.0), Authorization: Basic QWVKSzVFaThDSXpVazVRc0hXNXpZb3BIRjg1OGNlVk8wejRtQl9DSUNib0JWQjA1UjFVVWZYenJOOWlTWW5IV0lleW5BT092VkoyTFdsMWc6RUFGVHRDOF9uNHJ4OHhZM1NSSEZmMXBFaGFKUHBUX2hiS1dJbW9KOHR6OHhzN0h2bVB3MGNqellhVFo2ZUxnTlFVby1Uby1kT2J5Xzcydlc=, Accept: */*, Content-Length: 29, Content-Type: application/x-www-form-urlencoded, , 
+[26-11-2020 18:35:02] PayPal\Core\PayPalHttpConnection : DEBUG: Request Data		: grant_type=client_credentials
+--------------------------------------------------------------------------------------------------------------------------------
+
+[26-11-2020 18:35:02] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[26-11-2020 18:35:02] PayPal\Core\PayPalHttpConnection : DEBUG: Response Headers	: Cache-Control: max-age=0, no-cache, no-store, must-revalidate, Content-Length: 1055, Content-Type: application/json, Date: Thu, 26 Nov 2020 18:34:02 GMT, Paypal-Debug-Id: 7e5777411c7b9, X-Paypal-Token-Service: IAAS, 
+[26-11-2020 18:35:02] PayPal\Core\PayPalHttpConnection : DEBUG: Response Data 	: {"scope":"https://uri.paypal.com/services/invoicing https://uri.paypal.com/services/vault/payment-tokens/read https://uri.paypal.com/services/disputes/read-buyer https://uri.paypal.com/services/payments/realtimepayment https://uri.paypal.com/services/disputes/update-seller https://uri.paypal.com/services/payments/payment/authcapture openid https://uri.paypal.com/services/disputes/read-seller Braintree:Vault https://uri.paypal.com/services/payments/refund https://api.paypal.com/v1/vault/credit-card https://api.paypal.com/v1/payments/.* https://uri.paypal.com/payments/payouts https://uri.paypal.com/services/vault/payment-tokens/readwrite https://api.paypal.com/v1/vault/credit-card/.* https://uri.paypal.com/services/subscriptions https://uri.paypal.com/services/applications/webhooks","access_token":"A21AAIBKAXUiPJV5p5kM1a_ncLinkkoHfPLuK6M4IP0wBFnkBNzjHZekkaTk46WdvEWo6yhL82UFKB0cPduXZ8ioIkSU0JGJw","token_type":"Bearer","app_id":"APP-80W284485P519543T","expires_in":30757,"nonce":"2020-11-26T18:06:39ZC0rg3vc-agZbmy7pPuCoySwkMatjLECcgCmY4sxNhhs"}
+
+================================================================================================================================
+
+[26-11-2020 18:35:02] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[26-11-2020 18:35:05] PayPal\Core\PayPalHttpConnection : DEBUG: Request Headers 	: POST /v1/payments/payment HTTP/1.1, Host: api.sandbox.paypal.com, Accept: */*, Content-Type: application/json, User-Agent: PayPalSDK/PayPal-PHP-SDK 1.14.0 (platform-ver=7.3.15; bit=64; os=Windows_NT_10.0; machine=AMD64; crypto-lib-ver=1.1.1d; curl=7.68.0), Authorization: Bearer A21AAIBKAXUiPJV5p5kM1a_ncLinkkoHfPLuK6M4IP0wBFnkBNzjHZekkaTk46WdvEWo6yhL82UFKB0cPduXZ8ioIkSU0JGJw, Content-Length: 113, , 
+[26-11-2020 18:35:05] PayPal\Core\PayPalHttpConnection : DEBUG: Request Data		: {"intent":"sale","payer":{"payment_method":"paypal"},"transactions":[{"amount":{},"description":"Order No. 73"}]}
+--------------------------------------------------------------------------------------------------------------------------------
+
+[26-11-2020 18:35:05] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 400
+[26-11-2020 18:35:05] PayPal\Core\PayPalHttpConnection : DEBUG: Response Headers	: Cache-Control: max-age=0, no-cache, no-store, must-revalidate, Content-Language: *, Content-Length: 373, Content-Type: application/json, Date: Thu, 26 Nov 2020 18:34:03 GMT, Paypal-Debug-Id: b8917a2ad7983, 
+[26-11-2020 18:35:05] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 400 when accessing https://api.sandbox.paypal.com/v1/payments/payment. {"name":"VALIDATION_ERROR","message":"Invalid request - see details","debug_id":"b8917a2ad7983","information_link":"https://developer.paypal.com/docs/api/payments/#errors","details":[{"field":"/transactions/0/amount","location":"body","issue":"Cannot construct instance of `com.paypal.platform.payments.model.rest.common.Amount`, problem: INVALID_CURRENCY_AMOUNT_FORMAT"}]}
+[26-11-2020 18:35:05] PayPal\Core\PayPalHttpConnection : DEBUG: 
+
+================================================================================================================================
+

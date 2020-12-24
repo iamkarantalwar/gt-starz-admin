@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Repositories\Order\OrderRepository;
 use App\Repositories\User\UserRepository;
 
-class StripePaymentService
+class StripePaymentService implements PaymentServiceInterface
 {
 
     private $userRepository, $stripePayment, $orderRepository, $orderStatus;
@@ -23,7 +23,7 @@ class StripePaymentService
         $this->orderRepository = $orderRepository;
     }
 
-    public function changeUserStripeId(User $user, $stripeId)
+    public function changePayerId(User $user, $stripeId)
     {
         $update = $this->userRepository->update($user, [
             'stripe_id' => $stripeId,
@@ -36,7 +36,8 @@ class StripePaymentService
         }
     }
 
-    public function createPayment($data) {
+    public function createPayment($data, $order) {
+        $data['order_id'] = $order->id;
         $create = $this->stripePayment->updateOrCreate($data);
         if($create) {
             return true;
@@ -45,7 +46,7 @@ class StripePaymentService
         }
     }
 
-    public function confirmStripePayment($transactionId, $orderId) {
+    public function confirmPayment($transactionId, $orderId) {
 
         $stripePaymentObject = $this->stripePayment->where('txn_id', $transactionId)->where('order_id', $orderId)->first();
 
